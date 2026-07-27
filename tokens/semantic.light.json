@@ -1,0 +1,375 @@
+{
+  "$description": "Nemo — Semantic (light). Daki alias tree resolved for light.",
+  "color": {
+    "$type": "color",
+    "surface": {
+      "neutral": {
+        "primary": {
+          "$value": "{color.gray.98}"
+        },
+        "secondary": {
+          "$value": "{color.gray.87}"
+        },
+        "tertiary": {
+          "$value": "{color.gray.94}"
+        },
+        "inverted": {
+          "$value": "{color.gray.20}"
+        },
+        "disabled": {
+          "$value": "{color.gray.90}"
+        }
+      },
+      "accent": {
+        "benefit": {
+          "$value": "{color.emerald.95}"
+        },
+        "incentive": {
+          "$value": "{color.purple.80}"
+        },
+        "benefit-low": {
+          "$value": "{color.emerald.90}"
+        },
+        "benefit-lowest": {
+          "$value": "{color.emerald.80}"
+        },
+        "incentive-low": {
+          "$value": "{color.purple.80}"
+        },
+        "incentive-lowest": {
+          "$value": "{color.purple.30}"
+        },
+        "primary": {
+          "$value": "{color.blue.95}"
+        },
+        "primary-low": {
+          "$value": "{color.blue.80}"
+        },
+        "primary-lowest": {
+          "$value": "{color.blue.30}"
+        }
+      },
+      "medal": {
+        "gold": {
+          "$value": "{color.gold.95}"
+        },
+        "gold-low": {
+          "$value": "{color.gold.90}"
+        },
+        "gold-lowest": {
+          "$value": "{color.gold.80}"
+        },
+        "silver": {
+          "$value": "{color.silver.95}"
+        },
+        "silver-low": {
+          "$value": "{color.silver.90}"
+        },
+        "silver-lowest": {
+          "$value": "{color.silver.80}"
+        },
+        "bronze": {
+          "$value": "{color.bronze.95}"
+        },
+        "bronze-low": {
+          "$value": "{color.bronze.90}"
+        },
+        "bronze-lowest": {
+          "$value": "{color.bronze.80}"
+        }
+      },
+      "semantic": {
+        "warning": {
+          "$value": "{color.yellow.95}"
+        },
+        "critical": {
+          "$value": "{color.red.95}"
+        },
+        "success": {
+          "$value": "{color.green.95}"
+        },
+        "info": {
+          "$value": "{color.navy.95}"
+        },
+        "warning-low": {
+          "$value": "{color.yellow.90}"
+        },
+        "critical-low": {
+          "$value": "{color.red.90}"
+        },
+        "success-low": {
+          "$value": "{color.green.90}"
+        },
+        "info-low": {
+          "$value": "{color.navy.90}"
+        }
+      }
+    },
+    "text": {
+      "neutral": {
+        "primary": {
+          "$value": "{color.gray.10}"
+        },
+        "secondary": {
+          "$value": "{color.gray.30}"
+        },
+        "tertiary": {
+          "$value": "{color.gray.50}"
+        },
+        "disabled": {
+          "$value": "{color.gray.90}"
+        },
+        "inverted": {
+          "$value": "{color.gray.98}"
+        }
+      },
+      "semantic": {
+        "warning": {
+          "$value": "{color.yellow.30}"
+        },
+        "critical": {
+          "$value": "{color.red.30}"
+        },
+        "success": {
+          "$value": "{color.green.30}"
+        },
+        "info": {
+          "$value": "{color.navy.30}"
+        }
+      },
+      "accent": {
+        "benefit": {
+          "$value": "{color.emerald.30}"
+        },
+        "incentive": {
+          "$value": "{color.purple.30}"
+        },
+        "primary": {
+          "$value": "{color.blue.30}"
+        },
+        "inverted-incentive": {
+          "$value": "{color.purple.100}"
+        }
+      },
+      "medal": {
+        "gold": {
+          "$value": "{color.gold.30}"
+        },
+        "silver": {
+          "$value": "{color.silver.30}"
+        },
+        "bronze": {
+          "$value": "{color.bronze.30}"
+        },
+        "inverted-bronze": {
+          "$value": "{color.bronze.100}"
+        },
+        "inverted-gold": {
+          "$value": "{color.gold.100}"
+        },
+        "inverted-silver": {
+          "$value": "{color.silver.100}"
+        },
+        "inverted-bronze-2": {
+          "$value": "{color.bronze.100}"
+        }
+      }
+    },
+    "border": {
+      "semantic": {
+        "warning": {
+          "$value": "{color.yellow.40}"
+        },
+        "critical": {
+          "$value": "{color.red.40}"
+        },
+        "success": {
+          "$value": "{color.green.40}"
+        },
+        "info": {
+          "$value": "{color.navy.40}"
+        }
+      },
+      "neutral": {
+        "main": {
+          "$value": "{color.gray.90}"
+        },
+        "hover": {
+          "$value": "{color.gray.50}"
+        },
+        "active": {
+          "$value": "{color.gray.30}"
+        },
+        "disabled": {
+          "$value": "{color.gray.90}"
+        }
+      },
+      "accent": {
+        "secondary": {
+          "$value": "{color.emerald.40}"
+        },
+        "incentive": {
+          "$value": "{color.purple.40}"
+        },
+        "primary": {
+          "$value": "{color.blue.40}"
+        }
+      },
+      "medal": {
+        "gold": {
+          "$value": "{color.gold.40}"
+        },
+        "silver": {
+          "$value": "{color.silver.40}"
+        },
+        "bronze": {
+          "$value": "{color.bronze.40}"
+        }
+      }
+    },
+    "icon": {
+      "neutral": {
+        "primary": {
+          "$value": "{color.gray.10}"
+        },
+        "secondary": {
+          "$value": "{color.gray.30}"
+        },
+        "tertiary": {
+          "$value": "{color.gray.50}"
+        },
+        "inverted": {
+          "$value": "{color.gray.98}"
+        },
+        "disabled": {
+          "$value": "{color.gray.90}"
+        }
+      },
+      "accent": {
+        "primary": {
+          "$value": "{color.blue.40}"
+        },
+        "benefit": {
+          "$value": "{color.emerald.40}"
+        },
+        "incentive": {
+          "$value": "{color.purple.40}"
+        }
+      },
+      "semantic": {
+        "warning": {
+          "$value": "{color.yellow.40}"
+        },
+        "critical": {
+          "$value": "{color.red.40}"
+        },
+        "success": {
+          "$value": "{color.green.40}"
+        },
+        "info": {
+          "$value": "{color.navy.40}"
+        }
+      },
+      "medal": {
+        "gold": {
+          "$value": "{color.gold.40}"
+        },
+        "silver": {
+          "$value": "{color.silver.40}"
+        },
+        "bronze": {
+          "$value": "{color.bronze.40}"
+        }
+      }
+    },
+    "background": {
+      "bg": {
+        "$value": "{color.gray.98}"
+      }
+    },
+    "interactive": {
+      "accent": {
+        "primary": {
+          "inverted": {
+            "$value": "{color.blue.100}"
+          },
+          "main": {
+            "$value": "{color.blue.40}"
+          },
+          "active-on-surface": {
+            "$value": "#0018484d"
+          },
+          "hover": {
+            "$value": "{color.blue.30}"
+          },
+          "active": {
+            "$value": "{color.blue.10}"
+          },
+          "hover-on-surface": {
+            "$value": "#0040a11a"
+          }
+        },
+        "benefit": {
+          "inverted": {
+            "$value": "{color.emerald.100}"
+          },
+          "active": {
+            "$value": "{color.emerald.10}"
+          },
+          "hover-on-surface": {
+            "$value": "#00543e1a"
+          },
+          "active-on-surface": {
+            "$value": "#001c144d"
+          },
+          "hover": {
+            "$value": "{color.emerald.30}"
+          },
+          "main": {
+            "$value": "{color.emerald.40}"
+          }
+        },
+        "incentive": {
+          "main": {
+            "$value": "{color.purple.40}"
+          },
+          "hover-on-surface": {
+            "$value": "#3f33c21a"
+          },
+          "hover": {
+            "$value": "{color.purple.30}"
+          },
+          "active-on-surface": {
+            "$value": "#1410544d"
+          },
+          "active": {
+            "$value": "{color.purple.10}"
+          },
+          "inverted": {
+            "$value": "{color.purple.100}"
+          }
+        }
+      },
+      "neutral": {
+        "hover-on-surface-2": {
+          "$value": "#45464f1a"
+        },
+        "primary": {
+          "$value": "{color.gray.50}"
+        },
+        "active-2": {
+          "$value": "{color.gray.10}"
+        },
+        "active-on-surface-2": {
+          "$value": "#1a1b224d"
+        },
+        "inverted-2": {
+          "$value": "{color.gray.98}"
+        },
+        "hover-2": {
+          "$value": "{color.gray.30}"
+        }
+      }
+    }
+  }
+}

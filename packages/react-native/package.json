@@ -1,0 +1,11 @@
+{
+  "name": "@nemo/react-native",
+  "version": "0.1.0",
+  "description": "Nemo — React Native components driven by the generated Nemo token theme.",
+  "main": "src/index.ts",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.74",
+    "react-native-svg": ">=15"
+  }
+}

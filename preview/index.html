@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nemo — Design System Preview</title>
+  <!-- Generated Nemo tokens -->
+  <link rel="stylesheet" href="../build/web/nemo.css" />
+  <link rel="stylesheet" href="../build/web/nemo.dark.css" />
+  <style>
+    /* Every value below is a Nemo token — no hardcoded color/radius/shadow/border. */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--nemo-font-family-sans);
+      background: var(--nemo-color-surface-primary);
+      color: var(--nemo-color-text-primary);
+      transition: background .2s, color .2s;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: var(--nemo-space-10) var(--nemo-space-6); }
+    header.hero { display: flex; align-items: center; justify-content: space-between; gap: var(--nemo-space-4); margin-bottom: var(--nemo-space-8); }
+    .brandmark { display: flex; align-items: center; gap: var(--nemo-space-3); }
+    .fish {
+      width: 44px; height: 44px; border-radius: var(--nemo-radius-full);
+      background: var(--nemo-color-brand-default);
+      display: grid; place-items: center; font-size: 24px;
+      box-shadow: var(--nemo-elevation-overlay);
+    }
+    h2 { font-size: var(--nemo-font-size-lg); margin: var(--nemo-space-8) 0 var(--nemo-space-4); }
+    .decorative { color: var(--nemo-color-text-decorative); }
+
+    /* ---- Typography specimen (mirrors <Text> variants) ---- */
+    .t-display { font-size: var(--nemo-font-size-3xl); font-weight: var(--nemo-font-weight-bold); line-height: var(--nemo-line-height-tight); letter-spacing: -.02em; }
+    .t-h1 { font-size: var(--nemo-font-size-2xl); font-weight: var(--nemo-font-weight-bold); line-height: var(--nemo-line-height-tight); }
+    .t-h2 { font-size: var(--nemo-font-size-xl); font-weight: var(--nemo-font-weight-semibold); }
+    .t-h3 { font-size: var(--nemo-font-size-lg); font-weight: var(--nemo-font-weight-semibold); }
+    .t-body { font-size: var(--nemo-font-size-md); font-weight: var(--nemo-font-weight-regular); }
+    .t-bodySm { font-size: var(--nemo-font-size-sm); }
+    .t-label { font-size: var(--nemo-font-size-sm); font-weight: var(--nemo-font-weight-medium); }
+    .t-caption { font-size: var(--nemo-font-size-xs); color: var(--nemo-color-text-muted); }
+    .type-row { display: flex; align-items: baseline; gap: var(--nemo-space-4); margin-bottom: var(--nemo-space-3); }
+    .type-row .tag { font-size: 11px; color: var(--nemo-color-text-muted); width: 72px; flex: none; }
+
+    /* ---- Buttons ---- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--nemo-space-2);
+      height: 40px; padding: 0 var(--nemo-space-4);
+      border-radius: var(--nemo-radius-md);
+      font-size: var(--nemo-font-size-sm); font-weight: var(--nemo-font-weight-medium);
+      border: var(--nemo-border-width-default) solid transparent; cursor: pointer; transition: all .15s;
+    }
+    .btn-primary { background: var(--nemo-color-brand-default); color: var(--nemo-color-brand-on-brand); }
+    .btn-primary:hover { background: var(--nemo-color-brand-hover); }
+    .btn-secondary { background: var(--nemo-color-surface-secondary); color: var(--nemo-color-text-primary); }
+    .btn-outline { background: transparent; color: var(--nemo-color-text-primary); border-color: var(--nemo-color-border-default); }
+    .btn-outline:hover { background: var(--nemo-color-surface-secondary); }
+    .btn-destructive { background: var(--nemo-color-feedback-danger); color: var(--nemo-color-feedback-on-feedback); }
+    .row { display: flex; gap: var(--nemo-space-3); flex-wrap: wrap; align-items: center; }
+
+    /* ---- Input ---- */
+    .field { display: flex; flex-direction: column; gap: var(--nemo-space-2); max-width: 320px; }
+    .input {
+      height: 40px; width: 100%; padding: 0 var(--nemo-space-3);
+      border-radius: var(--nemo-radius-md);
+      border: var(--nemo-border-width-default) solid var(--nemo-color-border-default);
+      background: var(--nemo-color-surface-primary); color: var(--nemo-color-text-primary);
+      font-size: var(--nemo-font-size-sm); font-family: inherit; outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    .input::placeholder { color: var(--nemo-color-text-muted); }
+    .input:focus { border-color: var(--nemo-color-border-focus); box-shadow: 0 0 0 3px var(--nemo-color-brand-subtle); }
+
+    /* ---- Toggle / Switch (mirrors <Switch>) ---- */
+    .switch { position: relative; display: inline-flex; align-items: center; gap: var(--nemo-space-3); cursor: pointer; }
+    .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .track { width: 44px; height: 24px; border-radius: var(--nemo-radius-full); background: var(--nemo-color-surface-secondary); border: var(--nemo-border-width-strong) solid var(--nemo-color-border-default); transition: background .15s, border-color .15s; position: relative; }
+    .thumb { position: absolute; top: 1px; left: 1px; width: 18px; height: 18px; border-radius: var(--nemo-radius-full); background: var(--nemo-color-surface-primary); box-shadow: var(--nemo-elevation-raised); transition: transform .15s; }
+    .switch input:checked + .track { background: var(--nemo-color-brand-default); border-color: var(--nemo-color-brand-default); }
+    .switch input:checked + .track .thumb { transform: translateX(20px); }
+
+    /* ---- Card ---- */
+    .card {
+      border: var(--nemo-border-width-default) solid var(--nemo-color-border-default);
+      background: var(--nemo-color-surface-raised);
+      border-radius: var(--nemo-radius-lg);
+      padding: var(--nemo-space-6); max-width: 380px;
+      box-shadow: var(--nemo-elevation-raised);
+    }
+    .card h3 { margin: 0 0 var(--nemo-space-2); font-size: var(--nemo-font-size-lg); font-weight: var(--nemo-font-weight-semibold); }
+    .card p { margin: 0 0 var(--nemo-space-5); color: var(--nemo-color-text-secondary); font-size: var(--nemo-font-size-sm); }
+
+    /* ---- Elevation specimen ---- */
+    .elevs { display: flex; gap: var(--nemo-space-6); flex-wrap: wrap; }
+    .elev { width: 120px; height: 72px; border-radius: var(--nemo-radius-md); background: var(--nemo-color-surface-raised); display: grid; place-items: center; font-size: 12px; color: var(--nemo-color-text-secondary); border: var(--nemo-border-width-default) solid var(--nemo-color-border-default); }
+    .elev.raised { box-shadow: var(--nemo-elevation-raised); }
+    .elev.overlay { box-shadow: var(--nemo-elevation-overlay); }
+    .elev.modal { box-shadow: var(--nemo-elevation-modal); }
+
+    .toggle-theme {
+      border: var(--nemo-border-width-default) solid var(--nemo-color-border-default); background: var(--nemo-color-surface-secondary);
+      color: var(--nemo-color-text-primary); border-radius: var(--nemo-radius-full);
+      padding: var(--nemo-space-2) var(--nemo-space-4); cursor: pointer; font-size: var(--nemo-font-size-sm);
+    }
+    .badge { display:inline-block; padding: 2px 10px; border-radius: var(--nemo-radius-full); font-size: 12px; font-weight: var(--nemo-font-weight-semibold); }
+    .badge.success { background: var(--nemo-color-feedback-success-subtle); color: var(--nemo-color-feedback-success); }
+    .badge.warning { background: var(--nemo-color-feedback-warning-subtle); color: var(--nemo-color-feedback-warning); }
+    .badge.danger  { background: var(--nemo-color-feedback-danger-subtle);  color: var(--nemo-color-feedback-danger); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="brandmark">
+        <div class="fish">🐟</div>
+        <div>
+          <div class="t-h1">Nemo</div>
+          <div class="t-bodySm" style="color:var(--nemo-color-text-secondary)">Design system da Daki · perdido no <span class="decorative">mar azulão</span>, pronto pros tubarões</div>
+        </div>
+      </div>
+      <button class="toggle-theme" onclick="document.documentElement.classList.toggle('dark')">🌗 Alternar tema</button>
+    </header>
+
+    <h2>Tipografia</h2>
+    <div class="type-row"><span class="tag">display</span><span class="t-display">Entrega em minutos</span></div>
+    <div class="type-row"><span class="tag">h1</span><span class="t-h1">Entrega em minutos</span></div>
+    <div class="type-row"><span class="tag">h2</span><span class="t-h2">Entrega em minutos</span></div>
+    <div class="type-row"><span class="tag">h3</span><span class="t-h3">Entrega em minutos</span></div>
+    <div class="type-row"><span class="tag">body</span><span class="t-body">Seu mercado a um toque de distância, do jeitinho Daki.</span></div>
+    <div class="type-row"><span class="tag">bodySm</span><span class="t-bodySm">Seu mercado a um toque de distância.</span></div>
+    <div class="type-row"><span class="tag">label</span><span class="t-label">E-mail</span></div>
+    <div class="type-row"><span class="tag">caption</span><span class="t-caption">Taxa de entrega calculada no checkout</span></div>
+
+    <h2>Botões <span class="t-caption">· radius-md = 8px</span></h2>
+    <div class="row">
+      <button class="btn btn-primary">Fazer pedido</button>
+      <button class="btn btn-secondary">Ver carrinho</button>
+      <button class="btn btn-outline">Detalhes</button>
+      <button class="btn btn-destructive">Cancelar</button>
+    </div>
+
+    <h2>Input</h2>
+    <div class="field">
+      <label class="t-label" for="email">E-mail</label>
+      <input class="input" id="email" type="email" placeholder="voce@exemplo.com" />
+      <span class="t-caption">Enviaremos a confirmação do pedido aqui.</span>
+    </div>
+
+    <h2>Toggle</h2>
+    <div class="row" style="gap:var(--nemo-space-8)">
+      <label class="switch"><input type="checkbox" checked /><span class="track"><span class="thumb"></span></span><span class="t-bodySm">Notificações push</span></label>
+      <label class="switch"><input type="checkbox" /><span class="track"><span class="thumb"></span></span><span class="t-bodySm">Modo econômico</span></label>
+    </div>
+
+    <h2>Elevação <span class="t-caption">· tokens de shadow</span></h2>
+    <div class="elevs">
+      <div class="elev raised">raised</div>
+      <div class="elev overlay">overlay</div>
+      <div class="elev modal">modal</div>
+    </div>
+
+    <h2>Card</h2>
+    <div class="card">
+      <h3>Entrega em 15 min <span class="badge success">no prazo</span></h3>
+      <p>Seu pedido saiu do dark store mais perto de você. Acompanhe o entregador em tempo real.</p>
+      <div class="row">
+        <button class="btn btn-primary">Acompanhar</button>
+        <button class="btn btn-outline">Ajuda</button>
+      </div>
+    </div>
+
+    <h2>Paleta · Blue (mar azulão)</h2>
+    <div class="row">
+      <span class="badge success">Sucesso</span>
+      <span class="badge warning">Atenção</span>
+      <span class="badge danger">Erro</span>
+    </div>
+  </div>
+</body>
+</html>

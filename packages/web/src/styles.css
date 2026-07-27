@@ -1,0 +1,43 @@
+/* Generated Nemo tokens (must precede @tailwind per CSS @import rules). */
+@import "../../../build/web/nemo.css";
+@import "../../../build/web/nemo.dark.css";
+
+/* Brand fonts — Owners (display/headings) + Inter (body/UI). */
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Owners Text";
+  src: url("./fonts/OwnersText-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Owners Text";
+  src: url("./fonts/OwnersText-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Owners Narrow";
+  src: url("./fonts/OwnersNarrow-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: var(--nemo-color-surface-neutral-primary);
+  color: var(--nemo-color-text-neutral-primary);
+  font-family: var(--nemo-font-family-inter);
+}

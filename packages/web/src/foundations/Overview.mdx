@@ -1,0 +1,28 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Foundations/Overview" />
+
+# 🐟 Nemo
+
+**Design system da Daki.** Quatro letras, perdido no _mar azulão_, pronto pra encarar os
+tubarões (iFood, Keeta, Rappi…).
+
+Uma **única fonte de verdade** de tokens (no Figma) alimenta web (shadcn/ui + Tailwind),
+React Native e Flutter. Cor, radius, border-width e shadow são **todos tokens** — nada de
+valor solto nos componentes.
+
+## Como está organizado
+
+- **Foundations** — os tokens: Colors, Typography, Elevation, Radius & Spacing.
+- **Components** — Button, Card, Input, Switch e Text, no padrão shadcn/ui, consumindo os
+  tokens semânticos.
+
+## Camadas de token
+
+1. **Core** (`tokens/core.json`) — primitivos crus: escala `blue`/`neutral`, `space`,
+   `radius`, `borderWidth`, `shadow`, tipografia. Âncora: `blue.700 = #001e6b`.
+2. **Semantic** (`semantic.light/dark.json`) — significado: `surface`, `text`, `brand`,
+   `border`, `feedback`, `elevation`. **É o que o código consome.**
+
+Use o ícone de tema (🌗) na toolbar pra alternar entre **light** e **deep-sea (dark)** — tudo
+vira só trocando a classe `.dark`.

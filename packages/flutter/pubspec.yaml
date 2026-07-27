@@ -1,0 +1,29 @@
+name: nemo_flutter
+description: Nemo — Flutter widgets and design tokens for Daki's design system.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Owners Narrow
+      fonts:
+        - asset: fonts/OwnersNarrow-Black.ttf
+          weight: 900
+    - family: Owners Text
+      fonts:
+        - asset: fonts/OwnersText-Regular.ttf
+          weight: 400
+        - asset: fonts/OwnersText-Medium.ttf
+          weight: 500
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter-Variable.ttf
