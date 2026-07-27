@@ -129,6 +129,7 @@ export default {
         display: "var(--nemo-font-family-owners-narrow)",
       },
       fontSize: {
+        "2xs": v("font-size-1"), // 10
         xs: v("font-size-2"), // 12
         sm: v("font-size-3"), // 14
         md: v("font-size-4"), // 16
