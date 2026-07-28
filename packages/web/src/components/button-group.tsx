@@ -14,11 +14,11 @@ const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
       role="group"
       data-orientation={orientation}
       className={cn(
-        "inline-flex",
+        "inline-flex gap-1",
         orientation === "vertical" ? "flex-col" : "flex-row",
         orientation === "horizontal"
-          ? "[&>*]:rounded-none [&>*]:first:rounded-l-md [&>*]:last:rounded-r-md [&>*:not(:first-child)]:-ml-px"
-          : "[&>*]:rounded-none [&>*]:first:rounded-t-md [&>*]:last:rounded-b-md [&>*:not(:first-child)]:-mt-px",
+          ? "[&>*]:rounded-none [&>*]:first:rounded-l-md [&>*]:last:rounded-r-md"
+          : "[&>*]:rounded-none [&>*]:first:rounded-t-md [&>*]:last:rounded-b-md",
         className
       )}
       {...props}
