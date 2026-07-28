@@ -86,6 +86,12 @@ const toast = Object.assign(withDedupe(sonnerToast, "default"), {
  * patching sonner itself. Flagging rather than reaching for a workaround
  * (e.g. mutating the DOM after render) that isn't a real fix.
  *
+ * `visibleToasts={3}` is explicit even though it's also sonner's own
+ * default — max 3 stacked at once was a deliberate decision (matches the
+ * Daki App DS precedent; HUBR allows 5, Jake queues 1-at-a-time with
+ * dedupe instead of stacking), not an untouched default left to chance. If
+ * sonner ever changes that default, this keeps the decision pinned.
+ *
  * `success`/`error`/`warning`/`info`/`loading` (sonner's native `toast.<type>()`
  * variants) get the same "soft" tonal look `Badge`'s `type="filled"` uses — the
  * `*-soft`/`*-soft-foreground` pair plus the semantic border, not the DEFAULT
@@ -119,6 +125,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       theme={theme as ToasterProps["theme"]}
       position="top-right"
       duration={TOAST_DURATION.short}
+      visibleToasts={3}
       closeButton
       swipeDirections={["top", "right"]}
       className="toaster group"
