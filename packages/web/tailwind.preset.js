@@ -27,11 +27,13 @@ export default {
         },
         // Brand blue pinned to its light-mode primitives — doesn't tonal-flip
         // in dark mode like `primary` does. Used where the brand color itself
-        // (not a surface) needs to stay recognizable across themes.
+        // (not a surface) needs to stay recognizable across themes. Backed by
+        // tokens/fixed.json (generated), not a raw primitive reference —
+        // RN/Flutter point at the same generated -fixed tokens.
         "primary-fixed": {
-          DEFAULT: v("color-blue-40"),
-          hover: v("color-blue-30"),
-          foreground: v("color-blue-100"),
+          DEFAULT: v("color-fixed-primary"),
+          hover: v("color-fixed-primary-hover"),
+          foreground: v("color-fixed-primary-foreground"),
         },
         secondary: {
           DEFAULT: v("color-surface-neutral-secondary"),
@@ -56,10 +58,10 @@ export default {
         // Critical red pinned to its own light-mode primitives — dark mode's
         // tonal-flip turns the surface into a pale pink that white text can't
         // read against. Stays one dark-red "universe" (dark bg, white text)
-        // in both themes instead of inverting.
+        // in both themes instead of inverting. Backed by tokens/fixed.json.
         "destructive-fixed": {
-          DEFAULT: v("color-red-40"),
-          foreground: v("color-red-100"),
+          DEFAULT: v("color-fixed-destructive"),
+          foreground: v("color-fixed-destructive-foreground"),
         },
         success: {
           DEFAULT: v("color-icon-semantic-success"),
@@ -71,8 +73,8 @@ export default {
         // Same "-fixed" treatment as destructive-fixed above — success's icon
         // tone tonal-flips to a pale green in dark mode, too pale for white text.
         "success-fixed": {
-          DEFAULT: v("color-green-40"),
-          foreground: v("color-green-100"),
+          DEFAULT: v("color-fixed-success"),
+          foreground: v("color-fixed-success-foreground"),
         },
         warning: {
           DEFAULT: v("color-icon-semantic-warning"),
@@ -83,8 +85,8 @@ export default {
         },
         // Same story for warning — pale gold in dark mode otherwise.
         "warning-fixed": {
-          DEFAULT: v("color-yellow-40"),
-          foreground: v("color-yellow-100"),
+          DEFAULT: v("color-fixed-warning"),
+          foreground: v("color-fixed-warning-foreground"),
         },
         info: {
           // DEFAULT/foreground already pair surface-semantic-info ↔ text-semantic-info

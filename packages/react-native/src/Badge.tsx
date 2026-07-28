@@ -37,15 +37,15 @@ function formatCount(count: number) {
 }
 
 /**
- * "solid" backgrounds for success/warning/critical pin to the light-mode
- * primitive (same "-fixed" pattern as web's destructive-fixed/primary-fixed,
- * which mirrors what button.tsx already does for default/destructive):
+ * "solid" backgrounds for success/warning/critical use the generated
+ * `fixed.*` tokens (`tokens/fixed.json`, built alongside CORE/SEM into the RN
+ * theme) — same "-fixed" pattern as web's destructive-fixed/primary-fixed,
+ * which mirrors what button.tsx already does for default/destructive.
  * `t.color.surface.semantic.*`/`icon.semantic.*` tonal-flip to a PALE tone in
- * dark mode, which white foreground text can't read against. Figma's alias
- * set never promoted an "On <Hue>" role for these, so there's no *semantic*
- * theme token for it — but the primitive itself (`t.color.red[40]` etc.) is
- * a real generated token (build.mjs now includes CORE in the RN theme, not
- * just the semantic tree), so this still isn't a hardcoded value.
+ * dark mode, which white foreground text can't read against; Figma's alias
+ * set never promoted an "On <Hue>" role for these, so `fixed.*` pins to the
+ * light-mode primitive instead — a real generated token, not a primitive
+ * reached for ad hoc, so web/RN/Flutter all point at the same named thing.
  */
 function bgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
   if (type === "outline" || type === "ghost") return "transparent";
@@ -54,11 +54,11 @@ function bgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
     case "default":
       return t.color.interactive.accent.primary.main;
     case "success":
-      return solid ? t.color.green[40] : t.color.surface.semantic.success;
+      return solid ? t.color.fixed.success : t.color.surface.semantic.success;
     case "warning":
-      return solid ? t.color.yellow[40] : t.color.surface.semantic.warning;
+      return solid ? t.color.fixed.warning : t.color.surface.semantic.warning;
     case "critical":
-      return solid ? t.color.red[40] : t.color.surface.semantic.critical;
+      return solid ? t.color.fixed.destructive : t.color.surface.semantic.critical;
     case "info":
       // No dedicated strong info tone (mirrors web: solid intentionally == filled).
       return t.color.surface.semantic.info;
@@ -75,11 +75,11 @@ function fgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
     case "default":
       return type === "outline" || type === "ghost" ? t.color.text.accent.primary : t.color.interactive.accent.primary.inverted;
     case "success":
-      return solid ? t.color.green[100] : t.color.text.semantic.success;
+      return solid ? t.color.fixed["success-foreground"] : t.color.text.semantic.success;
     case "warning":
-      return solid ? t.color.yellow[100] : t.color.text.semantic.warning;
+      return solid ? t.color.fixed["warning-foreground"] : t.color.text.semantic.warning;
     case "critical":
-      return solid ? t.color.red[100] : t.color.text.semantic.critical;
+      return solid ? t.color.fixed["destructive-foreground"] : t.color.text.semantic.critical;
     case "info":
       return t.color.text.semantic.info;
     case "disabled":

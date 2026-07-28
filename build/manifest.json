@@ -3262,6 +3262,96 @@
     "value": "#45464f"
   },
   {
+    "name": "--nemo-color-fixed-primary",
+    "path": [
+      "color",
+      "fixed",
+      "primary"
+    ],
+    "type": "color",
+    "value": "#0069ff"
+  },
+  {
+    "name": "--nemo-color-fixed-primary-hover",
+    "path": [
+      "color",
+      "fixed",
+      "primary-hover"
+    ],
+    "type": "color",
+    "value": "#0040a1"
+  },
+  {
+    "name": "--nemo-color-fixed-primary-foreground",
+    "path": [
+      "color",
+      "fixed",
+      "primary-foreground"
+    ],
+    "type": "color",
+    "value": "#ffffff"
+  },
+  {
+    "name": "--nemo-color-fixed-destructive",
+    "path": [
+      "color",
+      "fixed",
+      "destructive"
+    ],
+    "type": "color",
+    "value": "#b3282c"
+  },
+  {
+    "name": "--nemo-color-fixed-destructive-foreground",
+    "path": [
+      "color",
+      "fixed",
+      "destructive-foreground"
+    ],
+    "type": "color",
+    "value": "#ffffff"
+  },
+  {
+    "name": "--nemo-color-fixed-success",
+    "path": [
+      "color",
+      "fixed",
+      "success"
+    ],
+    "type": "color",
+    "value": "#38852e"
+  },
+  {
+    "name": "--nemo-color-fixed-success-foreground",
+    "path": [
+      "color",
+      "fixed",
+      "success-foreground"
+    ],
+    "type": "color",
+    "value": "#ffffff"
+  },
+  {
+    "name": "--nemo-color-fixed-warning",
+    "path": [
+      "color",
+      "fixed",
+      "warning"
+    ],
+    "type": "color",
+    "value": "#765a00"
+  },
+  {
+    "name": "--nemo-color-fixed-warning-foreground",
+    "path": [
+      "color",
+      "fixed",
+      "warning-foreground"
+    ],
+    "type": "color",
+    "value": "#ffffff"
+  },
+  {
     "name": "--nemo-space-0",
     "path": [
       "space",

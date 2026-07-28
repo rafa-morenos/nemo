@@ -21,6 +21,8 @@ const BUILD = resolve(ROOT, 'build');
 const CORE = resolve(ROOT, 'tokens/core.json');
 const SEM_LIGHT = resolve(ROOT, 'tokens/semantic.light.json');
 const SEM_DARK = resolve(ROOT, 'tokens/semantic.dark.json');
+// Hand-authored, NOT from Figma — see tokens/fixed.json's own $description.
+const FIXED = resolve(ROOT, 'tokens/fixed.json');
 
 const PREFIX = 'nemo';
 
@@ -139,9 +141,9 @@ StyleDictionary.registerFilter({
 
 /* ---------- instances ---------- */
 
-// LIGHT: core + light semantic → CSS :root, TS, Flutter, RN light theme
+// LIGHT: core + light semantic + fixed pins → CSS :root, TS, Flutter, RN light theme
 const light = new StyleDictionary({
-  source: [CORE, SEM_LIGHT],
+  source: [CORE, SEM_LIGHT, FIXED],
   platforms: {
     css: {
       transformGroup: 'css',
@@ -175,13 +177,13 @@ const light = new StyleDictionary({
       buildPath: `${BUILD}/rn/`,
       files: [
         {
-          // Includes CORE too (not just the semantic alias tree) so RN can
-          // reference primitive tones (e.g. `light.color.red[40]`) the same
-          // way Flutter's NemoTokens already can — needed for the "-fixed"
-          // pin pattern (badge.tsx's solid variant) without hardcoding hex.
+          // Includes CORE + FIXED too (not just the semantic alias tree) so
+          // RN can reference primitives and the "-fixed" pins (e.g.
+          // `light.color.fixed.success`) the same way Flutter's NemoTokens
+          // already can — no hardcoded hex needed for badge.tsx's solid variant.
           destination: 'theme.light.ts',
           format: 'nemo/rn-theme',
-          filter: (t) => t.filePath === SEM_LIGHT || t.filePath === CORE,
+          filter: (t) => t.filePath === SEM_LIGHT || t.filePath === CORE || t.filePath === FIXED,
           options: { themeName: 'light' },
         },
       ],
@@ -189,9 +191,9 @@ const light = new StyleDictionary({
   },
 });
 
-// DARK: core + dark semantic → CSS .dark, RN dark theme
+// DARK: core + dark semantic + fixed pins → CSS .dark, RN dark theme
 const dark = new StyleDictionary({
-  source: [CORE, SEM_DARK],
+  source: [CORE, SEM_DARK, FIXED],
   platforms: {
     css: {
       transformGroup: 'css',
@@ -211,11 +213,11 @@ const dark = new StyleDictionary({
       buildPath: `${BUILD}/rn/`,
       files: [
         {
-          // Same primitive access as rnLight above — primitives don't have a
+          // Same primitive + fixed access as rnLight above — neither has a
           // dark variant, so this duplicates the same values, not a divergent set.
           destination: 'theme.dark.ts',
           format: 'nemo/rn-theme',
-          filter: (t) => t.filePath === SEM_DARK || t.filePath === CORE,
+          filter: (t) => t.filePath === SEM_DARK || t.filePath === CORE || t.filePath === FIXED,
           options: { themeName: 'dark' },
         },
       ],
