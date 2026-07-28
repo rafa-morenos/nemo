@@ -61,6 +61,7 @@ export * from "./components/input-otp";
 export * from "./components/item";
 export * from "./components/kbd";
 export * from "./components/menu-item";
+export * from "./components/menu-shortcut";
 export * from "./components/navigation-menu";
 export * from "./components/pagination";
 export * from "./components/progress";
