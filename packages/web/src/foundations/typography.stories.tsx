@@ -64,3 +64,195 @@ export const Weights: Story = {
     </div>
   ),
 };
+
+/**
+ * Named text styles — the actual composed styles from the "🎨 Design Tokens
+ * V3" Figma file (🆎 Typography page, node 94:500), not yet exported into our
+ * token pipeline (they're Figma text styles, no "typography" composite token
+ * exists in tokens/*.json). Hero/Heading/Title use the Desk (web) variants;
+ * Body/Label/Support are shared ("Global") across platforms.
+ */
+const FAMILY_VAR = {
+  narrow: "var(--nemo-font-family-owners-narrow)",
+  text: "var(--nemo-font-family-owners-text)",
+  inter: "var(--nemo-font-family-inter)",
+} as const;
+
+type TextStyle = {
+  token: string;
+  family: keyof typeof FAMILY_VAR;
+  weight: number;
+  size: number;
+  lineHeight: number;
+  letterSpacing?: number;
+  decoration?: "underline" | "line-through";
+};
+
+const TEXT_STYLE_SECTIONS: { title: string; description?: string; styles: TextStyle[] }[] = [
+  {
+    title: "Hero · Desk",
+    description: "Tipografia para uso expressivo.",
+    styles: [
+      { token: "hero-sm", family: "narrow", weight: 900, size: 24, lineHeight: 1.2, letterSpacing: 0.48 },
+      { token: "hero-md", family: "narrow", weight: 900, size: 32, lineHeight: 1.2, letterSpacing: 0.64 },
+      { token: "hero-lg", family: "narrow", weight: 900, size: 40, lineHeight: 1.2, letterSpacing: 0.8 },
+    ],
+  },
+  {
+    title: "Heading · Desk",
+    description: "Títulos de maior relevância.",
+    styles: [
+      { token: "heading-sm", family: "text", weight: 500, size: 18, lineHeight: 1.2 },
+      { token: "heading-md", family: "text", weight: 500, size: 24, lineHeight: 1.2 },
+      { token: "heading-lg", family: "text", weight: 500, size: 28, lineHeight: 1.2 },
+      { token: "heading-xl", family: "text", weight: 500, size: 32, lineHeight: 1.2 },
+    ],
+  },
+  {
+    title: "Title · Desk",
+    description: "Títulos de menor relevância.",
+    styles: [
+      { token: "title-sm", family: "text", weight: 400, size: 14, lineHeight: 1.2 },
+      { token: "title-md", family: "text", weight: 400, size: 16, lineHeight: 1.2 },
+      { token: "title-lg", family: "text", weight: 400, size: 18, lineHeight: 1.2 },
+      { token: "title-xl", family: "text", weight: 400, size: 24, lineHeight: 1.2 },
+    ],
+  },
+  {
+    title: "Body · Regular",
+    description: "Para uso em blocos de texto.",
+    styles: [
+      { token: "body-regular-xxs", family: "inter", weight: 400, size: 10, lineHeight: 1.5 },
+      { token: "body-regular-xs", family: "inter", weight: 400, size: 12, lineHeight: 1.5 },
+      { token: "body-regular-sm", family: "inter", weight: 400, size: 14, lineHeight: 1.5 },
+      { token: "body-regular-md", family: "inter", weight: 400, size: 16, lineHeight: 1.5 },
+      { token: "body-regular-lg", family: "inter", weight: 400, size: 18, lineHeight: 1.5 },
+    ],
+  },
+  {
+    title: "Body · Bold",
+    description: "Ênfase dentro de blocos de texto.",
+    styles: [
+      { token: "body-bold-xxs", family: "inter", weight: 600, size: 10, lineHeight: 1.5 },
+      { token: "body-bold-xs", family: "inter", weight: 600, size: 12, lineHeight: 1.5 },
+      { token: "body-bold-sm", family: "inter", weight: 600, size: 14, lineHeight: 1.5 },
+      { token: "body-bold-md", family: "inter", weight: 600, size: 16, lineHeight: 1.5 },
+      { token: "body-bold-lg", family: "inter", weight: 600, size: 18, lineHeight: 1.5 },
+    ],
+  },
+  {
+    title: "Label",
+    description: "Usado para rotulagem de elementos.",
+    styles: [
+      { token: "label-xxs", family: "inter", weight: 500, size: 8, lineHeight: 1 },
+      { token: "label-xs", family: "inter", weight: 500, size: 10, lineHeight: 1 },
+      { token: "label-sm", family: "inter", weight: 500, size: 12, lineHeight: 1 },
+      { token: "label-md", family: "inter", weight: 500, size: 14, lineHeight: 1 },
+      { token: "label-lg", family: "inter", weight: 500, size: 16, lineHeight: 1 },
+    ],
+  },
+  {
+    title: "Label · Bold",
+    styles: [
+      { token: "label-bold-xs", family: "inter", weight: 700, size: 10, lineHeight: 1 },
+      { token: "label-bold-sm", family: "inter", weight: 700, size: 12, lineHeight: 1 },
+      { token: "label-bold-md", family: "inter", weight: 700, size: 14, lineHeight: 1 },
+      { token: "label-bold-lg", family: "inter", weight: 700, size: 16, lineHeight: 1 },
+    ],
+  },
+  {
+    title: "Support · Button",
+    description: "Para uso em componentes.",
+    styles: [
+      { token: "support-button-xs", family: "inter", weight: 700, size: 12, lineHeight: 1 },
+      { token: "support-button-sm", family: "inter", weight: 700, size: 14, lineHeight: 1 },
+      { token: "support-button-md", family: "inter", weight: 700, size: 16, lineHeight: 1 },
+      { token: "support-button-lg", family: "inter", weight: 700, size: 20, lineHeight: 1 },
+    ],
+  },
+  {
+    title: "Support · Link",
+    styles: [
+      { token: "support-link-sm", family: "inter", weight: 400, size: 14, lineHeight: 1.5, decoration: "underline" },
+      { token: "support-link-md", family: "inter", weight: 400, size: 16, lineHeight: 1.5, decoration: "underline" },
+      { token: "support-link-lg", family: "inter", weight: 400, size: 18, lineHeight: 1.5, decoration: "underline" },
+    ],
+  },
+  {
+    title: "Support · Strike",
+    styles: [
+      { token: "support-strike-sm", family: "inter", weight: 400, size: 14, lineHeight: 1.2, decoration: "line-through" },
+      { token: "support-strike-md", family: "inter", weight: 400, size: 16, lineHeight: 1.2, decoration: "line-through" },
+      { token: "support-strike-lg", family: "inter", weight: 400, size: 18, lineHeight: 1.2, decoration: "line-through" },
+    ],
+  },
+];
+
+export const TextStyles: Story = {
+  render: () => (
+    <div style={{ maxWidth: 820 }}>
+      {TEXT_STYLE_SECTIONS.map((section) => (
+        <section key={section.title} style={{ marginBottom: 28 }}>
+          <h3
+            style={{
+              fontFamily: "var(--nemo-font-family-owners-text)",
+              fontWeight: 500,
+              fontSize: 20,
+              margin: "0 0 4px",
+              color: "var(--nemo-color-text-neutral-primary)",
+            }}
+          >
+            {section.title}
+          </h3>
+          {section.description != null && (
+            <p style={{ fontFamily: inter, fontSize: 13, margin: "0 0 12px", color: "var(--nemo-color-text-neutral-tertiary)" }}>
+              {section.description}
+            </p>
+          )}
+          <div>
+            {section.styles.map((s) => (
+              <div
+                key={s.token}
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 20,
+                  padding: "10px 0",
+                  borderBottom: "1px solid var(--nemo-color-border-neutral-main)",
+                }}
+              >
+                <code
+                  style={{
+                    width: 170,
+                    flex: "none",
+                    fontFamily: inter,
+                    fontSize: 11,
+                    color: "var(--nemo-color-text-neutral-tertiary)",
+                  }}
+                >
+                  {s.token}
+                  <br />
+                  {s.size}px · {s.weight} · lh {s.lineHeight}
+                  {s.letterSpacing ? ` · ls ${s.letterSpacing}px` : ""}
+                </code>
+                <span
+                  style={{
+                    fontFamily: FAMILY_VAR[s.family],
+                    fontWeight: s.weight,
+                    fontSize: s.size,
+                    lineHeight: s.lineHeight,
+                    letterSpacing: s.letterSpacing ? `${s.letterSpacing}px` : undefined,
+                    textDecoration: s.decoration,
+                    color: "var(--nemo-color-text-neutral-primary)",
+                  }}
+                >
+                  Mercado em minutos!
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  ),
+};
