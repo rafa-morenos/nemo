@@ -51,11 +51,12 @@ const CollectionBanner = React.forwardRef<HTMLDivElement, CollectionBannerProps>
           {products.slice(0, 4).map((product, i) => (
             <div
               key={i}
-              // Fixed light backdrop (not bg-muted): product photography is
-              // shot on white and uses mix-blend-darken to sit cleanly on
-              // the tile — that trick inverts to near-black if this tile
-              // goes dark with the rest of the UI in dark mode.
-              className="flex size-16 items-center justify-center rounded-lg bg-[var(--nemo-color-gray-94)] p-1"
+              // bg-card (alias surface/neutral/tertiary): darkens in dark
+              // mode like the rest of the UI. Product photography uses
+              // mix-blend-darken to sit cleanly on the tile, which reads
+              // darker/lower-contrast here in dark mode as a tradeoff for
+              // staying on real alias tokens (no fixed/primitive backdrop).
+              className="flex size-16 items-center justify-center rounded-lg bg-card p-1"
             >
               <img
                 src={product.image}

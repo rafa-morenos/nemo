@@ -245,9 +245,9 @@ class _GroupedButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.add_location_alt_outlined, size: 24, color: Colors.white),
+              const Icon(Icons.add_location_alt_outlined, size: 24, color: NemoTokens.colorTextNeutralInverted),
               const SizedBox(width: 8),
-              Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white, height: 1.5)),
+              Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: NemoTokens.colorTextNeutralInverted, height: 1.5)),
             ],
           ),
         ),
