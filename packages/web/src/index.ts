@@ -81,4 +81,6 @@ export * from "./components/textarea";
 export * from "./components/toggle";
 export * from "./components/tooltip";
 
+export * from "./icons";
+
 export { cn } from "./lib/utils";
