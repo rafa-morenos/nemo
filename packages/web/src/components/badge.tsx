@@ -10,11 +10,14 @@ import { cn } from "../lib/utils";
  * agnostic Tag proposed to replace the ~15 per-product tag components
  * (SuperDakiTag, StatusTag, DiscountTag, ModalityTag, CounterTag...) —
  * `type="filled"` is the semantic-color "soft" look (tonal bg). `type="solid"`
- * is a real strong bg for `default`/`inverted`/`disabled` (backed by Figma's
- * Primary/On Primary alias), but currently renders the same as `filled` for
- * `success`/`warning`/`critical`/`info` — Figma's alias set never promoted an
- * "On <Hue>" role (the white-on-strong-color foreground) for those, only the
- * "Container" pair that `filled` already uses. Revisit once that role exists.
+ * is a real strong bg for every color except `info`: `default`/`inverted`/
+ * `disabled` are backed by Figma's aliased Primary/On Primary pair;
+ * `success`/`warning`/`critical` use the same "-fixed" pin as `button.tsx`
+ * (`destructive-fixed`/`primary-fixed`) — Figma's alias set never promoted
+ * an "On <Hue>" role (the real white-on-strong-color foreground) for those,
+ * only the "Container" pair `filled` uses, so `-fixed` pins to the light-mode
+ * primitive instead of tonal-flipping to a too-pale tone in dark mode. `info`
+ * has no such pin (no precedent in `button.tsx` either) and stays == `filled`.
  * `size` and `shape` cover the remaining spec (sm/md, pill/square). `count`
  * covers the numeric-counter use case (counter-tag, picking-amount).
  * Icon and dot inherit the variant's text color via `currentColor`, so they
@@ -58,29 +61,24 @@ const badgeVariants = cva(
       { color: "success", type: "filled", className: "bg-success-soft text-success-soft-foreground" },
       { color: "success", type: "outline", className: "border-success-border bg-transparent text-success-soft-foreground" },
       { color: "success", type: "ghost", className: "bg-transparent text-success-soft-foreground" },
-      // "solid" == "filled" here on purpose, not a bug: the Figma alias set
-      // has Success/Success Container/On Success Container (what soft uses)
-      // but never promoted "On Success" — the correct white-on-strong-green
-      // foreground for Success as a full background — into the alias tree
-      // (it only exists inside the raw Color Palette). Without that role,
-      // a real strong-green solid look isn't backed by any token that stays
-      // legible across both themes. Revisit once Figma adds it.
-      { color: "success", type: "solid", className: "bg-success-soft text-success-soft-foreground" },
+      // Figma never promoted "On Success" (the real white-on-strong-green
+      // foreground) to the alias set, so pin to the light-mode primitive
+      // instead — same "-fixed" pattern button.tsx already uses for
+      // default/destructive. Revisit once Figma adds the real alias.
+      { color: "success", type: "solid", className: "bg-success-fixed text-success-fixed-foreground" },
 
       { color: "warning", type: "filled", className: "bg-warning-soft text-warning-soft-foreground" },
       { color: "warning", type: "outline", className: "border-warning-border bg-transparent text-warning-soft-foreground" },
       { color: "warning", type: "ghost", className: "bg-transparent text-warning-soft-foreground" },
       // Same gap as success — no aliased "On Warning" role. See above.
-      { color: "warning", type: "solid", className: "bg-warning-soft text-warning-soft-foreground" },
+      { color: "warning", type: "solid", className: "bg-warning-fixed text-warning-fixed-foreground" },
 
       { color: "critical", type: "filled", className: "bg-destructive-soft text-destructive-soft-foreground" },
       { color: "critical", type: "outline", className: "border-destructive-border bg-transparent text-destructive-soft-foreground" },
       { color: "critical", type: "ghost", className: "bg-transparent text-destructive-soft-foreground" },
-      // Same gap as success — no aliased "On Critical" role (destructive-fixed
-      // is a different, pre-existing token pinned to a different tone; it
-      // isn't Figma's real "Critical Fixed" role and reusing it here would
-      // just swap one off-spec value for another). See above.
-      { color: "critical", type: "solid", className: "bg-destructive-soft text-destructive-soft-foreground" },
+      // Same gap as success — reuses the pre-existing destructive-fixed
+      // (button.tsx already pins critical this way for the same reason).
+      { color: "critical", type: "solid", className: "bg-destructive-fixed text-destructive-fixed-foreground" },
 
       { color: "info", type: "filled", className: "bg-info text-info-foreground" },
       { color: "info", type: "outline", className: "border-info-border bg-transparent text-info-foreground" },

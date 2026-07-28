@@ -68,12 +68,23 @@ export default {
           "soft-foreground": v("color-text-semantic-success"),
           border: v("color-border-semantic-success"),
         },
+        // Same "-fixed" treatment as destructive-fixed above — success's icon
+        // tone tonal-flips to a pale green in dark mode, too pale for white text.
+        "success-fixed": {
+          DEFAULT: v("color-green-40"),
+          foreground: v("color-green-100"),
+        },
         warning: {
           DEFAULT: v("color-icon-semantic-warning"),
           foreground: v("color-gray-100"),
           soft: v("color-surface-semantic-warning"),
           "soft-foreground": v("color-text-semantic-warning"),
           border: v("color-border-semantic-warning"),
+        },
+        // Same story for warning — pale gold in dark mode otherwise.
+        "warning-fixed": {
+          DEFAULT: v("color-yellow-40"),
+          foreground: v("color-yellow-100"),
         },
         info: {
           // DEFAULT/foreground already pair surface-semantic-info ↔ text-semantic-info
