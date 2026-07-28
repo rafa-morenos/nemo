@@ -76,9 +76,9 @@ const badgeVariants = cva(
       { color: "critical", type: "filled", className: "bg-destructive-soft text-destructive-soft-foreground" },
       { color: "critical", type: "outline", className: "border-destructive-border bg-transparent text-destructive-soft-foreground" },
       { color: "critical", type: "ghost", className: "bg-transparent text-destructive-soft-foreground" },
-      // Same gap as success — reuses the pre-existing destructive-fixed
-      // (button.tsx already pins critical this way for the same reason).
-      { color: "critical", type: "solid", className: "bg-destructive-fixed text-destructive-fixed-foreground" },
+      // Same gap as success — no aliased "On Critical" role exists yet
+      // (only the "Container" pair that `filled` already uses). See above.
+      { color: "critical", type: "solid", className: "bg-destructive-soft text-destructive-soft-foreground" },
 
       { color: "info", type: "filled", className: "bg-info text-info-foreground" },
       { color: "info", type: "outline", className: "border-info-border bg-transparent text-info-foreground" },
