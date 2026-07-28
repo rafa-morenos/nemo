@@ -250,6 +250,63 @@ const CarouselNext = React.forwardRef<
 });
 CarouselNext.displayName = "CarouselNext";
 
+/** Dot pagination — one dot per slide, active dot pill-shaped. Hidden for single-slide carousels. */
+const CarouselDots = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const { api } = useCarousel();
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
+
+  React.useEffect(() => {
+    if (!api) return;
+
+    const onSelect = () => setSelectedIndex(api.selectedScrollSnap());
+    const onReInit = () => {
+      setScrollSnaps(api.scrollSnapList());
+      onSelect();
+    };
+
+    onReInit();
+    api.on("select", onSelect);
+    api.on("reInit", onReInit);
+
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onReInit);
+    };
+  }, [api]);
+
+  if (scrollSnaps.length <= 1) return null;
+
+  return (
+    <div
+      ref={ref}
+      role="tablist"
+      aria-label="Slides"
+      className={cn("flex items-center justify-center gap-1.5", className)}
+      {...props}
+    >
+      {scrollSnaps.map((_, index) => (
+        <button
+          key={index}
+          type="button"
+          role="tab"
+          aria-label={`Ir para o slide ${index + 1}`}
+          aria-selected={index === selectedIndex}
+          onClick={() => api?.scrollTo(index)}
+          className={cn(
+            "h-1.5 rounded-full transition-all",
+            index === selectedIndex ? "w-4 bg-primary" : "w-1.5 bg-border"
+          )}
+        />
+      ))}
+    </div>
+  );
+});
+CarouselDots.displayName = "CarouselDots";
+
 export {
   type CarouselApi,
   Carousel,
@@ -257,5 +314,6 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselDots,
   useCarousel,
 };
