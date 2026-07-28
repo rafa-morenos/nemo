@@ -13,6 +13,9 @@ export const Default: Story = {
         <Button onClick={() => toast("Pedido confirmado", { description: "Chega em ~15 min." })}>Toast</Button>
         <Button variant="outline" onClick={() => toast.success("Pagamento aprovado")}>Success</Button>
         <Button variant="outline" onClick={() => toast.error("Pagamento recusado")}>Error</Button>
+        <Button variant="outline" onClick={() => toast.warning("Estoque baixo")}>Warning</Button>
+        <Button variant="outline" onClick={() => toast.info("Novo horário de entrega")}>Info</Button>
+        <Button variant="outline" onClick={() => toast.loading("Confirmando pedido...")}>Loading</Button>
         <Button
           variant="outline"
           onClick={() => toast("Pedido a caminho", { action: { label: "Ver", onClick: () => {} } })}
