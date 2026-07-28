@@ -61,6 +61,7 @@ export * from "./components/input-otp";
 export * from "./components/item";
 export * from "./components/kbd";
 export * from "./components/menu-item";
+export * from "./components/menu-shortcut";
 export * from "./components/navigation-menu";
 export * from "./components/pagination";
 export * from "./components/progress";
@@ -79,5 +80,7 @@ export * from "./components/tabs";
 export * from "./components/textarea";
 export * from "./components/toggle";
 export * from "./components/tooltip";
+
+export * from "./icons";
 
 export { cn } from "./lib/utils";

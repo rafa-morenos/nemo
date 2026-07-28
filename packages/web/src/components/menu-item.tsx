@@ -51,21 +51,10 @@ export interface MenuItemProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const MenuItem = React.forwardRef<HTMLElement, MenuItemProps>(
-  ({ className, icon, label, badge, dot, trailing, asChild = false, ...props }, ref) => {
+  ({ className, icon, label, badge, dot, trailing, asChild = false, children, ...props }, ref) => {
     const Comp: React.ElementType = asChild ? Slot : "button";
-    return (
-      <Comp
-        ref={ref as never}
-        type={asChild ? undefined : "button"}
-        data-slot="menu-item"
-        className={cn(
-          "group flex w-full items-center gap-4 rounded-lg px-2 py-2.5 text-left transition-colors",
-          "hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-          "disabled:pointer-events-none disabled:opacity-50",
-          className
-        )}
-        {...props}
-      >
+    const inner = (
+      <>
         {icon != null && (
           <span
             aria-hidden
@@ -91,6 +80,24 @@ const MenuItem = React.forwardRef<HTMLElement, MenuItemProps>(
         ) : (
           trailing && <span className="ml-auto shrink-0 text-muted-foreground">{trailing}</span>
         )}
+      </>
+    );
+    return (
+      <Comp
+        ref={ref as never}
+        type={asChild ? undefined : "button"}
+        data-slot="menu-item"
+        className={cn(
+          "group flex w-full items-center gap-4 rounded-lg px-2 py-2.5 text-left transition-colors",
+          "hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "disabled:pointer-events-none disabled:opacity-50",
+          className
+        )}
+        {...props}
+      >
+        {asChild && React.isValidElement(children)
+          ? React.cloneElement(children, undefined, inner)
+          : inner}
       </Comp>
     );
   }
