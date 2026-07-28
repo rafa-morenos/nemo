@@ -44,6 +44,7 @@ export * from "./components/carousel";
 export * from "./components/calendar";
 export * from "./components/chart";
 export * from "./components/attachment";
+export * from "./components/collection-banner";
 export * from "./components/bubble";
 export * from "./components/table";
 export * from "./components/data-table";
