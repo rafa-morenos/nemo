@@ -76,10 +76,8 @@ const badgeVariants = cva(
       { color: "critical", type: "filled", className: "bg-destructive-soft text-destructive-soft-foreground" },
       { color: "critical", type: "outline", className: "border-destructive-border bg-transparent text-destructive-soft-foreground" },
       { color: "critical", type: "ghost", className: "bg-transparent text-destructive-soft-foreground" },
-      // Same gap as success — no aliased "On Critical" role (destructive-fixed
-      // is a different, pre-existing token pinned to a different tone; it
-      // isn't Figma's real "Critical Fixed" role and reusing it here would
-      // just swap one off-spec value for another). See above.
+      // Same gap as success — no aliased "On Critical" role exists yet
+      // (only the "Container" pair that `filled` already uses). See above.
       { color: "critical", type: "solid", className: "bg-destructive-soft text-destructive-soft-foreground" },
 
       { color: "info", type: "filled", className: "bg-info text-info-foreground" },

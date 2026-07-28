@@ -131,7 +131,7 @@ export function KanbanCard({
         <>
           <View style={s.divider} />
           <Pressable style={[s.groupedBtn, { backgroundColor: accent }]} onPress={onGroupedPress}>
-            <PinIcon size={24} color="#FFFFFF" />
+            <PinIcon size={24} color={t.color.text.neutral.inverted} />
             <Text style={s.groupedText}>{groupedLabel}</Text>
           </Pressable>
         </>
@@ -187,6 +187,6 @@ function makeStyles(t: NemoTheme) {
       borderRadius: 60,
       padding: 4,
     },
-    groupedText: { fontSize: 16, fontWeight: "600", color: "#FFFFFF" },
+    groupedText: { fontSize: 16, fontWeight: "600", color: t.color.text.neutral.inverted },
   });
 }

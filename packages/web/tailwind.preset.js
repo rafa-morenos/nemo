@@ -25,14 +25,6 @@ export default {
           subtle: v("color-surface-accent-primary"),
           foreground: v("color-interactive-accent-primary-inverted"),
         },
-        // Brand blue pinned to its light-mode primitives — doesn't tonal-flip
-        // in dark mode like `primary` does. Used where the brand color itself
-        // (not a surface) needs to stay recognizable across themes.
-        "primary-fixed": {
-          DEFAULT: v("color-blue-40"),
-          hover: v("color-blue-30"),
-          foreground: v("color-blue-100"),
-        },
         secondary: {
           DEFAULT: v("color-surface-neutral-secondary"),
           foreground: v("color-text-neutral-primary"),
@@ -48,29 +40,27 @@ export default {
         },
         destructive: {
           DEFAULT: v("color-icon-semantic-critical"),
-          foreground: v("color-gray-100"),
+          // No aliased "On Critical" role exists in Figma (only the
+          // "Container" pair below), so this borrows the neutral inverted
+          // text alias instead of a static white — it flips light/dark the
+          // same direction icon-semantic-critical's own tonal-flip does
+          // (dark-on-light bg in light mode, light-on-dark bg in dark mode),
+          // so contrast holds in both themes without a primitive.
+          foreground: v("color-text-neutral-inverted"),
           soft: v("color-surface-semantic-critical"),
           "soft-foreground": v("color-text-semantic-critical"),
           border: v("color-border-semantic-critical"),
         },
-        // Critical red pinned to its own light-mode primitives — dark mode's
-        // tonal-flip turns the surface into a pale pink that white text can't
-        // read against. Stays one dark-red "universe" (dark bg, white text)
-        // in both themes instead of inverting.
-        "destructive-fixed": {
-          DEFAULT: v("color-red-40"),
-          foreground: v("color-red-100"),
-        },
         success: {
           DEFAULT: v("color-icon-semantic-success"),
-          foreground: v("color-gray-100"),
+          foreground: v("color-text-neutral-inverted"),
           soft: v("color-surface-semantic-success"),
           "soft-foreground": v("color-text-semantic-success"),
           border: v("color-border-semantic-success"),
         },
         warning: {
           DEFAULT: v("color-icon-semantic-warning"),
-          foreground: v("color-gray-100"),
+          foreground: v("color-text-neutral-inverted"),
           soft: v("color-surface-semantic-warning"),
           "soft-foreground": v("color-text-semantic-warning"),
           border: v("color-border-semantic-warning"),
