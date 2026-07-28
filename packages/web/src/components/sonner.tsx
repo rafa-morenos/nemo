@@ -79,12 +79,13 @@ const toast = Object.assign(withDedupe(sonnerToast, "default"), {
  * makes explicit what sonner would already infer silently from `position`
  * (so it stays correct and documented if `position` ever changes) — swipe-
  * to-dismiss itself needs no extra code, sonner enables it by default.
- * Known gap: the close button's aria-label is hardcoded to "Close toast"
- * (English) inside sonner's own toast-item component — `ToasterProps` has no
- * `closeButtonAriaLabel`-style field to override it (checked the type
- * definition directly), so there's no clean way to localize it without
- * patching sonner itself. Flagging rather than reaching for a workaround
- * (e.g. mutating the DOM after render) that isn't a real fix.
+ * `toastOptions.closeButtonAriaLabel` localizes the close button's
+ * announced label to "Fechar" — sonner 1.x hardcoded it to "Close toast"
+ * with no override; this needed bumping to sonner 2.x (`ToastClassnames`
+ * and the `toast` API are unchanged between the two, confirmed against the
+ * published type definitions before upgrading, so this was a real fix, not
+ * a workaround). Bonus from the same upgrade: sonner 2.x auto-hides the
+ * close button on `loading`-type toasts, which we hadn't set up ourselves.
  *
  * `visibleToasts={3}` is explicit even though it's also sonner's own
  * default — max 3 stacked at once was a deliberate decision (matches the
@@ -105,15 +106,32 @@ const toast = Object.assign(withDedupe(sonnerToast, "default"), {
  * inventing one. Sonner's built-in per-type icons use `fill="currentColor"`,
  * so they pick up each variant's text color automatically.
  *
- * The `!` (important) prefix on every variant color utility below is load-
- * bearing: sonner puts the base `toast` classNames and the per-type
- * classNames (`success`/`error`/...) on the *same element*, both as
- * `group-[.toaster]:` utilities of equal specificity — so the winner is
- * whichever comes later in the generated stylesheet, which follows
- * `tailwind.preset.js`'s color-key order, not which `classNames` key you
- * wrote it in. `popover`/`border`/`foreground` are declared before the
- * semantic colors there, so without `!` the base `toast` style would win and
- * every toast would render as the generic gray card.
+ * The `!` (important) prefix on every color/weight utility below is load-
+ * bearing: sonner 2.x removed every `:where()` wrapper its own stylesheet
+ * used to have (confirmed directly in `dist/styles.css` — zero matches now,
+ * versus the 1.x version this component originally shipped against).
+ * `[data-title]`/`[data-description]`/`[data-button]`/`[data-close-button]`/
+ * the base toast rule are now plain selectors with real specificity, so
+ * without `!` sonner's own font-weight/color wins outright — this silently
+ * broke `title`'s font-weight and `description`'s color when upgrading from
+ * 1.7 to 2.0, caught by re-checking computed styles in Storybook rather than
+ * trusting the diff alone.
+ *
+ * Notably, `classNames.toast` below does NOT set background/text/border —
+ * that's deliberately left to sonner's own base rule (which reads
+ * `--normal-bg`/`--normal-border`/`--normal-text`), with those three custom
+ * properties redefined to real Nemo tokens in `styles.css` instead. Reason:
+ * a typed toast (success/error/...) gets *both* `classNames.toast` and
+ * `classNames[type]` on the same element — if `toast` also carried
+ * `!bg-popover` etc., two of our own `!important` Tailwind classes would tie
+ * on the same property, and Tailwind resolves same-specificity `!important`
+ * ties by JIT class-discovery order, not by anything under our control (this
+ * broke `info`/`error` while `success`/`warning` happened to still work, from
+ * one single change — verified via `document.styleSheets` before settling on
+ * the CSS custom-property route instead of chasing utility order). Overriding the custom properties directly means there's no
+ * competing class at all for the untyped case, and the type-specific classes
+ * below only ever need to beat sonner's own (non-`!important`) rule, which
+ * `!important` does unconditionally regardless of source order.
  */
 const Toaster = ({ ...props }: ToasterProps) => {
   const theme =
@@ -130,9 +148,12 @@ const Toaster = ({ ...props }: ToasterProps) => {
       swipeDirections={["top", "right"]}
       className="toaster group"
       toastOptions={{
+        closeButtonAriaLabel: "Fechar",
         classNames: {
-          toast:
-            "group toast group-[.toaster]:bg-popover group-[.toaster]:text-popover-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:rounded-lg",
+          // No background/text/border here on purpose — see the doc comment
+          // above. That comes from sonner's own --normal-bg/--normal-border/
+          // --normal-text, redefined to real Nemo tokens in styles.css.
+          toast: "group toast group-[.toaster]:shadow-lg group-[.toaster]:rounded-lg",
           // Same title/description split as alert.tsx: title heavier than
           // description, both on the same text-sm from Nemo's type scale
           // (sonner's own default is an unstyled hardcoded 13px). Weight uses
@@ -143,10 +164,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
           // token) — this keeps Toast itself tied to a real token without
           // taking on the larger, separate fix of wiring fontWeight into the
           // shared preset.
-          title: "group-[.toast]:text-sm group-[.toast]:[font-weight:var(--nemo-font-weight-semi-bold)]",
-          description: "group-[.toast]:text-sm group-[.toast]:text-muted-foreground",
-          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+          title: "group-[.toast]:text-sm group-[.toast]:![font-weight:var(--nemo-font-weight-semi-bold)]",
+          description: "group-[.toast]:text-sm group-[.toast]:!text-muted-foreground",
+          actionButton: "group-[.toast]:!bg-primary group-[.toast]:!text-primary-foreground",
+          cancelButton: "group-[.toast]:!bg-muted group-[.toast]:!text-muted-foreground",
           // Neutral on every variant, not tinted per type — matches the Jake
           // toast's own close icon (a fixed neutral gray in the dev spec,
           // regardless of success/warning/error). Needs `!` for the same
