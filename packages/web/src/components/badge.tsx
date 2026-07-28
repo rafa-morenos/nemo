@@ -12,12 +12,13 @@ import { cn } from "../lib/utils";
  * `type="filled"` is the semantic-color "soft" look (tonal bg). `type="solid"`
  * is a real strong bg for every color except `info`: `default`/`inverted`/
  * `disabled` are backed by Figma's aliased Primary/On Primary pair;
- * `success`/`warning`/`critical` use the same "-fixed" pin as `button.tsx`
- * (`destructive-fixed`/`primary-fixed`) — Figma's alias set never promoted
- * an "On <Hue>" role (the real white-on-strong-color foreground) for those,
- * only the "Container" pair `filled` uses, so `-fixed` pins to the light-mode
- * primitive instead of tonal-flipping to a too-pale tone in dark mode. `info`
- * has no such pin (no precedent in `button.tsx` either) and stays == `filled`.
+ * `success`/`warning`/`critical` pair the icon-tone bg (`bg-success` etc,
+ * same as `button.tsx`'s `destructive`) with `text-neutral-inverted` as the
+ * foreground — Figma never promoted an "On <Hue>" role for these, but
+ * `text-neutral-inverted` tonal-flips in the matching direction (near-white
+ * in light mode, near-black in dark mode) as the icon tone does, so contrast
+ * holds in both themes with only real aliases, no pinned primitive needed.
+ * `info` has no strong tone to pair it with and stays == `filled`.
  * `size` and `shape` cover the remaining spec (sm/md, pill/square). `count`
  * covers the numeric-counter use case (counter-tag, picking-amount).
  * Icon and dot inherit the variant's text color via `currentColor`, so they
@@ -61,24 +62,22 @@ const badgeVariants = cva(
       { color: "success", type: "filled", className: "bg-success-soft text-success-soft-foreground" },
       { color: "success", type: "outline", className: "border-success-border bg-transparent text-success-soft-foreground" },
       { color: "success", type: "ghost", className: "bg-transparent text-success-soft-foreground" },
-      // Figma never promoted "On Success" (the real white-on-strong-green
-      // foreground) to the alias set, so pin to the light-mode primitive
-      // instead — same "-fixed" pattern button.tsx already uses for
-      // default/destructive. Revisit once Figma adds the real alias.
-      { color: "success", type: "solid", className: "bg-success-fixed text-success-fixed-foreground" },
+      // No aliased "On Success" role, so pair the icon-tone bg with
+      // text-neutral-inverted (see top-of-file comment) instead of pinning.
+      { color: "success", type: "solid", className: "bg-success text-success-foreground" },
 
       { color: "warning", type: "filled", className: "bg-warning-soft text-warning-soft-foreground" },
       { color: "warning", type: "outline", className: "border-warning-border bg-transparent text-warning-soft-foreground" },
       { color: "warning", type: "ghost", className: "bg-transparent text-warning-soft-foreground" },
-      // Same gap as success — no aliased "On Warning" role. See above.
-      { color: "warning", type: "solid", className: "bg-warning-fixed text-warning-fixed-foreground" },
+      // Same story as success — see above.
+      { color: "warning", type: "solid", className: "bg-warning text-warning-foreground" },
 
       { color: "critical", type: "filled", className: "bg-destructive-soft text-destructive-soft-foreground" },
       { color: "critical", type: "outline", className: "border-destructive-border bg-transparent text-destructive-soft-foreground" },
       { color: "critical", type: "ghost", className: "bg-transparent text-destructive-soft-foreground" },
-      // Same gap as success — no aliased "On Critical" role exists yet
-      // (only the "Container" pair that `filled` already uses). See above.
-      { color: "critical", type: "solid", className: "bg-destructive-soft text-destructive-soft-foreground" },
+      // Same story as success — see above (button.tsx's destructive variant
+      // already uses this exact pairing).
+      { color: "critical", type: "solid", className: "bg-destructive text-destructive-foreground" },
 
       { color: "info", type: "filled", className: "bg-info text-info-foreground" },
       { color: "info", type: "outline", className: "border-info-border bg-transparent text-info-foreground" },
