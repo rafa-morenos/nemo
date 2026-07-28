@@ -175,9 +175,13 @@ const light = new StyleDictionary({
       buildPath: `${BUILD}/rn/`,
       files: [
         {
+          // Includes CORE too (not just the semantic alias tree) so RN can
+          // reference primitive tones (e.g. `light.color.red[40]`) the same
+          // way Flutter's NemoTokens already can — needed for the "-fixed"
+          // pin pattern (badge.tsx's solid variant) without hardcoding hex.
           destination: 'theme.light.ts',
           format: 'nemo/rn-theme',
-          filter: (t) => t.filePath === SEM_LIGHT,
+          filter: (t) => t.filePath === SEM_LIGHT || t.filePath === CORE,
           options: { themeName: 'light' },
         },
       ],
@@ -207,9 +211,11 @@ const dark = new StyleDictionary({
       buildPath: `${BUILD}/rn/`,
       files: [
         {
+          // Same primitive access as rnLight above — primitives don't have a
+          // dark variant, so this duplicates the same values, not a divergent set.
           destination: 'theme.dark.ts',
           format: 'nemo/rn-theme',
-          filter: (t) => t.filePath === SEM_DARK,
+          filter: (t) => t.filePath === SEM_DARK || t.filePath === CORE,
           options: { themeName: 'dark' },
         },
       ],

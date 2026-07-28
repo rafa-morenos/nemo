@@ -42,15 +42,11 @@ function formatCount(count: number) {
  * which mirrors what button.tsx already does for default/destructive):
  * `t.color.surface.semantic.*`/`icon.semantic.*` tonal-flip to a PALE tone in
  * dark mode, which white foreground text can't read against. Figma's alias
- * set never promoted an "On <Hue>" role for these, so there's no live theme
- * token for it — these values intentionally don't come from `t`.
+ * set never promoted an "On <Hue>" role for these, so there's no *semantic*
+ * theme token for it — but the primitive itself (`t.color.red[40]` etc.) is
+ * a real generated token (build.mjs now includes CORE in the RN theme, not
+ * just the semantic tree), so this still isn't a hardcoded value.
  */
-const FIXED = {
-  success: { bg: "#38852E", fg: "#FFFFFF" },
-  warning: { bg: "#765A00", fg: "#FFFFFF" },
-  critical: { bg: "#B3282C", fg: "#FFFFFF" },
-} as const;
-
 function bgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
   if (type === "outline" || type === "ghost") return "transparent";
   const solid = type === "solid";
@@ -58,11 +54,11 @@ function bgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
     case "default":
       return t.color.interactive.accent.primary.main;
     case "success":
-      return solid ? FIXED.success.bg : t.color.surface.semantic.success;
+      return solid ? t.color.green[40] : t.color.surface.semantic.success;
     case "warning":
-      return solid ? FIXED.warning.bg : t.color.surface.semantic.warning;
+      return solid ? t.color.yellow[40] : t.color.surface.semantic.warning;
     case "critical":
-      return solid ? FIXED.critical.bg : t.color.surface.semantic.critical;
+      return solid ? t.color.red[40] : t.color.surface.semantic.critical;
     case "info":
       // No dedicated strong info tone (mirrors web: solid intentionally == filled).
       return t.color.surface.semantic.info;
@@ -79,11 +75,11 @@ function fgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
     case "default":
       return type === "outline" || type === "ghost" ? t.color.text.accent.primary : t.color.interactive.accent.primary.inverted;
     case "success":
-      return solid ? FIXED.success.fg : t.color.text.semantic.success;
+      return solid ? t.color.green[100] : t.color.text.semantic.success;
     case "warning":
-      return solid ? FIXED.warning.fg : t.color.text.semantic.warning;
+      return solid ? t.color.yellow[100] : t.color.text.semantic.warning;
     case "critical":
-      return solid ? FIXED.critical.fg : t.color.text.semantic.critical;
+      return solid ? t.color.red[100] : t.color.text.semantic.critical;
     case "info":
       return t.color.text.semantic.info;
     case "disabled":
