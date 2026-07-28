@@ -72,6 +72,20 @@ const toast = Object.assign(withDedupe(sonnerToast, "default"), {
  * top/bottom — matters), so one static value covers both desktop and mobile
  * without a media-query hook.
  *
+ * `closeButton` is on for every toast (sonner defaults it OFF) — none of the
+ * 5 products agree on this today (Daki Web disables it entirely, others are
+ * inconsistent per screen), so this makes it a single deliberate answer
+ * instead of inherited inconsistency. `swipeDirections={["top","right"]}`
+ * makes explicit what sonner would already infer silently from `position`
+ * (so it stays correct and documented if `position` ever changes) — swipe-
+ * to-dismiss itself needs no extra code, sonner enables it by default.
+ * Known gap: the close button's aria-label is hardcoded to "Close toast"
+ * (English) inside sonner's own toast-item component — `ToasterProps` has no
+ * `closeButtonAriaLabel`-style field to override it (checked the type
+ * definition directly), so there's no clean way to localize it without
+ * patching sonner itself. Flagging rather than reaching for a workaround
+ * (e.g. mutating the DOM after render) that isn't a real fix.
+ *
  * `success`/`error`/`warning`/`info`/`loading` (sonner's native `toast.<type>()`
  * variants) get the same "soft" tonal look `Badge`'s `type="filled"` uses — the
  * `*-soft`/`*-soft-foreground` pair plus the semantic border, not the DEFAULT
@@ -105,6 +119,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
       theme={theme as ToasterProps["theme"]}
       position="top-right"
       duration={TOAST_DURATION.short}
+      closeButton
+      swipeDirections={["top", "right"]}
       className="toaster group"
       toastOptions={{
         classNames: {
@@ -124,6 +140,16 @@ const Toaster = ({ ...props }: ToasterProps) => {
           description: "group-[.toast]:text-sm group-[.toast]:text-muted-foreground",
           actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
           cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+          // Neutral on every variant, not tinted per type — matches the Jake
+          // toast's own close icon (a fixed neutral gray in the dev spec,
+          // regardless of success/warning/error). Needs `!` for the same
+          // specificity-tie reason as the variant colors above: sonner's own
+          // stylesheet styles `[data-close-button]` with a plain attribute
+          // selector (same specificity as this class), so the load order
+          // between that stylesheet and Tailwind's decides the winner
+          // without it.
+          closeButton:
+            "group-[.toaster]:!bg-popover group-[.toaster]:!text-popover-foreground group-[.toaster]:!border-border",
           success:
             "group-[.toaster]:!bg-success-soft group-[.toaster]:!text-success-soft-foreground group-[.toaster]:!border-success-border",
           error:
