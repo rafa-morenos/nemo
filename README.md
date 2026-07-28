@@ -1,7 +1,5 @@
 # 🐟 Nemo — Design System da Daki
 
-> Quatro letras. Perdido no **mar azulão**. Pronto pra encarar os tubarões (iFood, Keeta, Rappi…).
-
 Nemo é o design system multiplataforma da Daki. Uma **única fonte de verdade** de tokens (no
 Figma) alimenta **web (shadcn/ui + Tailwind), React Native e Flutter** — sem cor hardcoded,
 sem tema divergindo entre plataformas.
