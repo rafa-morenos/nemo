@@ -41,7 +41,18 @@ const Toaster = ({ ...props }: ToasterProps) => {
         classNames: {
           toast:
             "group toast group-[.toaster]:bg-popover group-[.toaster]:text-popover-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:rounded-lg",
-          description: "group-[.toast]:text-muted-foreground",
+          // Same title/description split as alert.tsx: title heavier than
+          // description, both on the same text-sm from Nemo's type scale
+          // (sonner's own default is an unstyled hardcoded 13px). Weight uses
+          // the real generated --nemo-font-weight-semi-bold var via an
+          // arbitrary-value class, not Tailwind's font-semibold utility:
+          // tailwind.preset.js has no fontWeight mapping yet (repo-wide gap,
+          // every component today uses the raw Tailwind utility instead of a
+          // token) — this keeps Toast itself tied to a real token without
+          // taking on the larger, separate fix of wiring fontWeight into the
+          // shared preset.
+          title: "group-[.toast]:text-sm group-[.toast]:[font-weight:var(--nemo-font-weight-semi-bold)]",
+          description: "group-[.toast]:text-sm group-[.toast]:text-muted-foreground",
           actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
           cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
           success:
