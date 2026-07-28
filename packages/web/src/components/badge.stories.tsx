@@ -45,12 +45,7 @@ export const WithoutIcon: Story = {
   ),
 };
 
-/**
- * Migra `DiscountTag` (Daki Web/App) → `color="critical" type="solid"`.
- * "Grátis" (default/solid) já mostra o fundo forte de verdade — "-30%"
- * (critical/solid) hoje renderiza igual ao `filled`, porque falta a role
- * "On Critical" no alias do Figma (ver comentário no topo de badge.tsx).
- */
+/** Migra `DiscountTag` (Daki Web/App) → `color="critical" type="solid"`. */
 export const DiscountTag: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">

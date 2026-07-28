@@ -25,6 +25,16 @@ export default {
           subtle: v("color-surface-accent-primary"),
           foreground: v("color-interactive-accent-primary-inverted"),
         },
+        // Brand blue pinned to its light-mode primitives — doesn't tonal-flip
+        // in dark mode like `primary` does. Used where the brand color itself
+        // (not a surface) needs to stay recognizable across themes. Backed by
+        // tokens/fixed.json (generated), not a raw primitive reference —
+        // RN/Flutter point at the same generated -fixed tokens.
+        "primary-fixed": {
+          DEFAULT: v("color-fixed-primary"),
+          hover: v("color-fixed-primary-hover"),
+          foreground: v("color-fixed-primary-foreground"),
+        },
         secondary: {
           DEFAULT: v("color-surface-neutral-secondary"),
           foreground: v("color-text-neutral-primary"),
@@ -58,12 +68,23 @@ export default {
           "soft-foreground": v("color-text-semantic-success"),
           border: v("color-border-semantic-success"),
         },
+        // Same "-fixed" treatment as destructive-fixed above — success's icon
+        // tone tonal-flips to a pale green in dark mode, too pale for white text.
+        "success-fixed": {
+          DEFAULT: v("color-fixed-success"),
+          foreground: v("color-fixed-success-foreground"),
+        },
         warning: {
           DEFAULT: v("color-icon-semantic-warning"),
           foreground: v("color-text-neutral-inverted"),
           soft: v("color-surface-semantic-warning"),
           "soft-foreground": v("color-text-semantic-warning"),
           border: v("color-border-semantic-warning"),
+        },
+        // Same story for warning — pale gold in dark mode otherwise.
+        "warning-fixed": {
+          DEFAULT: v("color-fixed-warning"),
+          foreground: v("color-fixed-warning-foreground"),
         },
         info: {
           // DEFAULT/foreground already pair surface-semantic-info ↔ text-semantic-info

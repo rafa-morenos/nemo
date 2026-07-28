@@ -52,22 +52,28 @@ class NemoBadge extends StatelessWidget {
 
   NemoBadgeSize get _effSize => size ?? (_counterOnly ? NemoBadgeSize.sm : NemoBadgeSize.md);
 
+  bool get _solid => type == NemoBadgeType.solid;
+
+  // "solid" backgrounds for success/warning/critical use the generated
+  // NemoTokens.colorFixed* constants (from tokens/fixed.json) — same
+  // "-fixed" pattern as web's destructive-fixed/primary-fixed, mirroring
+  // what button.tsx already does for default/destructive.
+  // NemoTokens.colorSurfaceSemantic*/colorIconSemantic* tonal-flip to a PALE
+  // tone in dark mode, which white text can't read against; Figma's alias
+  // set never promoted an "On <Hue>" role for these, so colorFixed* pins to
+  // the light-mode primitive instead — a real generated token, matching what
+  // web/RN reference too.
   Color get _bg {
     if (type == NemoBadgeType.outline || type == NemoBadgeType.ghost) return Colors.transparent;
     switch (color) {
       case NemoBadgeColor.defaultColor:
         return NemoTokens.colorInteractiveAccentPrimaryMain;
       case NemoBadgeColor.success:
-        // "solid" == filled here on purpose: Figma's alias set never
-        // promoted an "On Success" role (the white-on-strong-green
-        // foreground) — it only exists in the raw Color Palette. Without it
-        // there's no token for a strong-green solid look that stays legible
-        // in both themes. Same story for warning/critical below.
-        return NemoTokens.colorSurfaceSemanticSuccess;
+        return _solid ? NemoTokens.colorFixedSuccess : NemoTokens.colorSurfaceSemanticSuccess;
       case NemoBadgeColor.warning:
-        return NemoTokens.colorSurfaceSemanticWarning;
+        return _solid ? NemoTokens.colorFixedWarning : NemoTokens.colorSurfaceSemanticWarning;
       case NemoBadgeColor.critical:
-        return NemoTokens.colorSurfaceSemanticCritical;
+        return _solid ? NemoTokens.colorFixedDestructive : NemoTokens.colorSurfaceSemanticCritical;
       case NemoBadgeColor.info:
         // No dedicated strong info tone (mirrors web: solid intentionally == filled).
         return NemoTokens.colorSurfaceSemanticInfo;
@@ -84,11 +90,11 @@ class NemoBadge extends StatelessWidget {
       case NemoBadgeColor.defaultColor:
         return outlineOrGhost ? NemoTokens.colorTextAccentPrimary : NemoTokens.colorInteractiveAccentPrimaryInverted;
       case NemoBadgeColor.success:
-        return NemoTokens.colorTextSemanticSuccess;
+        return _solid ? NemoTokens.colorFixedSuccessforeground : NemoTokens.colorTextSemanticSuccess;
       case NemoBadgeColor.warning:
-        return NemoTokens.colorTextSemanticWarning;
+        return _solid ? NemoTokens.colorFixedWarningforeground : NemoTokens.colorTextSemanticWarning;
       case NemoBadgeColor.critical:
-        return NemoTokens.colorTextSemanticCritical;
+        return _solid ? NemoTokens.colorFixedDestructiveforeground : NemoTokens.colorTextSemanticCritical;
       case NemoBadgeColor.info:
         return NemoTokens.colorTextSemanticInfo;
       case NemoBadgeColor.disabled:
