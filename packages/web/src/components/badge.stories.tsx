@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 const COLORS = ["default", "success", "warning", "critical", "info", "disabled", "inverted"] as const;
-const TYPES = ["filled", "outline", "ghost"] as const;
+const TYPES = ["filled", "outline", "ghost", "solid"] as const;
 
 export const Matrix: Story = {
   render: () => (
@@ -41,6 +41,47 @@ export const WithoutIcon: Story = {
       <Badge color="critical">Atrasado</Badge>
       <Badge color="info">Novidade</Badge>
       <Badge color="disabled">Rascunho</Badge>
+    </div>
+  ),
+};
+
+/**
+ * Migra `DiscountTag` (Daki Web/App) → `color="critical" type="solid"`.
+ * "Grátis" (default/solid) já mostra o fundo forte de verdade — "-30%"
+ * (critical/solid) hoje renderiza igual ao `filled`, porque falta a role
+ * "On Critical" no alias do Figma (ver comentário no topo de badge.tsx).
+ */
+export const DiscountTag: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge color="critical" type="solid">-30%</Badge>
+      <Badge color="default" type="solid">Grátis</Badge>
+    </div>
+  ),
+};
+
+/** Migra `counter-tag`/`PickingAmountTags` (HUBR) → `count` sem `children`. */
+export const Counter: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-3">
+      <Badge count={3} />
+      <Badge count={12} color="info" />
+      <Badge count={128} color="critical" />
+      <span className="text-sm text-muted-foreground">itens no carrinho</span>
+      <Badge color="default">Itens</Badge>
+      <Badge color="default" count={12}>Itens</Badge>
+    </div>
+  ),
+};
+
+/** Chip de filtro compacto — `size="sm"` + `shape="square"`. */
+export const FilterChip: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge size="sm" shape="square" type="outline">Entrega hoje</Badge>
+      <Badge size="sm" shape="square" type="outline" color="info">
+        Super Daki
+      </Badge>
     </div>
   ),
 };
