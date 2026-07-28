@@ -1,9 +1,76 @@
-import { Toaster as Sonner, toast, type ToasterProps } from "sonner";
+import { Toaster as Sonner, toast as sonnerToast, type ToasterProps, type ExternalToast } from "sonner";
+
+/**
+ * Named duration levels — same vocabulary the Jake (Raio App/Flutter) toast
+ * already uses (short/medium/long/persistent), adopted as the Nemo-wide
+ * standard instead of loose ms values per call-site: one place to retune a
+ * level later, and the call-site reads as intent ("this is important, stays
+ * longer") instead of a magic number. `persistent` maps to sonner's own
+ * `Infinity` duration (never auto-dismisses).
+ */
+const TOAST_DURATION = {
+  short: 3000,
+  medium: 5000,
+  long: 10000,
+  persistent: Infinity,
+} as const;
+
+type ToastMessage = Parameters<typeof sonnerToast>[0];
+type ToastData = ExternalToast | undefined;
+
+/**
+ * Wraps a sonner toast function so repeated calls with the *same text*
+ * (per variant) update the existing toast instead of stacking a duplicate —
+ * mirrors the Jake toast's text+type dedupe, and matches what
+ * toast-design-guide-cenarios.html itself recommends ("adotar dedupe como
+ * padrão evita spam de toasts iguais"). Built on sonner's own id-based
+ * replace (calling toast(msg, { id }) updates the toast with that id if one
+ * already exists, instead of adding a new one) — no dedupe logic invented,
+ * just this existing mechanism used with a derived key. Only applies when
+ * the message is a plain string: JSX/function titles have no safe stable key
+ * to derive, so those pass through unchanged. Callers can still pass their
+ * own `id` to opt out or pick a different dedupe key.
+ */
+function withDedupe(fn: (message: ToastMessage, data?: ToastData) => string | number, type: string) {
+  return (message: ToastMessage, data?: ToastData) => {
+    if (data?.id !== undefined || typeof message !== "string") return fn(message, data);
+    return fn(message, { ...data, id: `${type}:${message}` });
+  };
+}
+
+/**
+ * Same API as sonner's `toast`, but `success`/`error`/`warning`/`info`/
+ * `loading`/`message` (and the default call) auto-dedupe — see
+ * `withDedupe` above. `custom`/`promise`/`dismiss`/`getHistory`/`getToasts`
+ * pass through unchanged: they don't take a plain message, so there's no
+ * safe key to dedupe on.
+ */
+const toast = Object.assign(withDedupe(sonnerToast, "default"), {
+  success: withDedupe(sonnerToast.success, "success"),
+  error: withDedupe(sonnerToast.error, "error"),
+  warning: withDedupe(sonnerToast.warning, "warning"),
+  info: withDedupe(sonnerToast.info, "info"),
+  loading: withDedupe(sonnerToast.loading, "loading"),
+  message: withDedupe(sonnerToast.message, "message"),
+  custom: sonnerToast.custom,
+  promise: sonnerToast.promise,
+  dismiss: sonnerToast.dismiss,
+  getHistory: sonnerToast.getHistory,
+  getToasts: sonnerToast.getToasts,
+});
 
 /**
  * Toaster — wraps `sonner`, themed with Nemo tokens. Reads light/dark from the
  * `.dark` class on <html> (no next-themes dependency). Render <Toaster /> once
  * at the app root, then call `toast(...)`.
+ *
+ * `position="top-right"` and `duration={TOAST_DURATION.short}` are explicit,
+ * deliberate choices (sonner's own defaults are `bottom-right` / `4000`) —
+ * not sonner's defaults left untouched. `top-right` and `top-center` render
+ * identically below sonner's own 600px mobile breakpoint (the toast becomes
+ * a full-width bar there regardless of x-position, only the y-side —
+ * top/bottom — matters), so one static value covers both desktop and mobile
+ * without a media-query hook.
  *
  * `success`/`error`/`warning`/`info`/`loading` (sonner's native `toast.<type>()`
  * variants) get the same "soft" tonal look `Badge`'s `type="filled"` uses — the
@@ -36,6 +103,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
+      position="top-right"
+      duration={TOAST_DURATION.short}
       className="toaster group"
       toastOptions={{
         classNames: {
@@ -71,4 +140,4 @@ const Toaster = ({ ...props }: ToasterProps) => {
   );
 };
 
-export { Toaster, toast };
+export { Toaster, toast, TOAST_DURATION };
