@@ -41,3 +41,23 @@ body {
   color: var(--nemo-color-text-neutral-primary);
   font-family: var(--nemo-font-family-inter);
 }
+
+/*
+ * sonner's own base toast rule reads --normal-bg/--normal-border/--normal-text
+ * (its plain/untyped toast look) with real, non-`:where()` specificity as of
+ * sonner 2.x. Redefining the custom properties themselves — rather than
+ * fighting that rule with a competing Tailwind class — means the untyped
+ * toast in sonner.tsx picks up real Nemo tokens with no specificity contest
+ * at all: sonner's own light/dark `--normal-*` values aren't `!important`, so
+ * ours (marked `!important` here) always wins regardless of stylesheet load
+ * order, and `[data-sonner-toaster]` (not theme-gated) still overrides both
+ * of sonner's `[data-theme='light'/'dark']`-scoped versions since importance
+ * beats specificity. See sonner.tsx's Toaster doc comment for the sibling
+ * problem this avoids (two of our own `!important` classes tying on the same
+ * property, which Tailwind resolves by JIT discovery order — undeterministic).
+ */
+[data-sonner-toaster] {
+  --normal-bg: var(--nemo-color-surface-neutral-primary) !important;
+  --normal-border: var(--nemo-color-border-neutral-main) !important;
+  --normal-text: var(--nemo-color-text-neutral-primary) !important;
+}
