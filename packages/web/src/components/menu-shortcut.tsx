@@ -37,11 +37,7 @@ const MenuShortcutItem = React.forwardRef<HTMLElement, MenuShortcutItemProps>(
       <>
         <span
           aria-hidden
-          className="flex size-16 shrink-0 items-center justify-center rounded-full [&_svg]:size-6 [&_svg]:shrink-0"
-          style={{
-            background: "var(--nemo-color-surface-accent-primary)",
-            color: "var(--nemo-color-text-accent-primary)",
-          }}
+          className="flex size-16 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground [&_svg]:size-6 [&_svg]:shrink-0"
         >
           {icon}
         </span>

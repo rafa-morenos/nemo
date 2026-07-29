@@ -135,25 +135,29 @@ class NemoBadge extends StatelessWidget {
       fontWeight: FontWeight.w600,
       color: fg,
     );
-    final iconSize = sm ? 10.0 : 12.0;
+    // iconSize (md) and the horizontal padding/dot sizes have no matching
+    // NemoTokens.space* step — same as web/RN, where these sit on the
+    // Figma component's own measurements rather than a named token.
+    final gap = sm ? NemoTokens.space12 : NemoTokens.space25;
+    final iconSize = sm ? 10.0 : NemoTokens.space75;
     final dotSize = sm ? 4.0 : 6.0;
 
     final children = <Widget>[
-      if (icon != null && !_counterOnly) ...[Icon(icon, size: iconSize, color: fg), SizedBox(width: sm ? 2 : 4)],
+      if (icon != null && !_counterOnly) ...[Icon(icon, size: iconSize, color: fg), SizedBox(width: gap)],
       if (dot && !_counterOnly) ...[
         Container(width: dotSize, height: dotSize, decoration: BoxDecoration(color: fg, shape: BoxShape.circle)),
-        SizedBox(width: sm ? 2 : 4),
+        SizedBox(width: gap),
       ],
       Text(_counterOnly ? _formatCount(count!) : (label ?? ''), style: textStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
       if (count != null && !_counterOnly) ...[
-        SizedBox(width: sm ? 2 : 4),
+        SizedBox(width: gap),
         Text(_formatCount(count!), style: textStyle.copyWith(fontWeight: FontWeight.w700)),
       ],
     ];
 
     return Container(
       constraints: _counterOnly ? const BoxConstraints(minWidth: 20) : null,
-      padding: EdgeInsets.symmetric(horizontal: sm ? 8 : 10, vertical: 2),
+      padding: EdgeInsets.symmetric(horizontal: sm ? 8 : 10, vertical: NemoTokens.space12),
       decoration: BoxDecoration(
         color: _bg,
         borderRadius: BorderRadius.circular(shape == NemoBadgeShape.pill ? NemoTokens.radiusPill : NemoTokens.radiusMd),

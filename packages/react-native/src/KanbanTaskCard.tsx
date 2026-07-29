@@ -66,7 +66,7 @@ export function KanbanTaskCard({
           <View style={s.divider} />
 
           {(tasksLabel || progress) && (
-            <View style={{ gap: 8 }}>
+            <View style={{ gap: t.space["50"] }}>
               <View style={s.tasksRow}>
                 <Text style={s.tasksLabel}>{tasksLabel}</Text>
                 {timeLeft ? <Text style={s.timeLeft}>{timeLeft}</Text> : null}
@@ -132,42 +132,51 @@ export function KanbanTaskCard({
   );
 }
 
+// RN's `fontWeight` style prop takes a string; `t.font.weight.*` is numeric
+// (shared with web/Flutter), so cast at the point of use.
+const fw = (n: number) => String(n) as "400" | "500" | "600";
+
 function makeStyles(t: NemoTheme) {
   return StyleSheet.create({
     card: {
       width: "100%",
-      borderLeftWidth: 4,
+      borderLeftWidth: t.borderWidth.lg,
       borderLeftColor: t.color.interactive.accent.primary.main,
-      borderRadius: 12,
+      borderRadius: t.radius.lg,
       backgroundColor: t.color.surface.neutral.tertiary,
-      paddingLeft: 16,
-      paddingRight: 8,
-      paddingVertical: 8,
-      gap: 8,
+      paddingLeft: t.space["100"],
+      paddingRight: t.space["50"],
+      paddingVertical: t.space["50"],
+      gap: t.space["50"],
       overflow: "hidden",
     },
-    titleArea: { gap: 8 },
+    titleArea: { gap: t.space["50"] },
     topRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-    created: { flex: 1, fontSize: 14, color: t.color.text.neutral.primary },
-    title: { fontSize: 18, fontFamily: nemoFontFamily.heading, color: t.color.text.neutral.primary },
-    description: { fontSize: 14, fontWeight: "600", color: t.color.text.neutral.primary },
+    created: { flex: 1, fontSize: t.font.size["3"], color: t.color.text.neutral.primary },
+    // web's title is text-lg/font-medium (20/500) — was 18 with no weight set, drifted from web.
+    title: { fontSize: t.font.size["6"], fontWeight: fw(t.font.weight.medium), fontFamily: nemoFontFamily.heading, color: t.color.text.neutral.primary },
+    description: { fontSize: t.font.size["3"], fontWeight: fw(t.font.weight["semi-bold"]), color: t.color.text.neutral.primary },
     divider: { height: StyleSheet.hairlineWidth, backgroundColor: t.color.border.neutral.main },
-    tasksRow: { flexDirection: "row", alignItems: "center" },
-    tasksLabel: { flex: 1, fontSize: 14, fontWeight: "600", color: t.color.text.neutral.primary },
-    timeLeft: { fontSize: 14, color: t.color.text.neutral.primary },
-    progressRow: { flexDirection: "row", alignItems: "center", gap: 8 },
-    progressTrack: { flex: 1, flexDirection: "row", height: 4, borderRadius: 200, overflow: "hidden" },
-    segment: { flex: 1, height: 4 },
-    progressLabel: { fontSize: 12, color: t.color.text.neutral.primary },
-    taskRow: { flexDirection: "row", alignItems: "center", height: 40, gap: 16 },
-    taskLeft: { flex: 1, flexDirection: "row", alignItems: "center", gap: 8 },
-    checkbox: { width: 20, height: 20, borderRadius: 6, borderWidth: 2, alignItems: "center", justifyContent: "center" },
-    taskTitle: { fontSize: 14, color: t.color.text.neutral.primary },
-    taskDesc: { flex: 1, fontSize: 14, color: t.color.text.neutral.primary },
-    statusPill: { borderRadius: 40, paddingHorizontal: 8, paddingVertical: 4 },
-    statusText: { fontSize: 14, color: t.color.text.neutral.primary },
-    assignee: { flexDirection: "row", alignItems: "center", gap: 4 },
-    assigneeName: { fontSize: 14, fontWeight: "600", color: t.color.text.neutral.primary },
-    updated: { textAlign: "right", fontSize: 12, color: t.color.text.neutral.primary },
+    // web's tasksRow is `gap-4` (16) — was unset, timeLeft/label had no spacing on RN.
+    tasksRow: { flexDirection: "row", alignItems: "center", gap: t.space["100"] },
+    tasksLabel: { flex: 1, fontSize: t.font.size["3"], fontWeight: fw(t.font.weight["semi-bold"]), color: t.color.text.neutral.primary },
+    timeLeft: { fontSize: t.font.size["3"], color: t.color.text.neutral.primary },
+    progressRow: { flexDirection: "row", alignItems: "center", gap: t.space["50"] },
+    // web's track is `rounded-full` — was 200, doesn't match any radius token.
+    progressTrack: { flex: 1, flexDirection: "row", height: t.space["25"], borderRadius: t.radius.pill, overflow: "hidden" },
+    segment: { flex: 1, height: t.space["25"] },
+    progressLabel: { fontSize: t.font.size["2"], color: t.color.text.neutral.primary },
+    taskRow: { flexDirection: "row", alignItems: "center", height: t.space["250"], gap: t.space["100"] },
+    taskLeft: { flex: 1, flexDirection: "row", alignItems: "center", gap: t.space["50"] },
+    // web's checkbox is `rounded-sm border-2` — radius was 6, doesn't match any radius token (sm=4).
+    checkbox: { width: t.space["125"], height: t.space["125"], borderRadius: t.radius.sm, borderWidth: t.borderWidth.md, alignItems: "center", justifyContent: "center" },
+    taskTitle: { fontSize: t.font.size["3"], color: t.color.text.neutral.primary },
+    taskDesc: { flex: 1, fontSize: t.font.size["3"], color: t.color.text.neutral.primary },
+    // web's status pill is `rounded-full` — was 40, doesn't match any radius token.
+    statusPill: { borderRadius: t.radius.pill, paddingHorizontal: t.space["50"], paddingVertical: t.space["25"] },
+    statusText: { fontSize: t.font.size["3"], color: t.color.text.neutral.primary },
+    assignee: { flexDirection: "row", alignItems: "center", gap: t.space["25"] },
+    assigneeName: { fontSize: t.font.size["3"], fontWeight: fw(t.font.weight["semi-bold"]), color: t.color.text.neutral.primary },
+    updated: { textAlign: "right", fontSize: t.font.size["2"], color: t.color.text.neutral.primary },
   });
 }

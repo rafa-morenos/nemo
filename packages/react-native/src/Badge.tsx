@@ -124,7 +124,7 @@ export function Badge({
   const bg = bgFor(t, color, type);
   const fg = fgFor(t, color, type);
   const border = borderFor(t, color, type);
-  const sizing = effSize === "sm" ? sizes.sm : sizes.md;
+  const sizing = sizesFor(t, effSize);
 
   return (
     <View
@@ -134,8 +134,8 @@ export function Badge({
         {
           backgroundColor: bg,
           borderColor: border,
-          borderWidth: type === "outline" ? 1 : 0,
-          borderRadius: shape === "pill" ? 500 : 8,
+          borderWidth: type === "outline" ? t.borderWidth.sm : 0,
+          borderRadius: shape === "pill" ? t.radius.pill : t.radius.md,
         },
         counterOnly && styles.counterOnly,
       ]}
@@ -158,20 +158,24 @@ const styles = StyleSheet.create({
   countSuffix: { fontWeight: "700" },
 });
 
-// Font sizes mirror the `font-size-2` (12) / `font-size-1` (10) tokens by
-// value — the generated RN theme only exports the color tree, not the font
-// scale, so there's no `t.font.*` path to reference here directly.
-const sizes = {
-  md: StyleSheet.create({
-    container: { paddingHorizontal: 10, paddingVertical: 2, gap: 4 },
-    text: { fontSize: 12, fontWeight: "600" },
-    icon: { width: 12, height: 12 },
-    dot: { width: 6, height: 6 },
-  }),
-  sm: StyleSheet.create({
-    container: { paddingHorizontal: 8, paddingVertical: 2, gap: 2 },
-    text: { fontSize: 10, fontWeight: "600" },
-    icon: { width: 10, height: 10 },
-    dot: { width: 4, height: 4 },
-  }),
-};
+/**
+ * `md`'s paddingHorizontal (10) and the dot sizes have no matching
+ * `t.space.*` step — same as web, where `px-2.5` sits on Tailwind's
+ * untouched default scale rather than a named Nemo token; kept as literals
+ * here for the same reason, not a missed token.
+ */
+function sizesFor(t: NemoTheme, size: BadgeSize) {
+  return size === "md"
+    ? {
+        container: { paddingHorizontal: 10, paddingVertical: t.space["12"], gap: t.space["25"] },
+        text: { fontSize: t.font.size["2"], fontWeight: String(t.font.weight["semi-bold"]) as "600" },
+        icon: { width: t.space["75"], height: t.space["75"] },
+        dot: { width: 6, height: 6 },
+      }
+    : {
+        container: { paddingHorizontal: 8, paddingVertical: t.space["12"], gap: t.space["12"] },
+        text: { fontSize: t.font.size["1"], fontWeight: String(t.font.weight["semi-bold"]) as "600" },
+        icon: { width: 10, height: 10 },
+        dot: { width: 4, height: 4 },
+      };
+}

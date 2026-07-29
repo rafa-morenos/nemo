@@ -9,7 +9,7 @@
     "./tailwind.preset": "./tailwind.preset.js"
   },
   "scripts": {
-    "storybook": "storybook dev -p 6007 --no-open",
+    "storybook": "storybook dev --no-open",
     "build-storybook": "storybook build",
     "figma:connect": "figma connect publish",
     "figma:check": "figma connect --dry-run"
