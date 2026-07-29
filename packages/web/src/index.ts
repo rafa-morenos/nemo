@@ -24,6 +24,7 @@ export {
 
 // shadcn component set (Nemo-themed)
 export * from "./components/accordion";
+export * from "./components/add-to-cart";
 export * from "./components/alert";
 export * from "./components/alert-dialog";
 export * from "./components/aspect-ratio";
