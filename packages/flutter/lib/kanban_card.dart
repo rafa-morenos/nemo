@@ -114,56 +114,56 @@ class KanbanCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: _bg,
         borderRadius: BorderRadius.circular(NemoTokens.radiusLg),
-        border: Border(left: BorderSide(color: _accent, width: NemoTokens.borderWidthMd * 2)),
+        border: Border(left: BorderSide(color: _accent, width: NemoTokens.borderWidthLg)),
         boxShadow: _nemoShadow,
       ),
-      padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+      padding: EdgeInsets.fromLTRB(NemoTokens.space100, NemoTokens.space50, NemoTokens.space50, NemoTokens.space50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (scheduled != null) ...[
             _Pill(label: scheduled!, icon: Icons.access_time, full: true),
-            const SizedBox(height: 8),
+            SizedBox(height: NemoTokens.space50),
           ],
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(orderId, style: _t(16, FontWeight.w600)),
+              Text(orderId, style: _t(NemoTokens.fontSize4, FontWeight.w600)),
               Row(
                 children: [
                   for (final tm in timers) ...[
                     _Pill(label: tm.label, dot: tm.dot),
-                    const SizedBox(width: 4),
+                    SizedBox(width: NemoTokens.space25),
                   ],
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: NemoTokens.space50),
           Row(
             children: [
-              Expanded(child: Text(clientName, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(16, FontWeight.w600))),
-              if (clientBadge != null) ...[const SizedBox(width: 8), _Pill(label: clientBadge!)],
+              Expanded(child: Text(clientName, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(NemoTokens.fontSize4, FontWeight.w600))),
+              if (clientBadge != null) ...[SizedBox(width: NemoTokens.space50), _Pill(label: clientBadge!)],
             ],
           ),
-          const SizedBox(height: 4),
-          Text(address, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(16, FontWeight.w500)),
-          Text(neighborhood, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(16, FontWeight.w500, NemoTokens.colorTextNeutralSecondary)),
-          const SizedBox(height: 8),
+          SizedBox(height: NemoTokens.space25),
+          Text(address, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(NemoTokens.fontSize4, FontWeight.w500)),
+          Text(neighborhood, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(NemoTokens.fontSize4, FontWeight.w500, NemoTokens.colorTextNeutralSecondary)),
+          SizedBox(height: NemoTokens.space50),
           const _Divider(),
-          const SizedBox(height: 8),
+          SizedBox(height: NemoTokens.space50),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(child: _Assignment(a: shopper, color: _toneColor(shopper.tone))),
-              const SizedBox(width: 16),
+              SizedBox(width: NemoTokens.space100),
               Expanded(child: _Assignment(a: rider, color: _toneColor(rider.tone))),
             ],
           ),
           if (variant == KanbanVariant.stacking) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: NemoTokens.space50),
             const _Divider(),
-            const SizedBox(height: 8),
+            SizedBox(height: NemoTokens.space50),
             _GroupedButton(label: groupedLabel, color: _accent, onTap: onGrouped),
           ],
         ],
@@ -195,16 +195,16 @@ class _Pill extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (dot) ...[
-          Container(width: 8, height: 8, decoration: BoxDecoration(color: NemoTokens.colorTextNeutralPrimary, shape: BoxShape.circle)),
-          const SizedBox(width: 4),
+          Container(width: NemoTokens.space50, height: NemoTokens.space50, decoration: BoxDecoration(color: NemoTokens.colorTextNeutralPrimary, shape: BoxShape.circle)),
+          SizedBox(width: NemoTokens.space25),
         ],
-        if (icon != null) ...[Icon(icon, size: 16, color: NemoTokens.colorTextNeutralPrimary), const SizedBox(width: 4)],
-        Flexible(child: Text(label, style: _t(14, FontWeight.w600))),
+        if (icon != null) ...[Icon(icon, size: NemoTokens.space100, color: NemoTokens.colorTextNeutralPrimary), SizedBox(width: NemoTokens.space25)],
+        Flexible(child: Text(label, style: _t(NemoTokens.fontSize3, FontWeight.w600))),
       ],
     );
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: NemoTokens.colorSurfaceNeutralSecondary, borderRadius: BorderRadius.circular(500)),
+      padding: EdgeInsets.symmetric(horizontal: NemoTokens.space50, vertical: NemoTokens.space12),
+      decoration: BoxDecoration(color: NemoTokens.colorSurfaceNeutralSecondary, borderRadius: BorderRadius.circular(NemoTokens.radiusPill)),
       child: content,
     );
   }
@@ -219,9 +219,9 @@ class _Assignment extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(a.label, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(16, FontWeight.w400)),
-        const SizedBox(height: 4),
-        Text(a.value, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(16, FontWeight.w600, color)),
+        Text(a.label, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(NemoTokens.fontSize4, FontWeight.w400)),
+        SizedBox(height: NemoTokens.space25),
+        Text(a.value, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(NemoTokens.fontSize4, FontWeight.w600, color)),
       ],
     );
   }
@@ -234,20 +234,21 @@ class _GroupedButton extends StatelessWidget {
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
+    // web's grouped button is `rounded-full` — was 60, doesn't match any radius token.
     return Material(
       color: color,
-      borderRadius: BorderRadius.circular(60),
+      borderRadius: BorderRadius.circular(NemoTokens.radiusPill),
       child: InkWell(
-        borderRadius: BorderRadius.circular(60),
+        borderRadius: BorderRadius.circular(NemoTokens.radiusPill),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: EdgeInsets.all(NemoTokens.space25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.add_location_alt_outlined, size: 24, color: NemoTokens.colorTextNeutralInverted),
-              const SizedBox(width: 8),
-              Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: NemoTokens.colorTextNeutralInverted, height: 1.5)),
+              Icon(Icons.add_location_alt_outlined, size: NemoTokens.space150, color: NemoTokens.colorTextNeutralInverted),
+              SizedBox(width: NemoTokens.space50),
+              Text(label, style: TextStyle(fontSize: NemoTokens.fontSize4, fontWeight: FontWeight.w600, color: NemoTokens.colorTextNeutralInverted, height: 1.5)),
             ],
           ),
         ),

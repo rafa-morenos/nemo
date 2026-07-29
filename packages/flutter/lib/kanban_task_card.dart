@@ -58,72 +58,76 @@ class KanbanTaskCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: NemoTokens.colorSurfaceNeutralPrimary,
         borderRadius: BorderRadius.circular(NemoTokens.radiusLg),
-        border: Border(left: BorderSide(color: NemoTokens.colorInteractiveAccentPrimaryMain, width: NemoTokens.borderWidthMd * 2)),
+        border: Border(left: BorderSide(color: NemoTokens.colorInteractiveAccentPrimaryMain, width: NemoTokens.borderWidthLg)),
         boxShadow: _nemoShadow,
       ),
-      padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+      padding: EdgeInsets.fromLTRB(NemoTokens.space100, NemoTokens.space50, NemoTokens.space50, NemoTokens.space50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Expanded(child: Text(createdLabel, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(14, FontWeight.w400))),
-              Icon(collapsed ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up, size: 16, color: NemoTokens.colorTextNeutralSecondary),
+              Expanded(child: Text(createdLabel, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(NemoTokens.fontSize3, FontWeight.w400))),
+              Icon(collapsed ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up, size: NemoTokens.space100, color: NemoTokens.colorTextNeutralSecondary),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(title, style: _t(18, FontWeight.w500).copyWith(fontFamily: NemoFonts.heading)),
-          if (description != null) ...[const SizedBox(height: 8), Text(description!, style: _t(14, FontWeight.w600))],
+          SizedBox(height: NemoTokens.space50),
+          // web's title is text-lg/font-medium (20/500) — was 18 here, drifted from web.
+          Text(title, style: _t(NemoTokens.fontSize6, FontWeight.w500).copyWith(fontFamily: NemoFonts.heading)),
+          if (description != null) ...[SizedBox(height: NemoTokens.space50), Text(description!, style: _t(NemoTokens.fontSize3, FontWeight.w600))],
           if (!collapsed) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: NemoTokens.space50),
             _divider(),
             if (tasksLabel != null || progressTotal != null) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: NemoTokens.space50),
               Row(
                 children: [
-                  Expanded(child: Text(tasksLabel ?? '', style: _t(14, FontWeight.w600))),
-                  if (timeLeft != null) Text(timeLeft!, style: _t(14, FontWeight.w400)),
+                  Expanded(child: Text(tasksLabel ?? '', style: _t(NemoTokens.fontSize3, FontWeight.w600))),
+                  // web's row is `gap-4` (16) — was unset, timeLeft had no spacing from the label.
+                  if (timeLeft != null) SizedBox(width: NemoTokens.space100),
+                  if (timeLeft != null) Text(timeLeft!, style: _t(NemoTokens.fontSize3, FontWeight.w400)),
                 ],
               ),
               if (progressTotal != null) ...[
-                const SizedBox(height: 8),
+                SizedBox(height: NemoTokens.space50),
                 Row(
                   children: [
                     Expanded(
+                      // web's track is `rounded-full` — was 200, doesn't match any radius token.
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(200),
+                        borderRadius: BorderRadius.circular(NemoTokens.radiusPill),
                         child: Row(
                           children: [
                             for (var i = 0; i < segments; i++)
-                              Expanded(child: Container(height: 4, color: i < filled ? NemoTokens.colorInteractiveAccentPrimaryMain : NemoTokens.colorSurfaceNeutralSecondary)),
+                              Expanded(child: Container(height: NemoTokens.space25, color: i < filled ? NemoTokens.colorInteractiveAccentPrimaryMain : NemoTokens.colorSurfaceNeutralSecondary)),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Text('${progressDone ?? 0}/$progressTotal', style: _t(12, FontWeight.w400)),
+                    SizedBox(width: NemoTokens.space50),
+                    Text('${progressDone ?? 0}/$progressTotal', style: _t(NemoTokens.fontSize2, FontWeight.w400)),
                   ],
                 ),
               ],
             ],
             for (final item in tasks) _ChecklistRow(item: item),
             if (assignees.isNotEmpty) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: NemoTokens.space50),
               _divider(),
-              const SizedBox(height: 8),
+              SizedBox(height: NemoTokens.space50),
               for (final name in assignees)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
+                  padding: EdgeInsets.only(bottom: NemoTokens.space25),
                   child: Row(children: [
-                    Icon(Icons.person_outline, size: 16, color: NemoTokens.colorTextNeutralPrimary),
-                    const SizedBox(width: 4),
-                    Text(name, style: _t(14, FontWeight.w600)),
+                    Icon(Icons.person_outline, size: NemoTokens.space100, color: NemoTokens.colorTextNeutralPrimary),
+                    SizedBox(width: NemoTokens.space25),
+                    Text(name, style: _t(NemoTokens.fontSize3, FontWeight.w600)),
                   ]),
                 ),
             ],
             if (updatedLabel != null) ...[
-              const SizedBox(height: 4),
-              Align(alignment: Alignment.centerRight, child: Text(updatedLabel!, style: _t(12, FontWeight.w400))),
+              SizedBox(height: NemoTokens.space25),
+              Align(alignment: Alignment.centerRight, child: Text(updatedLabel!, style: _t(NemoTokens.fontSize2, FontWeight.w400))),
             ],
           ],
         ],
@@ -147,22 +151,23 @@ class _ChecklistRow extends StatelessWidget {
     }[item.status]!;
     final label = {TaskStatus.done: 'Realizada', TaskStatus.todo: 'A fazer', TaskStatus.canceled: 'Cancelada'}[item.status]!;
 
+    // web's checkbox is `rounded-sm border-2` — radius was 6, doesn't match any radius token (sm=4).
     Widget checkbox() {
       if (item.disabled) {
-        return Container(width: 20, height: 20, decoration: BoxDecoration(color: NemoTokens.colorSurfaceNeutralSecondary, borderRadius: BorderRadius.circular(6)));
+        return Container(width: NemoTokens.space125, height: NemoTokens.space125, decoration: BoxDecoration(color: NemoTokens.colorSurfaceNeutralSecondary, borderRadius: BorderRadius.circular(NemoTokens.radiusSm)));
       }
       if (item.checked) {
         return Container(
-          width: 20, height: 20,
-          decoration: BoxDecoration(color: NemoTokens.colorInteractiveAccentPrimaryMain, borderRadius: BorderRadius.circular(6)),
+          width: NemoTokens.space125, height: NemoTokens.space125,
+          decoration: BoxDecoration(color: NemoTokens.colorInteractiveAccentPrimaryMain, borderRadius: BorderRadius.circular(NemoTokens.radiusSm)),
           child: Icon(Icons.check, size: 14, color: NemoTokens.colorInteractiveAccentPrimaryInverted),
         );
       }
       return Container(
-        width: 20, height: 20,
+        width: NemoTokens.space125, height: NemoTokens.space125,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: NemoTokens.colorBorderNeutralMain, width: 2),
+          borderRadius: BorderRadius.circular(NemoTokens.radiusSm),
+          border: Border.all(color: NemoTokens.colorBorderNeutralMain, width: NemoTokens.borderWidthMd),
         ),
       );
     }
@@ -170,25 +175,26 @@ class _ChecklistRow extends StatelessWidget {
     return Opacity(
       opacity: item.disabled ? 0.4 : 1,
       child: SizedBox(
-        height: 40,
+        height: NemoTokens.space250,
         child: Row(
           children: [
             Expanded(
               child: Row(children: [
                 checkbox(),
-                const SizedBox(width: 8),
-                Text(item.title, style: _t(14, FontWeight.w400)),
+                SizedBox(width: NemoTokens.space50),
+                Text(item.title, style: _t(NemoTokens.fontSize3, FontWeight.w400)),
                 if (item.description != null) ...[
-                  const SizedBox(width: 8),
-                  Expanded(child: Text(item.description!, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(14, FontWeight.w400))),
+                  SizedBox(width: NemoTokens.space50),
+                  Expanded(child: Text(item.description!, maxLines: 1, overflow: TextOverflow.ellipsis, style: _t(NemoTokens.fontSize3, FontWeight.w400))),
                 ],
               ]),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: NemoTokens.space100),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(40)),
-              child: Text(label, style: _t(14, FontWeight.w400, item.status == TaskStatus.canceled ? NemoTokens.colorTextNeutralSecondary : NemoTokens.colorTextNeutralPrimary)),
+              // web's status pill is `rounded-full` — was 40, doesn't match any radius token.
+              padding: EdgeInsets.symmetric(horizontal: NemoTokens.space50, vertical: NemoTokens.space25),
+              decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(NemoTokens.radiusPill)),
+              child: Text(label, style: _t(NemoTokens.fontSize3, FontWeight.w400, item.status == TaskStatus.canceled ? NemoTokens.colorTextNeutralSecondary : NemoTokens.colorTextNeutralPrimary)),
             ),
           ],
         ),
