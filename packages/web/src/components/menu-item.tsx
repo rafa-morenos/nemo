@@ -59,13 +59,9 @@ const MenuItem = React.forwardRef<HTMLElement, MenuItemProps>(
           <span
             aria-hidden
             className={cn(
-              "flex size-11 shrink-0 items-center justify-center rounded-full",
+              "flex size-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground",
               "[&_svg]:size-5 [&_svg]:shrink-0"
             )}
-            style={{
-              background: "var(--nemo-color-surface-accent-primary)",
-              color: "var(--nemo-color-text-accent-primary)",
-            }}
           >
             {icon}
           </span>

@@ -5,7 +5,7 @@
       "name": "storybook",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "storybook", "--prefix", "packages/web"],
-      "port": 6007
+      "autoPort": true
     }
   ]
 }
