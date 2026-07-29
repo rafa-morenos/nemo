@@ -41,6 +41,7 @@ export * from "./components/dialog";
 export * from "./components/form";
 export * from "./components/menubar";
 export * from "./components/popover";
+export * from "./components/product-tile";
 export * from "./components/carousel";
 export * from "./components/calendar";
 export * from "./components/chart";
