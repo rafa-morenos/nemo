@@ -50,6 +50,8 @@ const dartName = (path) => {
 };
 
 // Build a nested object from flat tokens (resolved values), skipping the leading group.
+// Dimension-ish types ("16px") become plain numbers (16) — RN style props take
+// unitless dp, same values Dart's `px()` parses out of the same raw strings.
 const nest = (tokens) => {
   const out = {};
   for (const t of tokens) {
@@ -59,7 +61,10 @@ const nest = (tokens) => {
       node[path[i]] ??= {};
       node = node[path[i]];
     }
-    node[path[path.length - 1]] = t.value ?? t.$value;
+    const type = t.$type ?? t.type;
+    const raw = t.value ?? t.$value;
+    node[path[path.length - 1]] =
+      type === 'dimension' || type === 'number' || type === 'fontWeight' ? px(raw) : raw;
   }
   return out;
 };
@@ -177,7 +182,9 @@ const light = new StyleDictionary({
         {
           destination: 'theme.light.ts',
           format: 'nemo/rn-theme',
-          filter: (t) => t.filePath === SEM_LIGHT,
+          // core (space/radius/borderWidth/font/primitives) + light semantic colors —
+          // RN can't read CSS vars, so it needs the same full tree Flutter/TS already get.
+          filter: (t) => t.filePath === SEM_LIGHT || t.filePath === CORE,
           options: { themeName: 'light' },
         },
       ],
@@ -209,7 +216,7 @@ const dark = new StyleDictionary({
         {
           destination: 'theme.dark.ts',
           format: 'nemo/rn-theme',
-          filter: (t) => t.filePath === SEM_DARK,
+          filter: (t) => t.filePath === SEM_DARK || t.filePath === CORE,
           options: { themeName: 'dark' },
         },
       ],
