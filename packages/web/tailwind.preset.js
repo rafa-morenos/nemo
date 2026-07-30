@@ -21,6 +21,11 @@ export default {
         primary: {
           DEFAULT: v("color-interactive-accent-primary-main"),
           hover: v("color-interactive-accent-primary-hover"),
+          // Pressed/active shade of the brand blue (blue-10, same value in
+          // both themes) — was missing from the preset even though the
+          // alias itself already existed; added for NavigationBar's active
+          // state instead of hardcoding a literal hex.
+          active: v("color-interactive-accent-primary-active"),
           strong: v("color-text-accent-primary"),
           subtle: v("color-surface-accent-primary"),
           foreground: v("color-interactive-accent-primary-inverted"),

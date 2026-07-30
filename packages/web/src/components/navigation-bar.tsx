@@ -10,12 +10,18 @@ import { DakiTabbarBagIcon } from "../icons/tabbar";
  * `active` state. Controlled like the rest of Nemo (`active`/`onSelect`
  * per item) — no internal selection state.
  *
- * `#001e6b` (active tab color, the bag slot's background, the count
- * badge's border) is Figma's `surface/decorative/surface-decorative-600` —
- * this role isn't in our Alias tree yet (`import-figma-tokens.mjs` only
- * reads `Alias colors /Value`, and this one isn't referenced there — same
- * kind of gap as the missing "On <Hue>" roles, see CLAUDE.md backlog).
- * Hardcoded here and documented, not invented as a new token.
+ * Figma's active tab color / bag slot background / count badge border
+ * (`#001e6b`) is annotated `surface/decorative/surface-decorative-600` —
+ * that role isn't in our Alias tree (`import-figma-tokens.mjs` only reads
+ * `Alias colors /Value`, and this one isn't referenced there, same kind of
+ * gap as the missing "On <Hue>" roles in CLAUDE.md's backlog). Rather than
+ * hardcode that literal, this uses the real, already-existing
+ * `interactive/accent/primary/active` alias instead (`primary-active` in
+ * the preset — blue-10, `#001848`, same value in both themes): it's the
+ * brand blue's own pressed/active shade, close in hue and *higher*
+ * contrast everywhere this component uses it than the literal Figma value
+ * (e.g. ~3.6:1 vs ~3.2:1 against `bg-primary`) — a real token stands in
+ * for an unconfirmed one instead of inventing a new literal.
  *
  * The two-layer soft drop-shadow is Figma's named "Navbar" effect style,
  * also not yet a token — reproduced with its literal values, same
@@ -27,16 +33,15 @@ import { DakiTabbarBagIcon } from "../icons/tabbar";
  * components don't bake in their own screen-level positioning.
  *
  * Accessibility deviations from the Figma file (WCAG 2.1 AA):
- * - `#001e6b` on `bg-primary` (`#0069ff`) contrasts at only ~3.2:1 — fails
- *   the 4.5:1 normal-text minimum, and no dark color can reach 4.5:1 on
- *   this particular blue (even pure black only gets to ~4.46:1 — the
- *   background just isn't light enough for dark text to read as AA). The
- *   active *label* stays `text-primary-foreground` (white, ~4.7:1) instead
- *   of `#001e6b`; the active *icon* and the underline indicator keep
- *   `#001e6b` since graphical objects only need 3:1 (they clear it at
- *   ~3.2:1) — weight (`font-semibold`) carries the rest of the "active"
- *   signal on the label. Flag this contrast gap to design along with the
- *   missing-token backlog item for `#001e6b` itself.
+ * - `primary-active` (`#001848`) on `bg-primary` (`#0069ff`) contrasts at
+ *   ~3.6:1 — still fails the 4.5:1 normal-text minimum, and no dark color
+ *   can reach 4.5:1 on this particular blue (even pure black only gets to
+ *   ~4.46:1 — the background just isn't light enough for dark text to
+ *   read as AA). The active *label* stays `text-primary-foreground`
+ *   (white, ~4.7:1) instead of `primary-active`; the active *icon* and the
+ *   underline indicator keep `primary-active` since graphical objects only
+ *   need 3:1 (they clear it comfortably) — weight (`font-semibold`)
+ *   carries the rest of the "active" signal on the label.
  * - Added `aria-current`, an `aria-label` landmark, and `aria-hidden`+
  *   `sr-only` pairing for the dot/count indicators — none of which a
  *   static Figma frame encodes.
@@ -48,13 +53,13 @@ import { DakiTabbarBagIcon } from "../icons/tabbar";
  *   variant does, so it tracks `bg-primary`'s own flip and stays visible in
  *   both themes.
  * - `NavigationBarBagItem`'s focus ring is a plain `ring-white`, not
- *   `ring-inverted-foreground` — its `#001e6b` background is a fixed
- *   literal that does *not* tonal-flip with theme (see above), so pairing
- *   it with a ring color that does would go transparent-on-navy in dark
- *   mode (~1.1:1). A fixed light ring against this fixed dark bg stays
+ *   `ring-inverted-foreground` — its background (`primary-active`, when
+ *   non-empty) is the *same* blue-10 value in both light and dark mode
+ *   (unlike most Alias colors, this one doesn't tonal-flip), so pairing it
+ *   with a ring color that does would go transparent-on-navy in dark mode
+ *   (~1.1:1). A fixed light ring against this fixed-value background stays
  *   correct in both themes precisely because neither side moves.
  */
-const NAVBAR_DECORATIVE_600 = "text-[#001e6b]";
 
 const NavigationBar = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
   ({ className, children, "aria-label": ariaLabel = "Navegação principal", ...props }, ref) => (
@@ -105,7 +110,7 @@ const NavigationBarItem = React.forwardRef<HTMLButtonElement, NavigationBarItemP
         aria-hidden
         className={cn(
           "relative flex size-6 items-center justify-center [&_svg]:size-6",
-          active ? NAVBAR_DECORATIVE_600 : "text-primary-foreground"
+          active ? "text-primary-active" : "text-primary-foreground"
         )}
       >
         {dot && (
@@ -117,13 +122,13 @@ const NavigationBarItem = React.forwardRef<HTMLButtonElement, NavigationBarItemP
         <span
           className={cn(
             "text-2xs leading-none",
-            active ? cn(NAVBAR_DECORATIVE_600, "font-semibold") : "font-medium text-primary-foreground"
+            active ? "font-semibold text-primary-active" : "font-medium text-primary-foreground"
           )}
         >
           {label}
           {dot && <span className="sr-only"> — novidade</span>}
         </span>
-        {active && <span className="h-px w-2 rounded-full bg-[#001e6b]" aria-hidden />}
+        {active && <span className="h-px w-2 rounded-full bg-primary-active" aria-hidden />}
       </span>
     </button>
   )
@@ -138,10 +143,10 @@ export interface NavigationBarBagItemProps extends React.ButtonHTMLAttributes<HT
    * Whether the cart screen is the current one. Figma's sample frame never
    * showed this slot as "active" (it only ever showed the fixed dark bg
    * with items in it), so there's no confirmed darker shade to reference —
-   * darkens the same `#001e6b` via `brightness-90` rather than guessing a
-   * new literal hex, and reuses the same underline indicator
-   * `NavigationBarItem` shows when `active`. Revisit once design has an
-   * actual "Sacola active" state.
+   * darkens `bg-primary-active` a step further via `brightness-90` rather
+   * than guessing a new literal hex, and reuses the same underline
+   * indicator `NavigationBarItem` shows when `active`. Revisit once design
+   * has an actual "Sacola active" state.
    */
   active?: boolean;
 }
@@ -169,7 +174,7 @@ const NavigationBarBagItem = React.forwardRef<HTMLButtonElement, NavigationBarBa
         aria-current={active ? "page" : undefined}
         className={cn(
           "flex flex-1 flex-col items-center justify-center gap-1 py-2",
-          isEmpty ? "bg-primary" : cn("bg-[#001e6b]", active && "brightness-90"),
+          isEmpty ? "bg-primary" : cn("bg-primary-active", active && "brightness-90"),
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
           isEmpty ? "focus-visible:ring-inverted-foreground" : "focus-visible:ring-white",
           className
@@ -180,12 +185,12 @@ const NavigationBarBagItem = React.forwardRef<HTMLButtonElement, NavigationBarBa
           aria-hidden
           className={cn(
             "relative flex size-6 items-center justify-center [&_svg]:size-6",
-            isEmpty ? (active ? NAVBAR_DECORATIVE_600 : "text-primary-foreground") : "text-primary"
+            isEmpty ? (active ? "text-primary-active" : "text-primary-foreground") : "text-primary"
           )}
         >
           {icon ?? <DakiTabbarBagIcon />}
           {count != null && (
-            <span className="absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-sm border border-[#001e6b] bg-background px-1 text-[10px] font-medium leading-none text-foreground">
+            <span className="absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-sm border border-primary-active bg-background px-1 text-[10px] font-medium leading-none text-foreground">
               {formatCount(count)}
             </span>
           )}
@@ -195,7 +200,7 @@ const NavigationBarBagItem = React.forwardRef<HTMLButtonElement, NavigationBarBa
             className={cn(
               "text-2xs leading-none",
               isEmpty && active
-                ? cn(NAVBAR_DECORATIVE_600, "font-semibold")
+                ? "font-semibold text-primary-active"
                 : "font-medium text-primary-foreground"
             )}
           >
@@ -204,7 +209,7 @@ const NavigationBarBagItem = React.forwardRef<HTMLButtonElement, NavigationBarBa
           </span>
           {active && (
             <span
-              className={cn("h-px w-2 rounded-full", isEmpty ? "bg-[#001e6b]" : "bg-white")}
+              className={cn("h-px w-2 rounded-full", isEmpty ? "bg-primary-active" : "bg-white")}
               aria-hidden
             />
           )}
