@@ -42,3 +42,18 @@ export const ChevronUpIcon = ({ size, color }: Props) => (
 export const ChevronDownIcon = ({ size, color }: Props) => (
   <S size={size}><Path d="m6 9 6 6 6-6" {...stroke(color)} /></S>
 );
+
+/* -------- ProductCard icon set -------- */
+export const PlusIcon = ({ size, color }: Props) => (
+  <S size={size}><Path d="M12 5v14M5 12h14" {...stroke(color)} /></S>
+);
+export const MinusIcon = ({ size, color }: Props) => (
+  <S size={size}><Path d="M5 12h14" {...stroke(color)} /></S>
+);
+export const PackageIcon = ({ size, color }: Props) => (
+  <S size={size}>
+    <Path d="M3 7 12 3l9 4-9 4-9-4Z" {...stroke(color)} />
+    <Path d="M3 7v10l9 4 9-4V7" {...stroke(color)} />
+    <Path d="M12 11v10" {...stroke(color)} />
+  </S>
+);

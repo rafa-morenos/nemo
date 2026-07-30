@@ -21,6 +21,25 @@ export {
   type TaskItem,
   type TaskStatus,
 } from "./components/kanban-card";
+export {
+  ProductCard,
+  ProductCardBody,
+  ProductCardMedia,
+  ProductCardTitle,
+  ProductCardTags,
+  ProductCardPill,
+  ProductCardLocation,
+  ProductCardText,
+  ProductCardSeparator,
+  ProductCardFooter,
+  ProductCardStepper,
+  ProductCardWithBadges,
+  type ProductCardTagsProps,
+  type ProductCardPillProps,
+  type ProductCardTextProps,
+  type ProductCardStepperProps,
+  type ProductCardWithBadgesProps,
+} from "./components/product-card";
 
 // shadcn component set (Nemo-themed)
 export * from "./components/accordion";
