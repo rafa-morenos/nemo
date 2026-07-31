@@ -42,6 +42,10 @@ export const ChevronUpIcon = ({ size, color }: Props) => (
 export const ChevronDownIcon = ({ size, color }: Props) => (
   <S size={size}><Path d="m6 9 6 6 6-6" {...stroke(color)} /></S>
 );
+/** MenuItem's default trailing affordance — no ChevronRight existed in this set yet. */
+export const ChevronRightIcon = ({ size, color }: Props) => (
+  <S size={size}><Path d="m9 18 6-6-6-6" {...stroke(color)} /></S>
+);
 
 /* -------- ProductCard icon set -------- */
 export const PlusIcon = ({ size, color }: Props) => (
