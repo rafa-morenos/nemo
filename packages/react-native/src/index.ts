@@ -27,3 +27,13 @@ export type {
   ProductCardStepperProps,
   ProductCardWithBadgesProps,
 } from "./ProductCard";
+export { NavigationBar, NavigationBarItem, NavigationBarBagItem } from "./NavigationBar";
+export type { NavigationBarProps, NavigationBarItemProps, NavigationBarBagItemProps } from "./NavigationBar";
+export {
+  TabbarHomeIcon,
+  TabbarCategoriesIcon,
+  TabbarSearchIcon,
+  TabbarOrdersIcon,
+  TabbarUserIcon,
+  TabbarBagIcon,
+} from "./icons";
