@@ -9,6 +9,7 @@ Design system multiplataforma. **Uma fonte de tokens (Figma) → web (shadcn/ui 
 - `packages/web` — Storybook + componentes React (shadcn) + `tailwind.preset.js`. `src/icons/` — lib de ícones `icons-DakiApp` (assets reais do Figma, ver Status).
 - `packages/react-native`, `packages/flutter` — espelhos (mesmos tokens gerados).
 - `preview/nemo-artifact.html` + `build-artifact.mjs` — showcase estático (Artifact).
+- `docs/convencoes-e-boas-praticas.md` — contrato definitivo de convenções (nomenclatura, contrato de props, tokens, testes, Storybook, acessibilidade). `docs/debitos-tecnicos.md` — backlog de código a atualizar para conformar com esse contrato. `docs/perguntas-em-aberto.md` — perguntas sem decisão ainda, que exigem alinhamento com o time (não decidíveis só a partir do código). `docs/nemo-comparativo-convencoes.md` — rationale histórico (comparação com a Jake), não é mais o contrato a seguir.
 
 ## Comandos
 ```bash
@@ -32,7 +33,7 @@ Storybook: **sempre** via `preview_start({name:"storybook"})` (nunca `npm` diret
 - **Preset Tailwind** (`packages/web/tailwind.preset.js`) mapeia os papéis do shadcn → tokens reais: `bg-primary`→`interactive-accent-primary-main`, `bg-background`→`surface-neutral-primary`, `text-foreground`→`text-neutral-primary`, `border-border`→`border-neutral-main`, `bg-card`→`surface-neutral-tertiary`, feedback `destructive/success/warning`→`icon-semantic-*`, e `sidebar-*`. Dark via classe `.dark`.
 
 ## Convenção pra adicionar um componente (shadcn-style)
-1. `packages/web/src/components/<nome>.tsx` — source canônico do shadcn (New-York). Únicas mudanças: `import { cn } from "../lib/utils"` (relativo), ícones de `lucide-react`, cross-imports relativos (`"./button"`). Manter as classes de papel do shadcn (o preset tematiza). **Sem** `"use client"`.
+1. `packages/web/src/components/<nome>.tsx` — source canônico do shadcn (New-York). Únicas mudanças: `import { cn } from "../lib/utils"` (relativo), ícones de `lucide-react`, cross-imports relativos (`"./button"`). Manter as classes de papel do shadcn (o preset tematiza). **Sem** `"use client"`. Se o vocabulário do shadcn colidir com uma decisão de nomenclatura já fechada do Nemo (ex.: `variant: "default"` vs. `normal`), não editar o valor no arquivo vendored — usar o wrapper de contrato (`docs/convencoes-e-boas-praticas.md` §2.1): uma camada fina na fronteira pública traduz o nome do Nemo pro nome interno do shadcn, mantendo o arquivo resincronizável via `npx shadcn add` sem reconciliação manual.
 2. `<nome>.stories.tsx` — story com `tags: ["autodocs"]`, exemplos em pt-BR com contexto Daki (pedidos/entrega).
 3. Exportar em `packages/web/src/index.ts` (`export * from "./components/<nome>"`).
 4. Se a lib for nova, adicionar em `packages/web/package.json` + `npm install` + reiniciar o Storybook.

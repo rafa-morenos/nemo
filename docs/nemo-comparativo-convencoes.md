@@ -1,5 +1,9 @@
 # Comparativo — Convenções herdadas do Jake × estado atual do Nemo
 
+> **Este documento é histórico/rationale.** As decisões e perguntas em aberto que ele levanta
+> (seção 2, itens ⚠️, e o backlog no fim) foram todas fechadas em
+> [`convencoes-e-boas-praticas.md`](./convencoes-e-boas-praticas.md) — esse é o guia de convenções definitivo a seguir.
+
 > Cruza a doc de convenções e boas práticas extraídas do DS antigo (Jake), em
 > [`docs/convencoes-jake-legado/`](./convencoes-jake-legado/README.md), com o
 > estado real do Nemo (código em `packages/web|react-native|flutter`, tokens,
@@ -129,17 +133,6 @@
 
 ## Resumo acionável (backlog derivado)
 
-| Prioridade | Item | Escopo |
-|---|---|---|
-| 🔴 Alta | Cobertura de testes (web/RN/Flutter) | Novo ferramental + specs por componente |
-| 🔴 Alta | Renomear prop `type` do Badge → `variant`/`appearance` | 3 plataformas |
-| 🔴 Alta | Decidir `default` vs `normal` e aplicar consistente | Contrato + código |
-| 🔴 Alta | Padronizar `danger` → `critical` | Flutter `AssignTone` |
-| 🟡 Média | Fechar prefixo `Nemo` no Flutter | Flutter (Kanban/ProductCard/TaskItem) |
-| 🟡 Média | Decidir e documentar convenção `is` em booleanos | Contrato + código |
-| 🟡 Média | `.md` por componente + `components/README.md` índice | Documentação |
-| 🟡 Média | Padronizar story `Playground` | Storybook |
-| 🟡 Média | Portar acervo de ícones para RN/Flutter | RN/Flutter |
-| 🟡 Média | Validar baseline/line-height nas 3 plataformas | QA de tipografia |
-| 🟢 Baixa | Ferramental mínimo (prettier/eslint/editorconfig/commitlint/CI/PR template) | Repo |
-| 🟢 Baixa | Fechar decisões em aberto §14 (children/label, icon prop, interactive em texto, deps) | Contrato |
+> Este backlog foi substituído por [`debitos-tecnicos.md`](./debitos-tecnicos.md), já reordenado
+> conforme as decisões fechadas em [`convencoes-e-boas-praticas.md`](./convencoes-e-boas-praticas.md)
+> — mantido aqui só como registro do estado no momento deste comparativo.
