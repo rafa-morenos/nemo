@@ -187,16 +187,15 @@ const SidebarTrigger = React.forwardRef<
       ref={ref}
       variant="ghost"
       size="icon"
+      icon={<PanelLeft />}
+      aria-label="Alternar sidebar"
       className={cn("h-7 w-7", className)}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
-    >
-      <PanelLeft />
-      <span className="sr-only">Alternar sidebar</span>
-    </Button>
+    />
   );
 });
 SidebarTrigger.displayName = "SidebarTrigger";
@@ -346,24 +345,32 @@ const sidebarMenuButtonVariants = cva(
   }
 );
 
+/** Public contract (§2.1/§3.3a): `cva` above stays shadcn's own `"default"` — `SidebarMenuBadge`'s CSS also keys off the raw `data-size="default"` DOM attribute (see below), so the translation to `"normal"` happens only at the prop boundary, never in what's written to the DOM/`cva`. */
+export type SidebarMenuButtonVariant = "normal" | "outline";
+export type SidebarMenuButtonSize = "normal" | "sm" | "lg";
+
 const SidebarMenuButton = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<"button"> & {
     asChild?: boolean;
     isActive?: boolean;
     tooltip?: string | React.ComponentProps<typeof TooltipContent>;
-  } & VariantProps<typeof sidebarMenuButtonVariants>
->(({ asChild = false, isActive = false, variant = "default", size = "default", tooltip, className, ...props }, ref) => {
+    variant?: SidebarMenuButtonVariant;
+    size?: SidebarMenuButtonSize;
+  }
+>(({ asChild = false, isActive = false, variant = "normal", size = "normal", tooltip, className, ...props }, ref) => {
   const Comp = asChild ? Slot : "button";
   const { isMobile, state } = useSidebar();
+  const internalVariant = variant === "normal" ? "default" : variant;
+  const internalSize = size === "normal" ? "default" : size;
 
   const button = (
     <Comp
       ref={ref}
       data-sidebar="menu-button"
-      data-size={size}
+      data-size={internalSize}
       data-active={isActive}
-      className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+      className={cn(sidebarMenuButtonVariants({ variant: internalVariant, size: internalSize }), className)}
       {...props}
     />
   );

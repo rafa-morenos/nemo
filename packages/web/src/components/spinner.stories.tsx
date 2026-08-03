@@ -18,8 +18,7 @@ export const Sizes: Story = {
 
 export const InButton: Story = {
   render: () => (
-    <Button disabled>
-      <Spinner className="size-4 text-primary-foreground" />
+    <Button disabled icon={<Spinner className="size-4 text-primary-foreground" />}>
       Processando…
     </Button>
   ),

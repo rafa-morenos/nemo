@@ -95,7 +95,7 @@ export type ProductCardPillProps = ViewProps & {
 /**
  * Neutral gray pill (`surface.neutral.secondary`/`text.neutral.primary`) — same look
  * `KanbanCard`'s local `Pill` uses. Kept scoped to the ProductCard family rather than
- * promoted to `Badge`, since `Badge` `color="default"` is intentionally the brand-strong
+ * promoted to `Badge`, since `Badge` `color="normal"` is intentionally the brand-strong
  * fill, not a neutral chip. `icon`/`dot` mirror `Badge`'s own props/rendering so a
  * neutral pill can still show the icon-dot-label anatomy Figma's tags use.
  */

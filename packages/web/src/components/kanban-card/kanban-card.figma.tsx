@@ -47,7 +47,7 @@ figma.connect(KanbanCard, `${FILE}?node-id=2965-110864`, {
   props: {
     // Scheduled encodes urgency for Stacking cards.
     urgency: figma.enum("Scheduled", {
-      Default: "default",
+      Default: "normal",
       Waning: "waning",
       Critical: "critical",
     }),

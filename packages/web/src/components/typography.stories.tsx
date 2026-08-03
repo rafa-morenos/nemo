@@ -12,10 +12,10 @@ const meta = {
     },
     tone: {
       control: "select",
-      options: ["default", "secondary", "muted", "brand", "decorative", "danger", "success", "onBrand"],
+      options: ["normal", "secondary", "muted", "brand", "decorative", "danger", "success", "onBrand"],
     },
   },
-  args: { children: "Entrega em minutos", variant: "body", tone: "default" },
+  args: { children: "Entrega em minutos", variant: "body", tone: "normal" },
 } satisfies Meta<typeof Text>;
 
 export default meta;
@@ -41,7 +41,7 @@ export const Scale: Story = {
 export const Tones: Story = {
   render: () => (
     <div className="flex flex-col gap-2">
-      <Text variant="h3" tone="default">default · texto primário</Text>
+      <Text variant="h3" tone="normal">normal · texto primário</Text>
       <Text variant="h3" tone="secondary">secondary · texto de apoio</Text>
       <Text variant="h3" tone="brand">brand · mar azulão</Text>
       <Text variant="h3" tone="decorative">decorative · navy #001e6b</Text>

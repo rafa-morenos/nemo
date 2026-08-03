@@ -41,12 +41,11 @@ const Attachment = React.forwardRef<HTMLDivElement, AttachmentProps>(
             type="button"
             variant="ghost"
             size="icon"
+            icon={<X className="h-4 w-4" />}
+            aria-label="Remove attachment"
             className="h-6 w-6 shrink-0 rounded-md"
             onClick={onRemove}
-          >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Remove attachment</span>
-          </Button>
+          />
         ) : null}
       </div>
     );

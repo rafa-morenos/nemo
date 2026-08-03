@@ -5,11 +5,11 @@ import { useNemoTheme, type NemoTheme } from "./theme";
 /**
  * Nemo Badge — RN port of the web Badge (the unified Tag/Chip). Same prop
  * surface as `packages/web/src/components/badge.tsx`: `color` × `variant` cover
- * the Figma matrix (default/success/warning/critical/info/disabled/inverted ×
+ * the Figma matrix (normal/success/warning/critical/info/disabled/inverted ×
  * filled/outline/ghost/solid), plus `size` (sm/md), `shape` (pill/square) and
  * `count` (numeric counter — counter-tag/picking-amount).
  */
-export type BadgeColor = "default" | "success" | "warning" | "critical" | "info" | "disabled" | "inverted";
+export type BadgeColor = "normal" | "success" | "warning" | "critical" | "info" | "disabled" | "inverted";
 export type BadgeVariant = "filled" | "outline" | "ghost" | "solid";
 export type BadgeSize = "sm" | "md";
 export type BadgeShape = "pill" | "square";
@@ -50,7 +50,7 @@ function bgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
   if (variant === "outline" || variant === "ghost") return "transparent";
   const solid = variant === "solid";
   switch (color) {
-    case "default":
+    case "normal":
       return t.color.interactive.accent.primary.main;
     case "success":
       return solid ? t.color.icon.semantic.success : t.color.surface.semantic.success;
@@ -71,7 +71,7 @@ function bgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
 function fgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
   const solid = variant === "solid";
   switch (color) {
-    case "default":
+    case "normal":
       return variant === "outline" || variant === "ghost" ? t.color.text.accent.primary : t.color.interactive.accent.primary.inverted;
     case "success":
       return solid ? t.color.text.neutral.inverted : t.color.text.semantic.success;
@@ -91,7 +91,7 @@ function fgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
 function borderFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
   if (variant !== "outline") return "transparent";
   switch (color) {
-    case "default":
+    case "normal":
       return t.color.border.accent.primary;
     case "success":
       return t.color.border.semantic.success;
@@ -109,7 +109,7 @@ function borderFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
 }
 
 export function Badge({
-  color = "default",
+  color = "normal",
   variant = "filled",
   size,
   shape = "pill",

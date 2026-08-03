@@ -30,21 +30,32 @@ const itemVariants = cva(
   }
 );
 
+/** Public contract (§2.1/§3.3a): `cva` above stays shadcn's own `"default"`; `Item` exposes `"normal"` instead, translated right before the `cva` call. */
+export type ItemVariant = "normal" | "outline" | "muted";
+export type ItemSize = "normal" | "sm";
+
 export interface ItemProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof itemVariants> {}
+    Omit<VariantProps<typeof itemVariants>, "variant" | "size"> {
+  variant?: ItemVariant;
+  size?: ItemSize;
+}
 
 const Item = React.forwardRef<HTMLDivElement, ItemProps>(
-  ({ className, variant, size, ...props }, ref) => (
-    <div
-      ref={ref}
-      data-slot="item"
-      data-variant={variant}
-      data-size={size}
-      className={cn(itemVariants({ variant, size }), className)}
-      {...props}
-    />
-  )
+  ({ className, variant = "normal", size = "normal", ...props }, ref) => {
+    const internalVariant = variant === "normal" ? "default" : variant;
+    const internalSize = size === "normal" ? "default" : size;
+    return (
+      <div
+        ref={ref}
+        data-slot="item"
+        data-variant={internalVariant}
+        data-size={internalSize}
+        className={cn(itemVariants({ variant: internalVariant, size: internalSize }), className)}
+        {...props}
+      />
+    );
+  }
 );
 Item.displayName = "Item";
 
