@@ -173,8 +173,20 @@ nemo/
 │  │     └─ lib/              cn()
 │  ├─ react-native/           NemoThemeProvider + KanbanCard/KanbanTaskCard (RN, tokens gerados)
 │  └─ flutter/                lib/ NemoTokens + kanban_card.dart + kanban_task_card.dart
-└─ preview/index.html         playground estático light/dark
+├─ preview/index.html         playground estático light/dark
+└─ docs/                      convenções, débitos técnicos e histórico de decisões
 ```
+
+## Convenções e boas práticas
+
+O contrato de convenções do Nemo (nomenclatura, contrato de props, tokens, testes, Storybook,
+acessibilidade etc.) vive em [`docs/convencoes-e-boas-praticas.md`](./docs/convencoes-e-boas-praticas.md).
+O backlog de código que ainda precisa ser ajustado para conformar com esse contrato está em
+[`docs/debitos-tecnicos.md`](./docs/debitos-tecnicos.md). Perguntas que ainda não têm decisão —
+por exigirem alinhamento com o time, não só leitura de código — ficam em
+[`docs/perguntas-em-aberto.md`](./docs/perguntas-em-aberto.md). O rationale histórico (comparação
+com o design system anterior, a Jake) está em
+[`docs/nemo-comparativo-convencoes.md`](./docs/nemo-comparativo-convencoes.md).
 
 ## Próximos passos sugeridos
 
