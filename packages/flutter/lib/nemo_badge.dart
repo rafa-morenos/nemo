@@ -6,14 +6,14 @@ import 'nemo_tokens.dart';
 /// `package:flutter/material.dart` widget of the same name.
 ///
 /// Same prop surface as `packages/web/src/components/badge.tsx`: `color` ×
-/// `type` cover the Figma matrix (defaultColor/success/warning/critical/info/
+/// `variant` cover the Figma matrix (defaultColor/success/warning/critical/info/
 /// disabled/inverted × filled/outline/ghost/solid), plus `size` (sm/md),
 /// `shape` (pill/square) and `count` (numeric counter — counter-tag/
 /// picking-amount).
 
 enum NemoBadgeColor { defaultColor, success, warning, critical, info, disabled, inverted }
 
-enum NemoBadgeType { filled, outline, ghost, solid }
+enum NemoBadgeVariant { filled, outline, ghost, solid }
 
 enum NemoBadgeSize { sm, md }
 
@@ -23,7 +23,7 @@ class NemoBadge extends StatelessWidget {
   const NemoBadge({
     super.key,
     this.color = NemoBadgeColor.defaultColor,
-    this.type = NemoBadgeType.filled,
+    this.variant = NemoBadgeVariant.filled,
     this.size,
     this.shape = NemoBadgeShape.pill,
     this.icon,
@@ -33,7 +33,7 @@ class NemoBadge extends StatelessWidget {
   });
 
   final NemoBadgeColor color;
-  final NemoBadgeType type;
+  final NemoBadgeVariant variant;
   final NemoBadgeSize? size;
   final NemoBadgeShape shape;
   final IconData? icon;
@@ -52,7 +52,7 @@ class NemoBadge extends StatelessWidget {
 
   NemoBadgeSize get _effSize => size ?? (_counterOnly ? NemoBadgeSize.sm : NemoBadgeSize.md);
 
-  bool get _solid => type == NemoBadgeType.solid;
+  bool get _solid => variant == NemoBadgeVariant.solid;
 
   // "solid" backgrounds for success/warning/critical pair the icon-tone bg
   // (colorIconSemantic*, same tone button.tsx's destructive variant uses)
@@ -63,7 +63,7 @@ class NemoBadge extends StatelessWidget {
   // near-black in dark mode) as the icon tone does, so contrast holds in
   // both themes with real aliases — no pinned primitive needed.
   Color get _bg {
-    if (type == NemoBadgeType.outline || type == NemoBadgeType.ghost) return Colors.transparent;
+    if (variant == NemoBadgeVariant.outline || variant == NemoBadgeVariant.ghost) return Colors.transparent;
     switch (color) {
       case NemoBadgeColor.defaultColor:
         return NemoTokens.colorInteractiveAccentPrimaryMain;
@@ -84,7 +84,7 @@ class NemoBadge extends StatelessWidget {
   }
 
   Color get _fg {
-    final outlineOrGhost = type == NemoBadgeType.outline || type == NemoBadgeType.ghost;
+    final outlineOrGhost = variant == NemoBadgeVariant.outline || variant == NemoBadgeVariant.ghost;
     switch (color) {
       case NemoBadgeColor.defaultColor:
         return outlineOrGhost ? NemoTokens.colorTextAccentPrimary : NemoTokens.colorInteractiveAccentPrimaryInverted;
@@ -104,7 +104,7 @@ class NemoBadge extends StatelessWidget {
   }
 
   Color get _border {
-    if (type != NemoBadgeType.outline) return Colors.transparent;
+    if (variant != NemoBadgeVariant.outline) return Colors.transparent;
     switch (color) {
       case NemoBadgeColor.defaultColor:
         return NemoTokens.colorBorderAccentPrimary;
@@ -161,7 +161,7 @@ class NemoBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: _bg,
         borderRadius: BorderRadius.circular(shape == NemoBadgeShape.pill ? NemoTokens.radiusPill : NemoTokens.radiusMd),
-        border: type == NemoBadgeType.outline ? Border.all(color: _border) : null,
+        border: variant == NemoBadgeVariant.outline ? Border.all(color: _border) : null,
       ),
       child: Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: children),
     );

@@ -5,7 +5,7 @@ export type { KanbanCardProps, KanbanUrgency, KanbanMode, KanbanTimer, KanbanAss
 export { KanbanTaskCard } from "./KanbanTaskCard";
 export type { KanbanTaskCardProps, TaskItem, TaskStatus } from "./KanbanTaskCard";
 export { Badge } from "./Badge";
-export type { BadgeProps, BadgeColor, BadgeType, BadgeSize, BadgeShape } from "./Badge";
+export type { BadgeProps, BadgeColor, BadgeVariant, BadgeSize, BadgeShape } from "./Badge";
 export {
   ProductCard,
   ProductCardBody,
