@@ -98,10 +98,10 @@
 5. **Prefixo `Nemo` incompleto no Flutter** (§3.1) — só `NemoBadge`/`NemoTokens`
    têm; `KanbanCard`, `KanbanTaskCard`, `ProductCard*`, `TaskItem` **não**.
    Decidir a regra e aplicar.
-6. **Booleanos sem prefixo `is`** (§3.2, §15) — `dot`, `loading`, `disabled`,
-   `asChild`. A doc decidiu `is` (e alerta: "contrato decidido mas nunca
-   aplicado" é débito). Decidir por componente (exceção nativa vale para
-   `disabled`) e **documentar**, em vez de deixar implícito.
+6. ~~**Booleanos sem prefixo `is`**~~ — **Resolvido em `convencoes-e-boas-praticas.md` §3.2**: decisão final foi
+   **não** adotar `is` como prefixo obrigatório (reverte a leitura deste comparativo e a decisão original
+   do fórum de DS do Jake registrada em `convencoes-jake-legado/03-nomenclatura.md` §3.2) — seguir o idioma
+   nativo da plataforma/prop (`dot`, `loading`, `disabled`, `asChild` continuam sem prefixo).
 7. **`.md` por componente + índice central** (§9) — não existe nenhum
    (`Visão Geral → Uso → Props → Exemplos → Best Practices → Relacionados`, +
    `components/README.md` com tabela Componente × Plataforma). A prosa do
@@ -122,12 +122,11 @@
     commitlint, CI mínima (build:tokens + typecheck + build-storybook), PR
     template. A parte pesada (2 aprovadores/fórum) fica na seção 1; o básico faz
     sentido.
-12. **Decisões em aberto §14 a fechar explicitamente para o Nemo:** `children`
-    vs `label` (parcialmente resolvido caso a caso — ProductCard virou compound
-    `data-slot`; documentar como decisão); modelo da prop de ícone (Nemo
-    escolheu `ReactNode` de fato — formalizar); uso de `interactive-*` em texto
-    (indefinido); `peerDependency` vs bundled (react é peer; `cva`/tailwind
-    embutidos — documentar).
+12. ~~**Decisões em aberto §14 a fechar explicitamente para o Nemo**~~ — **Todas resolvidas em
+    `convencoes-e-boas-praticas.md`**: `children` vs `label` depende do tipo de componente, contrato
+    restrito em atômico vs. livre em composto (§4.3); modelo da prop de ícone é `ReactNode`/`Widget` livre
+    (§4.4); `interactive-*` em texto é **nunca** — reservado a superfície/borda/interação (§6);
+    `peerDependency` vs bundled já documentado (react/react-dom peer, utilitários de build bundled, §4.5).
 
 ---
 
