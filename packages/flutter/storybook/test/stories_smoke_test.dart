@@ -10,7 +10,14 @@ import 'package:widgetbook/widgetbook.dart';
 // Espelha `WidgetbookNode.path` (lowercase, espaço vira hífen) — usado só pra
 // montar a `initialRoute` de cada teste isolado; não dá pra ler `.path` de
 // verdade antes de montar a árvore real (o parent só é setado dentro de
-// `_WidgetbookState.initState`, que roda depois do `pumpWidget`).
+// `_WidgetbookState.initState`, que roda depois do `pumpWidget`). A rota do
+// Widgetbook não usa segmentos de path — o node selecionado vem do query
+// param `path` (`AppRouteConfig.path => uri.queryParameters['path']`, usado
+// como chave em `WidgetbookRoot.table`). Uma rota que não bate com nenhum
+// node não dá erro nenhum — só mostra a `DefaultHomePage` silenciosamente
+// (por isso o teste também confere que essa página de boas-vindas NÃO
+// apareceu, pra não passar de mentirinha sem nunca chamar o builder de
+// verdade).
 String _slug(String name) => name.toLowerCase().replaceAll(' ', '-');
 
 void main() {
@@ -31,10 +38,11 @@ void main() {
           addTearDown(tester.view.resetPhysicalSize);
           addTearDown(tester.view.resetDevicePixelRatio);
 
+          final path = '${_slug(entry.key)}/${_slug(useCase.name)}';
           await tester.pumpWidget(
             Widgetbook.material(
               appBuilder: nemoAppBuilder,
-              initialRoute: '/${_slug(entry.key)}/${_slug(useCase.name)}',
+              initialRoute: '/?path=$path',
               directories: [
                 WidgetbookComponent(name: entry.key, useCases: [useCase]),
               ],
@@ -42,6 +50,13 @@ void main() {
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
+          expect(
+            find.text('Welcome to Widgetbook'),
+            findsNothing,
+            reason:
+                'a rota "$path" não bateu com nenhum node — caiu na tela de '
+                'boas-vindas em vez de renderizar o use case de verdade',
+          );
         },
       );
     }

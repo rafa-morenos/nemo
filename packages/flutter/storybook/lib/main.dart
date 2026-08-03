@@ -17,10 +17,15 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      // `appBuilder` troca o `MaterialApp` genérico do Widgetbook pelo
-      // `nemoAppBuilder` (fundo neutro secundário + fonte Inter default),
-      // igual ao `wrapperBuilder` que a versão anterior (storybook_flutter)
-      // usava.
+      // Abre direto no primeiro use case em vez da tela de boas-vindas do
+      // Widgetbook. A rota do Widgetbook não usa segmentos de path (`/x/y`)
+      // — o node selecionado vem do query param `path` (`AppRouteConfig.path
+      // => uri.queryParameters['path']`, usado como chave em
+      // `WidgetbookRoot.table`); o slug em si espelha `WidgetbookNode.path`
+      // (lowercase, espaço vira hífen).
+      initialRoute: '/?path=badge/playground',
+      // `appBuilder` troca o `MaterialApp` genérico do Widgetbook por um com
+      // o fundo neutro secundário e a fonte Inter default do Nemo.
       appBuilder: nemoAppBuilder,
       // Sem ViewportAddon/DeviceFrameAddon: os componentes do Nemo
       // (KanbanCard/ProductCard) são bem mais largos que um preview de
