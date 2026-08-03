@@ -100,8 +100,8 @@ export interface ProductCardPillProps extends React.HTMLAttributes<HTMLSpanEleme
 /**
  * Neutral gray pill (`bg-secondary`/`text-foreground`) — same look `KanbanCard`'s local
  * `Pill` uses. Kept scoped to the ProductCard family rather than promoted to `Badge`,
- * since `Badge` `color="default"` is intentionally the brand-strong fill, not a neutral
- * chip. `icon`/`dot` mirror `Badge`'s own props/rendering so a neutral pill can still
+ * since `Badge`'s default/brand color role is intentionally the brand-strong fill, not a
+ * neutral chip. `icon`/`dot` mirror `Badge`'s own props/rendering so a neutral pill can still
  * show the icon-dot-label anatomy Figma's tags use.
  */
 const ProductCardPill = React.forwardRef<HTMLSpanElement, ProductCardPillProps>(
