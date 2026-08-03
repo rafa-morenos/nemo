@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nemo_flutter/kanban_task_card.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 Widget _fixedWidth(Widget child) => SizedBox(width: 420, child: child);
 
-Story kanbanTaskCardStory(String name) => Story(
-  name: name,
+WidgetbookUseCase kanbanTaskCardUseCase() => WidgetbookUseCase(
+  name: 'Default',
   builder: (context) => _fixedWidth(
     const KanbanTaskCard(
       title: 'Fazer inventário da loja',
@@ -40,8 +40,8 @@ Story kanbanTaskCardStory(String name) => Story(
   ),
 );
 
-Story kanbanTaskCardCollapsedStory(String name) => Story(
-  name: name,
+WidgetbookUseCase kanbanTaskCardCollapsedUseCase() => WidgetbookUseCase(
+  name: 'Collapsed',
   builder: (context) => _fixedWidth(
     const KanbanTaskCard(
       collapsed: true,

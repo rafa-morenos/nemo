@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nemo_flutter/kanban_card.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 const _shopper = KanbanAssignment(label: 'Shopper', value: 'Ulisses Camilo');
 const _rider = KanbanAssignment(label: 'Rider: Modo', value: 'Ofertando');
 
 Widget _fixedWidth(Widget child) => SizedBox(width: 400, child: child);
 
-Story kanbanCardOrderStory(String name) => Story(
-  name: name,
+WidgetbookUseCase kanbanCardOrderUseCase() => WidgetbookUseCase(
+  name: 'Order',
   builder: (context) => _fixedWidth(
     const KanbanCard(
       variant: KanbanVariant.order,
@@ -24,8 +24,8 @@ Story kanbanCardOrderStory(String name) => Story(
   ),
 );
 
-Story kanbanCardOrderScheduledStory(String name) => Story(
-  name: name,
+WidgetbookUseCase kanbanCardOrderScheduledUseCase() => WidgetbookUseCase(
+  name: 'Order scheduled',
   builder: (context) => _fixedWidth(
     const KanbanCard(
       variant: KanbanVariant.order,
@@ -42,11 +42,11 @@ Story kanbanCardOrderScheduledStory(String name) => Story(
   ),
 );
 
-Story kanbanCardStackingStory(
+WidgetbookUseCase kanbanCardStackingUseCase(
   String name, {
   required KanbanUrgency urgency,
   required AssignTone riderTone,
-}) => Story(
+}) => WidgetbookUseCase(
   name: name,
   builder: (context) => _fixedWidth(
     KanbanCard(
@@ -71,8 +71,8 @@ Story kanbanCardStackingStory(
   ),
 );
 
-Story kanbanCardStackingAgendadoStory(String name) => Story(
-  name: name,
+WidgetbookUseCase kanbanCardStackingAgendadoUseCase() => WidgetbookUseCase(
+  name: 'Stacking agendado',
   builder: (context) => _fixedWidth(
     const KanbanCard(
       variant: KanbanVariant.stacking,
@@ -90,8 +90,8 @@ Story kanbanCardStackingAgendadoStory(String name) => Story(
   ),
 );
 
-Story kanbanCardStackingSuperDakiStory(String name) => Story(
-  name: name,
+WidgetbookUseCase kanbanCardStackingSuperDakiUseCase() => WidgetbookUseCase(
+  name: 'Stacking super daki',
   builder: (context) => _fixedWidth(
     const KanbanCard(
       variant: KanbanVariant.stacking,

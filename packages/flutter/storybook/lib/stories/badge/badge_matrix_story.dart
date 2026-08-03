@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nemo_flutter/nemo_badge.dart';
 import 'package:nemo_flutter/nemo_tokens.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 /// Espelha a story `Matrix` do web (`badge.stories.tsx`) — todas as
 /// combinações de `color` × `variant`, com ícone e dot, pra conferência
 /// visual rápida em bloco.
-Story badgeMatrixStory(String name) => Story(
-  name: name,
+WidgetbookUseCase badgeMatrixUseCase() => WidgetbookUseCase(
+  name: 'Matrix',
   builder: (context) => SingleChildScrollView(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nemo_flutter/product_card.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 List<Widget> _genericTags() => const [
   ProductCardPill(
@@ -23,8 +23,8 @@ Widget _genericImageBadge() => const ProductCardPill(
 
 Widget _fixedWidth(Widget child) => SizedBox(width: 320, child: child);
 
-Story productCardHorizontalStory(String name) => Story(
-  name: name,
+WidgetbookUseCase productCardHorizontalUseCase() => WidgetbookUseCase(
+  name: 'Horizontal',
   builder: (context) => _fixedWidth(
     ProductCardWithBadges(
       variant: ProductCardVariant.horizontal,
@@ -42,8 +42,8 @@ Story productCardHorizontalStory(String name) => Story(
   ),
 );
 
-Story productCardVerticalStory(String name) => Story(
-  name: name,
+WidgetbookUseCase productCardVerticalUseCase() => WidgetbookUseCase(
+  name: 'Vertical',
   builder: (context) => _fixedWidth(
     ProductCardWithBadges(
       variant: ProductCardVariant.vertical,

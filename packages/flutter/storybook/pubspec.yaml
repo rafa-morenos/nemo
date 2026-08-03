@@ -31,15 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Vendorizado (não a versão do pub.dev) — ver vendor/storybook_flutter/lib/src/plugins/layout.dart:
-  # o ícone de layout (auto/compact/expanded) do pacote original leva a uma
-  # sidebar "expanded" permanente (Contents + Knobs, 250dp fixos cada) sem
-  # NENHUM jeito de fechar em telas de celular — 500dp não cabe em ~360-430dp,
-  # o conteúdo do meio (com a barra de ícones que resolveria isso) some, e só
-  # resta hot-restart. Patch local esconde esse ícone (nunca precisamos de
-  # "expanded" aqui, é só emulador/simulador de celular).
-  storybook_flutter:
-    path: vendor/storybook_flutter
+  widgetbook: ^3.25.0
   nemo_flutter:
     path: ../
 

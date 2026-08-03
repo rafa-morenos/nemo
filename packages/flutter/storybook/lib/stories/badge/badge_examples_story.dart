@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nemo_flutter/nemo_badge.dart';
 import 'package:nemo_flutter/nemo_tokens.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 Widget _row(List<Widget> children) => Wrap(
   spacing: NemoTokens.space50,
@@ -11,8 +11,8 @@ Widget _row(List<Widget> children) => Wrap(
 );
 
 /// Sem ícone — mesma seleção de cores/labels da story `WithoutIcon` do web.
-Story badgeWithoutIconStory(String name) => Story(
-  name: name,
+WidgetbookUseCase badgeWithoutIconUseCase() => WidgetbookUseCase(
+  name: 'Without icon',
   builder: (context) => _row(const [
     NemoBadge(color: NemoBadgeColor.success, label: 'Entregue'),
     NemoBadge(color: NemoBadgeColor.warning, label: 'Atenção'),
@@ -23,8 +23,8 @@ Story badgeWithoutIconStory(String name) => Story(
 );
 
 /// Migra `DiscountTag` (Daki Web/App) → `color=critical variant=solid`.
-Story badgeDiscountTagStory(String name) => Story(
-  name: name,
+WidgetbookUseCase badgeDiscountTagUseCase() => WidgetbookUseCase(
+  name: 'Discount tag',
   builder: (context) => _row(const [
     NemoBadge(
       color: NemoBadgeColor.critical,
@@ -40,8 +40,8 @@ Story badgeDiscountTagStory(String name) => Story(
 );
 
 /// Migra `counter-tag`/`PickingAmountTags` (HUBR) → `count` sem `label`.
-Story badgeCounterStory(String name) => Story(
-  name: name,
+WidgetbookUseCase badgeCounterUseCase() => WidgetbookUseCase(
+  name: 'Counter',
   builder: (context) => _row(const [
     NemoBadge(count: 3),
     NemoBadge(count: 12, color: NemoBadgeColor.info),
@@ -52,8 +52,8 @@ Story badgeCounterStory(String name) => Story(
 );
 
 /// Chip de filtro compacto — `size=sm` + `shape=square`.
-Story badgeFilterChipStory(String name) => Story(
-  name: name,
+WidgetbookUseCase badgeFilterChipUseCase() => WidgetbookUseCase(
+  name: 'Filter chip',
   builder: (context) => _row(const [
     NemoBadge(
       size: NemoBadgeSize.sm,

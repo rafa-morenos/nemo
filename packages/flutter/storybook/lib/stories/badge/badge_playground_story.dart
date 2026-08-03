@@ -1,52 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:nemo_flutter/nemo_badge.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:widgetbook/widgetbook.dart';
 
-Story badgePlaygroundStory(String name) => Story(
-  name: name,
+WidgetbookUseCase badgePlaygroundUseCase() => WidgetbookUseCase(
+  name: 'Playground',
   builder: (context) => NemoBadge(
-    label: context.knobs.text(
+    label: context.knobs.string(
       label: 'Label',
       description: 'Conteúdo em texto do badge',
-      initial: 'Tag label',
+      initialValue: 'Tag label',
     ),
-    color: context.knobs.options(
+    color: context.knobs.object.dropdown<NemoBadgeColor>(
       label: 'Color',
-      initial: NemoBadgeColor.defaultColor,
-      options: NemoBadgeColor.values
-          .map((e) => Option(label: e.name, value: e))
-          .toList(),
+      initialOption: NemoBadgeColor.defaultColor,
+      options: NemoBadgeColor.values,
+      labelBuilder: (e) => e.name,
     ),
-    variant: context.knobs.options(
+    variant: context.knobs.object.dropdown<NemoBadgeVariant>(
       label: 'Variant',
-      initial: NemoBadgeVariant.filled,
-      options: NemoBadgeVariant.values
-          .map((e) => Option(label: e.name, value: e))
-          .toList(),
+      initialOption: NemoBadgeVariant.filled,
+      options: NemoBadgeVariant.values,
+      labelBuilder: (e) => e.name,
     ),
-    size: context.knobs.options(
+    size: context.knobs.object.dropdown<NemoBadgeSize>(
       label: 'Size',
-      initial: NemoBadgeSize.md,
-      options: NemoBadgeSize.values
-          .map((e) => Option(label: e.name, value: e))
-          .toList(),
+      initialOption: NemoBadgeSize.md,
+      options: NemoBadgeSize.values,
+      labelBuilder: (e) => e.name,
     ),
-    shape: context.knobs.options(
+    shape: context.knobs.object.dropdown<NemoBadgeShape>(
       label: 'Shape',
-      initial: NemoBadgeShape.pill,
-      options: NemoBadgeShape.values
-          .map((e) => Option(label: e.name, value: e))
-          .toList(),
+      initialOption: NemoBadgeShape.pill,
+      options: NemoBadgeShape.values,
+      labelBuilder: (e) => e.name,
     ),
-    icon: context.knobs.boolean(label: 'Icon', initial: false)
+    icon: context.knobs.boolean(label: 'Icon', initialValue: false)
         ? Icons.favorite
         : null,
-    dot: context.knobs.boolean(label: 'Dot', initial: false),
-    count: context.knobs.nullable.sliderInt(
-      label: 'Count',
-      initial: null,
-      min: 0,
-      max: 200,
-    ),
+    dot: context.knobs.boolean(label: 'Dot', initialValue: false),
+    count: context.knobs.intOrNull.slider(label: 'Count', min: 0, max: 200),
   ),
 );

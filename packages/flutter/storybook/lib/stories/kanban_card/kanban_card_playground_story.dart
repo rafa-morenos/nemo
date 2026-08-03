@@ -1,88 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:nemo_flutter/kanban_card.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:widgetbook/widgetbook.dart';
 
-Story kanbanCardPlaygroundStory(String name) => Story(
-  name: name,
+WidgetbookUseCase kanbanCardPlaygroundUseCase() => WidgetbookUseCase(
+  name: 'Playground',
   builder: (context) => SizedBox(
     width: 400,
     child: KanbanCard(
-      variant: context.knobs.options(
+      variant: context.knobs.object.dropdown<KanbanVariant>(
         label: 'Variant',
-        initial: KanbanVariant.order,
-        options: KanbanVariant.values
-            .map((e) => Option(label: e.name, value: e))
-            .toList(),
+        initialOption: KanbanVariant.order,
+        options: KanbanVariant.values,
+        labelBuilder: (e) => e.name,
       ),
-      urgency: context.knobs.options(
+      urgency: context.knobs.object.dropdown<KanbanUrgency>(
         label: 'Urgency',
-        initial: KanbanUrgency.normal,
-        options: KanbanUrgency.values
-            .map((e) => Option(label: e.name, value: e))
-            .toList(),
+        initialOption: KanbanUrgency.normal,
+        options: KanbanUrgency.values,
+        labelBuilder: (e) => e.name,
       ),
-      mode: context.knobs.options(
+      mode: context.knobs.object.dropdown<KanbanMode>(
         label: 'Mode',
-        initial: KanbanMode.core,
-        options: KanbanMode.values
-            .map((e) => Option(label: e.name, value: e))
-            .toList(),
+        initialOption: KanbanMode.core,
+        options: KanbanMode.values,
+        labelBuilder: (e) => e.name,
       ),
-      orderId: context.knobs.text(label: 'Order ID', initial: '8b81223456T'),
-      scheduled: context.knobs.boolean(label: 'Scheduled', initial: false)
-          ? context.knobs.text(
+      orderId: context.knobs.string(
+        label: 'Order ID',
+        initialValue: '8b81223456T',
+      ),
+      scheduled: context.knobs.boolean(label: 'Scheduled', initialValue: false)
+          ? context.knobs.string(
               label: 'Scheduled label',
-              initial: 'Agendado • 15:00 a 15:30',
+              initialValue: 'Agendado • 15:00 a 15:30',
             )
           : null,
       timers: [
         KanbanTimer(
-          context.knobs.text(label: 'Timer 1', initial: '2:57'),
+          context.knobs.string(label: 'Timer 1', initialValue: '2:57'),
           dot: true,
         ),
         KanbanTimer(
-          context.knobs.text(label: 'Timer 2', initial: 'ETA 45 • 00:02'),
+          context.knobs.string(
+            label: 'Timer 2',
+            initialValue: 'ETA 45 • 00:02',
+          ),
         ),
       ],
-      clientName: context.knobs.text(
+      clientName: context.knobs.string(
         label: 'Client name',
-        initial: 'Georgia P. S.',
+        initialValue: 'Georgia P. S.',
       ),
-      clientBadge: context.knobs.boolean(label: 'Client badge', initial: true)
-          ? context.knobs.text(
+      clientBadge:
+          context.knobs.boolean(label: 'Client badge', initialValue: true)
+          ? context.knobs.string(
               label: 'Client badge label',
-              initial: '1º Pedido',
+              initialValue: '1º Pedido',
             )
           : null,
-      address: context.knobs.text(
+      address: context.knobs.string(
         label: 'Address',
-        initial: 'Tv Canto das Duas Flores, 3 AP 02',
+        initialValue: 'Tv Canto das Duas Flores, 3 AP 02',
       ),
-      neighborhood: context.knobs.text(
+      neighborhood: context.knobs.string(
         label: 'Neighborhood',
-        initial: 'Jardim Nova Vida',
+        initialValue: 'Jardim Nova Vida',
       ),
       shopper: KanbanAssignment(
-        label: context.knobs.text(label: 'Shopper label', initial: 'Shopper'),
-        value: context.knobs.text(
+        label: context.knobs.string(
+          label: 'Shopper label',
+          initialValue: 'Shopper',
+        ),
+        value: context.knobs.string(
           label: 'Shopper value',
-          initial: 'Ulisses Camilo',
+          initialValue: 'Ulisses Camilo',
         ),
       ),
       rider: KanbanAssignment(
-        label: context.knobs.text(label: 'Rider label', initial: 'Rider: Modo'),
-        value: context.knobs.text(label: 'Rider value', initial: 'Ofertando'),
-        tone: context.knobs.options(
+        label: context.knobs.string(
+          label: 'Rider label',
+          initialValue: 'Rider: Modo',
+        ),
+        value: context.knobs.string(
+          label: 'Rider value',
+          initialValue: 'Ofertando',
+        ),
+        tone: context.knobs.object.dropdown<AssignTone>(
           label: 'Rider tone',
-          initial: AssignTone.normal,
-          options: AssignTone.values
-              .map((e) => Option(label: e.name, value: e))
-              .toList(),
+          initialOption: AssignTone.normal,
+          options: AssignTone.values,
+          labelBuilder: (e) => e.name,
         ),
       ),
-      groupedLabel: context.knobs.text(
+      groupedLabel: context.knobs.string(
         label: 'Grouped label',
-        initial: 'Entrega agrupada',
+        initialValue: 'Entrega agrupada',
       ),
     ),
   ),
