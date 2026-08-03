@@ -94,7 +94,7 @@ const toast = Object.assign(withDedupe(sonnerToast, "default"), {
  * sonner ever changes that default, this keeps the decision pinned.
  *
  * `success`/`error`/`warning`/`info`/`loading` (sonner's native `toast.<type>()`
- * variants) get the same "soft" tonal look `Badge`'s `type="filled"` uses — the
+ * variants) get the same "soft" tonal look `Badge`'s `variant="filled"` uses — the
  * `*-soft`/`*-soft-foreground` pair plus the semantic border, not the DEFAULT
  * icon-semantic tone (that one tonal-flips for icons/borders, not a background)
  * and not the `-fixed` pins (those are for a solid bg, which these toasts

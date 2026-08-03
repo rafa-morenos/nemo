@@ -4,12 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
 /**
- * Nemo Badge — the unified Tag/Chip. `color` × `type` cover the full Figma
+ * Nemo Badge — the unified Tag/Chip. `color` × `variant` cover the full Figma
  * matrix (HUBR Components, node 727:28091): default/success/warning/critical/
  * info/disabled/inverted × filled/outline/ghost/solid. This is the single
  * agnostic Tag proposed to replace the ~15 per-product tag components
  * (SuperDakiTag, StatusTag, DiscountTag, ModalityTag, CounterTag...) —
- * `type="filled"` is the semantic-color "soft" look (tonal bg). `type="solid"`
+ * `variant="filled"` is the semantic-color "soft" look (tonal bg). `variant="solid"`
  * is a real strong bg for every color except `info`: `default`/`inverted`/
  * `disabled` are backed by Figma's aliased Primary/On Primary pair;
  * `success`/`warning`/`critical` pair the icon-tone bg (`bg-success` etc,
@@ -37,7 +37,7 @@ const badgeVariants = cva(
         disabled: "",
         inverted: "",
       },
-      type: {
+      variant: {
         filled: "",
         outline: "",
         ghost: "",
@@ -53,50 +53,50 @@ const badgeVariants = cva(
       },
     },
     compoundVariants: [
-      { color: "default", type: "filled", className: "bg-primary text-primary-foreground" },
-      { color: "default", type: "outline", className: "border-accent-border bg-transparent text-accent-foreground" },
-      { color: "default", type: "ghost", className: "bg-transparent text-accent-foreground" },
+      { color: "default", variant: "filled", className: "bg-primary text-primary-foreground" },
+      { color: "default", variant: "outline", className: "border-accent-border bg-transparent text-accent-foreground" },
+      { color: "default", variant: "ghost", className: "bg-transparent text-accent-foreground" },
       // "default" has no soft token, so filled is already a strong bg — solid reuses it.
-      { color: "default", type: "solid", className: "bg-primary text-primary-foreground" },
+      { color: "default", variant: "solid", className: "bg-primary text-primary-foreground" },
 
-      { color: "success", type: "filled", className: "bg-success-soft text-success-soft-foreground" },
-      { color: "success", type: "outline", className: "border-success-border bg-transparent text-success-soft-foreground" },
-      { color: "success", type: "ghost", className: "bg-transparent text-success-soft-foreground" },
+      { color: "success", variant: "filled", className: "bg-success-soft text-success-soft-foreground" },
+      { color: "success", variant: "outline", className: "border-success-border bg-transparent text-success-soft-foreground" },
+      { color: "success", variant: "ghost", className: "bg-transparent text-success-soft-foreground" },
       // No aliased "On Success" role, so pair the icon-tone bg with
       // text-neutral-inverted (see top-of-file comment) instead of pinning.
-      { color: "success", type: "solid", className: "bg-success text-success-foreground" },
+      { color: "success", variant: "solid", className: "bg-success text-success-foreground" },
 
-      { color: "warning", type: "filled", className: "bg-warning-soft text-warning-soft-foreground" },
-      { color: "warning", type: "outline", className: "border-warning-border bg-transparent text-warning-soft-foreground" },
-      { color: "warning", type: "ghost", className: "bg-transparent text-warning-soft-foreground" },
+      { color: "warning", variant: "filled", className: "bg-warning-soft text-warning-soft-foreground" },
+      { color: "warning", variant: "outline", className: "border-warning-border bg-transparent text-warning-soft-foreground" },
+      { color: "warning", variant: "ghost", className: "bg-transparent text-warning-soft-foreground" },
       // Same story as success — see above.
-      { color: "warning", type: "solid", className: "bg-warning text-warning-foreground" },
+      { color: "warning", variant: "solid", className: "bg-warning text-warning-foreground" },
 
-      { color: "critical", type: "filled", className: "bg-destructive-soft text-destructive-soft-foreground" },
-      { color: "critical", type: "outline", className: "border-destructive-border bg-transparent text-destructive-soft-foreground" },
-      { color: "critical", type: "ghost", className: "bg-transparent text-destructive-soft-foreground" },
+      { color: "critical", variant: "filled", className: "bg-destructive-soft text-destructive-soft-foreground" },
+      { color: "critical", variant: "outline", className: "border-destructive-border bg-transparent text-destructive-soft-foreground" },
+      { color: "critical", variant: "ghost", className: "bg-transparent text-destructive-soft-foreground" },
       // Same story as success — see above (button.tsx's destructive variant
       // already uses this exact pairing).
-      { color: "critical", type: "solid", className: "bg-destructive text-destructive-foreground" },
+      { color: "critical", variant: "solid", className: "bg-destructive text-destructive-foreground" },
 
-      { color: "info", type: "filled", className: "bg-info text-info-foreground" },
-      { color: "info", type: "outline", className: "border-info-border bg-transparent text-info-foreground" },
-      { color: "info", type: "ghost", className: "bg-transparent text-info-foreground" },
+      { color: "info", variant: "filled", className: "bg-info text-info-foreground" },
+      { color: "info", variant: "outline", className: "border-info-border bg-transparent text-info-foreground" },
+      { color: "info", variant: "ghost", className: "bg-transparent text-info-foreground" },
       // No dedicated "info" strong tone in the preset (its DEFAULT is already
       // the tonal surface) — solid intentionally renders identical to filled.
-      { color: "info", type: "solid", className: "bg-info text-info-foreground" },
+      { color: "info", variant: "solid", className: "bg-info text-info-foreground" },
 
-      { color: "disabled", type: "filled", className: "bg-disabled text-disabled-foreground" },
-      { color: "disabled", type: "outline", className: "border-disabled-border bg-transparent text-disabled-foreground" },
-      { color: "disabled", type: "ghost", className: "bg-transparent text-disabled-foreground" },
-      { color: "disabled", type: "solid", className: "bg-disabled text-disabled-foreground" },
+      { color: "disabled", variant: "filled", className: "bg-disabled text-disabled-foreground" },
+      { color: "disabled", variant: "outline", className: "border-disabled-border bg-transparent text-disabled-foreground" },
+      { color: "disabled", variant: "ghost", className: "bg-transparent text-disabled-foreground" },
+      { color: "disabled", variant: "solid", className: "bg-disabled text-disabled-foreground" },
 
-      { color: "inverted", type: "filled", className: "bg-inverted text-inverted-foreground" },
-      { color: "inverted", type: "outline", className: "border-inverted bg-transparent text-inverted" },
-      { color: "inverted", type: "ghost", className: "bg-transparent text-inverted" },
-      { color: "inverted", type: "solid", className: "bg-inverted text-inverted-foreground" },
+      { color: "inverted", variant: "filled", className: "bg-inverted text-inverted-foreground" },
+      { color: "inverted", variant: "outline", className: "border-inverted bg-transparent text-inverted" },
+      { color: "inverted", variant: "ghost", className: "bg-transparent text-inverted" },
+      { color: "inverted", variant: "solid", className: "bg-inverted text-inverted-foreground" },
     ],
-    defaultVariants: { color: "default", type: "filled", size: "md", shape: "pill" },
+    defaultVariants: { color: "default", variant: "filled", size: "md", shape: "pill" },
   }
 );
 
@@ -120,14 +120,14 @@ export interface BadgeProps
   count?: number;
 }
 
-function Badge({ className, color, type, size, shape, icon, dot, count, children, ...props }: BadgeProps) {
+function Badge({ className, color, variant, size, shape, icon, dot, count, children, ...props }: BadgeProps) {
   const counterOnly = count != null && children == null;
   const effSize = size ?? (counterOnly ? "sm" : "md");
 
   return (
     <div
       className={cn(
-        badgeVariants({ color, type, size: effSize, shape }),
+        badgeVariants({ color, variant, size: effSize, shape }),
         counterOnly && "min-w-[1.25rem] justify-center px-1",
         className
       )}

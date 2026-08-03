@@ -4,19 +4,19 @@ import { useNemoTheme, type NemoTheme } from "./theme";
 
 /**
  * Nemo Badge — RN port of the web Badge (the unified Tag/Chip). Same prop
- * surface as `packages/web/src/components/badge.tsx`: `color` × `type` cover
+ * surface as `packages/web/src/components/badge.tsx`: `color` × `variant` cover
  * the Figma matrix (default/success/warning/critical/info/disabled/inverted ×
  * filled/outline/ghost/solid), plus `size` (sm/md), `shape` (pill/square) and
  * `count` (numeric counter — counter-tag/picking-amount).
  */
 export type BadgeColor = "default" | "success" | "warning" | "critical" | "info" | "disabled" | "inverted";
-export type BadgeType = "filled" | "outline" | "ghost" | "solid";
+export type BadgeVariant = "filled" | "outline" | "ghost" | "solid";
 export type BadgeSize = "sm" | "md";
 export type BadgeShape = "pill" | "square";
 
 export interface BadgeProps {
   color?: BadgeColor;
-  type?: BadgeType;
+  variant?: BadgeVariant;
   size?: BadgeSize;
   shape?: BadgeShape;
   /** Leading glyph, e.g. a react-native-svg icon from `./icons`. Caller controls its color. */
@@ -46,9 +46,9 @@ function formatCount(count: number) {
  * the icon tone does, so contrast holds in both themes with real aliases —
  * no pinned primitive needed.
  */
-function bgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
-  if (type === "outline" || type === "ghost") return "transparent";
-  const solid = type === "solid";
+function bgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
+  if (variant === "outline" || variant === "ghost") return "transparent";
+  const solid = variant === "solid";
   switch (color) {
     case "default":
       return t.color.interactive.accent.primary.main;
@@ -68,11 +68,11 @@ function bgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
   }
 }
 
-function fgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
-  const solid = type === "solid";
+function fgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
+  const solid = variant === "solid";
   switch (color) {
     case "default":
-      return type === "outline" || type === "ghost" ? t.color.text.accent.primary : t.color.interactive.accent.primary.inverted;
+      return variant === "outline" || variant === "ghost" ? t.color.text.accent.primary : t.color.interactive.accent.primary.inverted;
     case "success":
       return solid ? t.color.text.neutral.inverted : t.color.text.semantic.success;
     case "warning":
@@ -88,8 +88,8 @@ function fgFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
   }
 }
 
-function borderFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
-  if (type !== "outline") return "transparent";
+function borderFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
+  if (variant !== "outline") return "transparent";
   switch (color) {
     case "default":
       return t.color.border.accent.primary;
@@ -110,7 +110,7 @@ function borderFor(t: NemoTheme, color: BadgeColor, type: BadgeType) {
 
 export function Badge({
   color = "default",
-  type = "filled",
+  variant = "filled",
   size,
   shape = "pill",
   icon,
@@ -121,9 +121,9 @@ export function Badge({
   const t = useNemoTheme();
   const counterOnly = count != null && children == null;
   const effSize: BadgeSize = size ?? (counterOnly ? "sm" : "md");
-  const bg = bgFor(t, color, type);
-  const fg = fgFor(t, color, type);
-  const border = borderFor(t, color, type);
+  const bg = bgFor(t, color, variant);
+  const fg = fgFor(t, color, variant);
+  const border = borderFor(t, color, variant);
   const sizing = sizesFor(t, effSize);
 
   return (
@@ -134,7 +134,7 @@ export function Badge({
         {
           backgroundColor: bg,
           borderColor: border,
-          borderWidth: type === "outline" ? t.borderWidth.sm : 0,
+          borderWidth: variant === "outline" ? t.borderWidth.sm : 0,
           borderRadius: shape === "pill" ? t.radius.pill : t.radius.md,
         },
         counterOnly && styles.counterOnly,
