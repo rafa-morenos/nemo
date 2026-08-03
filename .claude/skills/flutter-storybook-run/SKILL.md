@@ -56,7 +56,7 @@ A Dart VM Service on <device> is available at: http://127.0.0.1:PORT/...
 
 Isso confirma que subiu. Pra rodar em dois dispositivos ao mesmo tempo (ex. Android + iOS), dispare os dois comandos `flutter run` num único turno (chamadas paralelas), cada um vira uma task em background separada.
 
-**Pra aplicar uma mudança de código:** `flutter run` não aceita hot reload via stdin nesta ferramenta (sem jeito de mandar teclas pro processo já rodando) — mate a task (`TaskStop`) e rode `flutter run` de novo. Isso reconstrói do zero e reseta qualquer estado em memória (útil, por exemplo, se algum `ChangeNotifier` do `storybook_flutter` ficou em estado inconsistente).
+**Pra aplicar uma mudança de código:** `flutter run` não aceita hot reload via stdin nesta ferramenta (sem jeito de mandar teclas pro processo já rodando) — mate a task (`TaskStop`) e rode `flutter run` de novo. Isso reconstrói do zero e reseta qualquer estado em memória.
 
 ---
 
@@ -76,9 +76,11 @@ Depois `Read` o arquivo pra ver o resultado.
 
 ---
 
-## Step 5 — Simular toque (só Android via `adb`)
+## Step 5 — Navegar/simular toque (só Android via `adb`)
 
-Não adivinhe coordenada a partir do screenshot redimensionado — pegue os bounds reais via `uiautomator`:
+A UI do Widgetbook é uma barra de 3 abas no rodapé — **Navigation** (abre um bottom sheet com busca + árvore de `WidgetbookComponent`/`WidgetbookUseCase`), **Addons** e **Knobs** (painel dos controles do use case selecionado). Ao abrir o app, a tela inicial é a "Welcome to Widgetbook" (nenhum use case selecionado ainda) — toque em "Navigation" e depois no nome do use case desejado na árvore.
+
+Pegue os bounds reais via `uiautomator` em vez de adivinhar coordenada a partir do screenshot redimensionado — **e lembre de multiplicar pelo fator de escala** (o screenshot que você vê já vem reduzido; a tag da imagem informa esse fator, ex. "displayed at 900x2000, multiply by 1.2"). Confirmado na prática: as abas do rodapé (Navigation/Addons/Knobs) expõem `content-desc`, mas os itens da árvore de componentes/use-cases **não** — não adianta filtrar por texto, pegue todo `clickable="true"` e localize pela posição relativa ao que apareceu no screenshot:
 
 ```bash
 adb -s <device-id> shell uiautomator dump /sdcard/window_dump.xml
@@ -112,8 +114,8 @@ Isso abre cada story (`test/stories_smoke_test.dart`) e falha em qualquer except
 
 ---
 
-## Contexto / armadilhas já resolvidas (não precisa reaplicar, só pra entender o histórico)
+## Contexto / decisões já tomadas (não precisa reaplicar, só pra entender o histórico)
 
-- **`storybook_flutter` é vendorizado** em `vendor/storybook_flutter/` (não é a versão do pub.dev) — o `pubspec.yaml` aponta `path: vendor/storybook_flutter`. O patch local esconde o ícone de "Layout" (`vendor/storybook_flutter/lib/src/plugins/layout.dart`): o modo "expanded" original do pacote trava a navegação em qualquer tela de celular (duas sidebars fixas de 250dp somam mais que a largura da tela, e some até a barra de ícones que resolveria isso — sem saída, só hot-restart). Como não tem mais o ícone, não tem como cair nessa armadilha de novo.
-- **`main.dart` embrulha o `Storybook` inteiro num `Directionality(textDirection: TextDirection.ltr)`** — sem isso, o painel do plugin de Logging (ícone `"`) quebra com "No Directionality widget found" (o `MaterialApp` do `nemoWrapperBuilder` só cobre o conteúdo de cada story, não a moldura do Storybook ao redor).
+- **É Widgetbook, não `storybook_flutter`** — a primeira versão deste storybook usava `storybook_flutter` (mesmo padrão que a Jake usa), migrada pro Widgetbook porque `storybook_flutter` está sem release há 2 anos (e tinha 2 bugs reais do próprio pacote: um ícone de "Layout" que travava a navegação sem saída em qualquer tela de celular, e um painel de plugin que quebrava com "No Directionality widget found" — nenhum dos dois existe no Widgetbook). Abordagem **manual** (`WidgetbookComponent`/`WidgetbookUseCase` direto em `main.dart`/`lib/stories/`), não a abordagem geradora (`@widgetbook.UseCase` + `build_runner`) — evita depender de codegen pra algo deste tamanho.
+- **Sempre especifique o type argument em `context.knobs.object.dropdown<T>(...)`** (ex. `.dropdown<NemoBadgeSize>(...)`) — sem isso, a inferência de tipo do Dart pode inferir `T` errado (nullable) quando o parâmetro de destino (`NemoBadge.size`, por exemplo) é opcional, e isso já quebrou o `flutter analyze` uma vez (`unchecked_use_of_nullable_value`).
 - **Fontes (`fonts/*.ttf`) são uma cópia local**, não uma referência a `packages/nemo_flutter/...` — motivo registrado em `docs/debitos-tecnicos.md` (fontes do `nemo_flutter` vivem fora de `lib/`, então esse prefixo não resolve).
