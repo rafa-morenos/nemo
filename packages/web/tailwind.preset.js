@@ -16,7 +16,18 @@ export default {
         background: v("color-surface-neutral-primary"),
         foreground: v("color-text-neutral-primary"),
         border: v("color-border-neutral-main"),
-        input: v("color-border-neutral-main"),
+        // Retroactive contrast audit (2026-07-31): `border-neutral-main` only
+        // hits ~1.2:1 (light) / ~2.7:1 (dark) against the page bg — fails
+        // WCAG 1.4.11 (3:1) for non-text UI boundaries. That's an acceptable
+        // subtle divider for decorative uses (Card/Sheet/Item outlines, which
+        // also have elevation/spacing as a boundary cue and keep `border`),
+        // but `input` is shadcn's dedicated role for load-bearing form
+        // control outlines (Input/Textarea/Select trigger/InputOTP — the
+        // border IS the only boundary cue there), so it needs to actually
+        // pass. `border-neutral-hover` is a real, already-existing alias
+        // (no new token invented) that clears 3:1 in both themes (~4.3:1
+        // light, ~7.5:1 dark).
+        input: v("color-border-neutral-hover"),
         ring: v("color-border-accent-primary"),
         primary: {
           DEFAULT: v("color-interactive-accent-primary-main"),
