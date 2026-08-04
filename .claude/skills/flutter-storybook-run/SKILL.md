@@ -1,13 +1,13 @@
 ---
 name: flutter-storybook-run
-description: Roda e testa o storybook Flutter do Nemo (packages/flutter/storybook) em emulador Android, simulador iOS ou macOS — lista dispositivos, sobe o app, tira screenshot e simula toques pra conferir stories. Específico do projeto Nemo em /Users/luisfelipeas5/Projects/nemo.
+description: Roda e testa o storybook Flutter do Nemo (packages/flutter/storybook) em emulador Android, simulador iOS ou macOS — lista dispositivos, sobe o app, tira screenshot e simula toques pra conferir stories.
 ---
 
 # Storybook Flutter — rodar e testar localmente
 
 Use esta skill quando o mantenedor pedir pra rodar, abrir ou testar o storybook Flutter (`packages/flutter/storybook/`) — o app que mostra as stories dos widgets `nemo_flutter` (`NemoBadge`, `KanbanCard`, `KanbanTaskCard`, `ProductCard`).
 
-**Projeto:** `/Users/luisfelipeas5/Projects/nemo/packages/flutter/storybook`
+Todos os caminhos abaixo são relativos à raiz do repositório. Todos os comandos `cd`/`flutter` assumem que você já está (ou entrou) em `packages/flutter/storybook`, exceto quando indicado o contrário.
 
 ---
 
@@ -32,7 +32,7 @@ open -a Simulator                          # iOS — depois `xcrun simctl list d
 Só precisa rodar de novo se o `pubspec.yaml`/`pubspec.lock` mudou desde a última vez:
 
 ```bash
-cd /Users/luisfelipeas5/Projects/nemo/packages/flutter/storybook && flutter pub get
+cd packages/flutter/storybook && flutter pub get
 ```
 
 ---
@@ -42,7 +42,7 @@ cd /Users/luisfelipeas5/Projects/nemo/packages/flutter/storybook && flutter pub 
 `flutter run` é um processo longo e interativo (fica esperando `r`/`R`/`q` no stdin) — sempre rode em background. Um por dispositivo (não passar múltiplos `-d`, só o último é respeitado de forma inconsistente):
 
 ```bash
-cd /Users/luisfelipeas5/Projects/nemo/packages/flutter/storybook
+cd packages/flutter/storybook
 flutter run -d <device-id>       # ex.: emulator-5554 (Android), o UDID do simulador (iOS), ou "macos"/"chrome"
 ```
 
@@ -107,7 +107,7 @@ No iOS simulator não tem um equivalente direto de `adb shell input tap` via lin
 ## Step 6 — Rodar os testes automatizados (sem precisar de emulador)
 
 ```bash
-cd /Users/luisfelipeas5/Projects/nemo/packages/flutter/storybook && flutter test
+cd packages/flutter/storybook && flutter test
 ```
 
 Isso abre cada story (`test/stories_smoke_test.dart`) e falha em qualquer exception/overflow. Já carrega as fontes reais via `test/flutter_test_config.dart` — sem isso, o `flutter test` usa a fonte de placeholder "Ahem" (glifos artificialmente largos) e acusa overflow falso que não acontece no app de verdade.
