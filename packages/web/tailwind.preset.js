@@ -57,7 +57,14 @@ export default {
           border: v("color-border-semantic-critical"),
         },
         success: {
-          DEFAULT: v("color-icon-semantic-success"),
+          // Unlike critical/warning, icon-semantic-success (green-40) paired
+          // with text-neutral-inverted only hits ~4.37:1 in light mode — under
+          // the 4.5:1 normal-text minimum (verified against the generated
+          // tokens, not eyeballed). text-semantic-success (green-30, the same
+          // alias already used as filled's soft-foreground) tonal-flips the
+          // same direction and clears 4.5:1 in both themes, so this reuses a
+          // real generated alias instead of pinning a new value.
+          DEFAULT: v("color-text-semantic-success"),
           foreground: v("color-text-neutral-inverted"),
           soft: v("color-surface-semantic-success"),
           "soft-foreground": v("color-text-semantic-success"),
