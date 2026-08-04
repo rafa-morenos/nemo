@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "storybook", "--prefix", "packages/web"],
       "autoPort": true
+    },
+    {
+      "name": "nemo-preview",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "web", "--prefix", "/Users/daki/Claude/nemo-preview"],
+      "port": 8081
     }
   ]
 }
