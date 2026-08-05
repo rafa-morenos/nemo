@@ -21,11 +21,28 @@ const toggleVariants = cva(
   }
 );
 
+/** Public contract (§2.1/§3.3a): `cva` above stays shadcn's own `"default"`; `Toggle` exposes `"normal"` instead, translated right before the `cva` call. */
+export type ToggleVariant = "normal" | "outline";
+export type ToggleSize = "normal" | "sm" | "lg";
+
 const Toggle = React.forwardRef<
   React.ElementRef<typeof TogglePrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>
->(({ className, variant, size, ...props }, ref) => (
-  <TogglePrimitive.Root ref={ref} className={cn(toggleVariants({ variant, size, className }))} {...props} />
+  Omit<React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root>, keyof VariantProps<typeof toggleVariants>> & {
+    variant?: ToggleVariant;
+    size?: ToggleSize;
+  }
+>(({ className, variant = "normal", size = "normal", ...props }, ref) => (
+  <TogglePrimitive.Root
+    ref={ref}
+    className={cn(
+      toggleVariants({
+        variant: variant === "normal" ? "default" : variant,
+        size: size === "normal" ? "default" : size,
+        className,
+      })
+    )}
+    {...props}
+  />
 ));
 Toggle.displayName = TogglePrimitive.Root.displayName;
 

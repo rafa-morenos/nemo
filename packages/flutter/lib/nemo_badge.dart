@@ -6,12 +6,12 @@ import 'nemo_tokens.dart';
 /// `package:flutter/material.dart` widget of the same name.
 ///
 /// Same prop surface as `packages/web/src/components/badge.tsx`: `color` ×
-/// `variant` cover the Figma matrix (defaultColor/success/warning/critical/info/
+/// `variant` cover the Figma matrix (normal/success/warning/critical/info/
 /// disabled/inverted × filled/outline/ghost/solid), plus `size` (sm/md),
 /// `shape` (pill/square) and `count` (numeric counter — counter-tag/
 /// picking-amount).
 
-enum NemoBadgeColor { defaultColor, success, warning, critical, info, disabled, inverted }
+enum NemoBadgeColor { normal, success, warning, critical, info, disabled, inverted }
 
 enum NemoBadgeVariant { filled, outline, ghost, solid }
 
@@ -22,7 +22,7 @@ enum NemoBadgeShape { pill, square }
 class NemoBadge extends StatelessWidget {
   const NemoBadge({
     super.key,
-    this.color = NemoBadgeColor.defaultColor,
+    this.color = NemoBadgeColor.normal,
     this.variant = NemoBadgeVariant.filled,
     this.size,
     this.shape = NemoBadgeShape.pill,
@@ -65,7 +65,7 @@ class NemoBadge extends StatelessWidget {
   Color get _bg {
     if (variant == NemoBadgeVariant.outline || variant == NemoBadgeVariant.ghost) return Colors.transparent;
     switch (color) {
-      case NemoBadgeColor.defaultColor:
+      case NemoBadgeColor.normal:
         return NemoTokens.colorInteractiveAccentPrimaryMain;
       case NemoBadgeColor.success:
         return _solid ? NemoTokens.colorIconSemanticSuccess : NemoTokens.colorSurfaceSemanticSuccess;
@@ -86,7 +86,7 @@ class NemoBadge extends StatelessWidget {
   Color get _fg {
     final outlineOrGhost = variant == NemoBadgeVariant.outline || variant == NemoBadgeVariant.ghost;
     switch (color) {
-      case NemoBadgeColor.defaultColor:
+      case NemoBadgeColor.normal:
         return outlineOrGhost ? NemoTokens.colorTextAccentPrimary : NemoTokens.colorInteractiveAccentPrimaryInverted;
       case NemoBadgeColor.success:
         return _solid ? NemoTokens.colorTextNeutralInverted : NemoTokens.colorTextSemanticSuccess;
@@ -106,7 +106,7 @@ class NemoBadge extends StatelessWidget {
   Color get _border {
     if (variant != NemoBadgeVariant.outline) return Colors.transparent;
     switch (color) {
-      case NemoBadgeColor.defaultColor:
+      case NemoBadgeColor.normal:
         return NemoTokens.colorBorderAccentPrimary;
       case NemoBadgeColor.success:
         return NemoTokens.colorBorderSemanticSuccess;

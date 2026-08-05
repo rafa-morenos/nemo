@@ -5,12 +5,12 @@ import { cn } from "../lib/utils";
 
 /**
  * Nemo Badge — the unified Tag/Chip. `color` × `variant` cover the full Figma
- * matrix (HUBR Components, node 727:28091): default/success/warning/critical/
+ * matrix (HUBR Components, node 727:28091): normal/success/warning/critical/
  * info/disabled/inverted × filled/outline/ghost/solid. This is the single
  * agnostic Tag proposed to replace the ~15 per-product tag components
  * (SuperDakiTag, StatusTag, DiscountTag, ModalityTag, CounterTag...) —
  * `variant="filled"` is the semantic-color "soft" look (tonal bg). `variant="solid"`
- * is a real strong bg for every color except `info`: `default`/`inverted`/
+ * is a real strong bg for every color except `info`: `normal`/`inverted`/
  * `disabled` are backed by Figma's aliased Primary/On Primary pair;
  * `success`/`warning`/`critical` pair the icon-tone bg (`bg-success` etc,
  * same as `button.tsx`'s `destructive`) with `text-neutral-inverted` as the
@@ -29,7 +29,7 @@ const badgeVariants = cva(
   {
     variants: {
       color: {
-        default: "",
+        normal: "",
         success: "",
         warning: "",
         critical: "",
@@ -53,11 +53,11 @@ const badgeVariants = cva(
       },
     },
     compoundVariants: [
-      { color: "default", variant: "filled", className: "bg-primary text-primary-foreground" },
-      { color: "default", variant: "outline", className: "border-accent-border bg-transparent text-accent-foreground" },
-      { color: "default", variant: "ghost", className: "bg-transparent text-accent-foreground" },
-      // "default" has no soft token, so filled is already a strong bg — solid reuses it.
-      { color: "default", variant: "solid", className: "bg-primary text-primary-foreground" },
+      { color: "normal", variant: "filled", className: "bg-primary text-primary-foreground" },
+      { color: "normal", variant: "outline", className: "border-accent-border bg-transparent text-accent-foreground" },
+      { color: "normal", variant: "ghost", className: "bg-transparent text-accent-foreground" },
+      // "normal" has no soft token, so filled is already a strong bg — solid reuses it.
+      { color: "normal", variant: "solid", className: "bg-primary text-primary-foreground" },
 
       { color: "success", variant: "filled", className: "bg-success-soft text-success-soft-foreground" },
       { color: "success", variant: "outline", className: "border-success-border bg-transparent text-success-soft-foreground" },
@@ -96,7 +96,7 @@ const badgeVariants = cva(
       { color: "inverted", variant: "ghost", className: "bg-transparent text-inverted" },
       { color: "inverted", variant: "solid", className: "bg-inverted text-inverted-foreground" },
     ],
-    defaultVariants: { color: "default", variant: "filled", size: "md", shape: "pill" },
+    defaultVariants: { color: "normal", variant: "filled", size: "md", shape: "pill" },
   }
 );
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "../lib/utils";
-import { Button } from "./button";
+import { buttonVariants } from "./button";
 import {
   Command,
   CommandEmpty,
@@ -40,15 +40,22 @@ function Combobox({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
+        {/*
+          Combobox needs a trailing icon, but Button's `icon` prop is
+          leading-only (§4.4 — no positional variants requested by the
+          contract). Composing `buttonVariants` directly on a plain
+          `<button>` keeps Button's own contract clean, same pattern
+          `pagination.tsx`'s `PaginationLink` already uses.
+        */}
+        <button
+          type="button"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className={cn(buttonVariants({ variant: "outline" }), "w-[200px] justify-between")}
         >
           {selected ? selected.label : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>

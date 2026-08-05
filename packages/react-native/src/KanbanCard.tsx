@@ -3,9 +3,9 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useNemoTheme, nemoCardShadow, type NemoTheme } from "./theme";
 import { PinIcon, ClockIcon } from "./icons";
 
-export type KanbanUrgency = "default" | "waning" | "critical";
+export type KanbanUrgency = "normal" | "waning" | "critical";
 export type KanbanMode = "core" | "agendado" | "superdaki";
-type Tone = "default" | "warning" | "danger" | "brand" | "success";
+type Tone = "normal" | "warning" | "critical" | "brand" | "success";
 
 export interface KanbanTimer {
   label: string;
@@ -45,11 +45,11 @@ function bgFor(t: NemoTheme, urgency: KanbanUrgency, mode: KanbanMode) {
   if (mode === "superdaki") return t.color.surface.accent.primary;
   return t.color.surface.neutral.primary;
 }
-function toneColor(t: NemoTheme, tone: Tone = "default") {
+function toneColor(t: NemoTheme, tone: Tone = "normal") {
   return {
-    default: t.color.text.neutral.primary,
+    normal: t.color.text.neutral.primary,
     warning: t.color.icon.semantic.warning,
-    danger: t.color.icon.semantic.critical,
+    critical: t.color.icon.semantic.critical,
     brand: t.color.interactive.accent.primary.main,
     success: t.color.icon.semantic.success,
   }[tone];
@@ -57,7 +57,7 @@ function toneColor(t: NemoTheme, tone: Tone = "default") {
 
 export function KanbanCard({
   variant = "order",
-  urgency = "default",
+  urgency = "normal",
   mode = "core",
   orderId,
   timers = [],

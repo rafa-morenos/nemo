@@ -69,12 +69,12 @@ const baseStacking = {
   rider: { label: "Rider: Auto", value: "Ofertando", tone: "warning" },
 } as const;
 
-export const StackingCore: Story = { args: { ...baseStacking, urgency: "default" } };
+export const StackingCore: Story = { args: { ...baseStacking, urgency: "normal" } };
 export const StackingWaning: Story = {
   args: { ...baseStacking, urgency: "waning", rider: { label: "Rider: Auto", value: "Ofertando", tone: "warning" } },
 };
 export const StackingCritical: Story = {
-  args: { ...baseStacking, urgency: "critical", rider: { label: "Rider: Auto", value: "Ofertando", tone: "danger" } },
+  args: { ...baseStacking, urgency: "critical", rider: { label: "Rider: Auto", value: "Ofertando", tone: "critical" } },
 };
 export const StackingAgendado: Story = {
   args: { ...baseStacking, mode: "agendado", scheduled: "Agendado • 15:00 a 15:30" },
@@ -129,11 +129,11 @@ export const Board: StoryObj = {
   render: () => (
     <div style={{ display: "flex", gap: 16, padding: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
       <div style={{ width: 340, display: "flex", flexDirection: "column", gap: 12 }}>
-        <KanbanCard variant="stacking" urgency="default" {...baseStacking} orderId="8b812" />
+        <KanbanCard variant="stacking" urgency="normal" {...baseStacking} orderId="8b812" />
         <KanbanCard variant="stacking" urgency="waning" {...baseStacking} orderId="9c344" rider={{ label: "Rider: Auto", value: "Ofertando", tone: "warning" }} />
       </div>
       <div style={{ width: 340, display: "flex", flexDirection: "column", gap: 12 }}>
-        <KanbanCard variant="stacking" urgency="critical" {...baseStacking} orderId="7a109" rider={{ label: "Rider: Auto", value: "Atrasado", tone: "danger" }} />
+        <KanbanCard variant="stacking" urgency="critical" {...baseStacking} orderId="7a109" rider={{ label: "Rider: Auto", value: "Atrasado", tone: "critical" }} />
         <KanbanCard variant="stacking" mode="superdaki" {...baseStacking} orderId="5f210" timers={[{ label: "SuperDaki", dot: true }, { label: "3:00" }]} />
       </div>
       <div style={{ width: 360, display: "flex", flexDirection: "column", gap: 12 }}>
