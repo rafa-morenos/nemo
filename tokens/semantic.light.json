@@ -114,7 +114,7 @@
           "$value": "{color.gray.30}"
         },
         "tertiary": {
-          "$value": "{color.gray.50}"
+          "$value": "{color.gray.40}"
         },
         "disabled": {
           "$value": "{color.gray.90}"
