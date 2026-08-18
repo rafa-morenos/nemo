@@ -818,5 +818,30 @@
         "$value": 900
       }
     }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "bottom": {
+      "1": {
+        "$value": {
+          "color": "#0000001a",
+          "offsetX": "0px",
+          "offsetY": "4px",
+          "blur": "8px",
+          "spread": "0px"
+        }
+      }
+    },
+    "top": {
+      "1": {
+        "$value": {
+          "color": "#0000001a",
+          "offsetX": "0px",
+          "offsetY": "-4px",
+          "blur": "8px",
+          "spread": "0px"
+        }
+      }
+    }
   }
 }

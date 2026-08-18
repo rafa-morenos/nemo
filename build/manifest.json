@@ -3684,5 +3684,25 @@
     ],
     "type": "fontWeight",
     "value": 900
+  },
+  {
+    "name": "--nemo-shadow-bottom-1",
+    "path": [
+      "shadow",
+      "bottom",
+      "1"
+    ],
+    "type": "shadow",
+    "value": "0px 4px 8px 0px #0000001a"
+  },
+  {
+    "name": "--nemo-shadow-top-1",
+    "path": [
+      "shadow",
+      "top",
+      "1"
+    ],
+    "type": "shadow",
+    "value": "0px -4px 8px 0px #0000001a"
   }
 ]
