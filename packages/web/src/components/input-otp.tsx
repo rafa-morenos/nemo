@@ -8,6 +8,11 @@ import { cn } from "../lib/utils";
  * Nemo Input OTP — canonical shadcn/ui Input OTP built on the `input-otp`
  * package (InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator).
  * Token-driven with Nemo variables.
+ *
+ * a11y: `InputOTPSlot` uses `border-input-strong` (Border/Neutral/Hover), not
+ * the default `border-input` (Border/Neutral/Main) — Main measures ~1.23:1
+ * (light) / ~2.66:1 (dark) against the background, below WCAG 1.4.11's 3:1
+ * minimum for UI component boundaries. Strong measures 4.27:1 / 7.45:1.
  */
 const InputOTP = React.forwardRef<
   React.ElementRef<typeof OTPInput>,
@@ -53,7 +58,7 @@ const InputOTPSlot = React.forwardRef<
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm text-foreground transition-all",
+        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input-strong text-sm text-foreground transition-all",
         "first:rounded-l-md first:border-l last:rounded-r-md",
         isActive && "z-10 ring-2 ring-ring ring-offset-background",
         className

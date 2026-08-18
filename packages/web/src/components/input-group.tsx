@@ -7,6 +7,11 @@ import { cn } from "../lib/utils";
  * Nemo InputGroup — follows the shadcn/ui Input Group API (InputGroup,
  * InputGroupInput, InputGroupAddon, InputGroupButton, InputGroupText).
  * Wraps an input with leading/trailing addons. Token-driven, Nemo variables.
+ *
+ * a11y: uses `border-input-strong` (Border/Neutral/Hover), not the default
+ * `border-input` (Border/Neutral/Main) — Main measures ~1.23:1 (light) /
+ * ~2.66:1 (dark) against the background, below WCAG 1.4.11's 3:1 minimum for
+ * UI component boundaries. Strong measures 4.27:1 / 7.45:1.
  */
 const InputGroup = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
@@ -15,7 +20,7 @@ const InputGroup = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       role="group"
       data-slot="input-group"
       className={cn(
-        "relative flex w-full items-center rounded-md border border-input bg-background transition-[color,box-shadow]",
+        "relative flex w-full items-center rounded-md border border-input-strong bg-background transition-[color,box-shadow]",
         "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
         "has-[[data-slot=input-group-input]:disabled]:opacity-50",
         className

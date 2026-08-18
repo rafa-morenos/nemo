@@ -8,6 +8,11 @@ import { cn } from "../lib/utils";
  * Colors/radii/spacing come from the Tailwind preset (→ Nemo CSS vars),
  * so this component is identical to what `npx shadcn add button` produces
  * and needs no per-brand edits.
+ *
+ * a11y: `outline` uses `border-border-strong` (Border/Neutral/Hover), not the
+ * default `border-border` (Border/Neutral/Main) — Main measures ~1.23:1 (light)
+ * / ~2.66:1 (dark) against the background, below WCAG 1.4.11's 3:1 minimum for
+ * UI component boundaries. Strong measures 4.27:1 / 7.45:1.
  */
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -17,7 +22,7 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground hover:bg-primary-hover",
         secondary: "bg-card text-info-foreground hover:bg-secondary",
         outline:
-          "border border-border bg-background hover:bg-secondary hover:text-foreground",
+          "border border-border-strong bg-background hover:bg-secondary hover:text-foreground",
         ghost: "hover:bg-secondary hover:text-foreground",
         destructive:
           "bg-destructive text-destructive-foreground hover:opacity-90",

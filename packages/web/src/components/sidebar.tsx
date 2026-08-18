@@ -334,7 +334,11 @@ const sidebarMenuButtonVariants = cva(
     variants: {
       variant: {
         default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-        outline: "bg-background shadow-[0_0_0_1px_var(--nemo-color-border-neutral-main)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        // a11y: uses Border/Neutral/Hover, not Border/Neutral/Main — Main
+        // measures ~1.23:1 (light) / ~2.66:1 (dark) against the background,
+        // below WCAG 1.4.11's 3:1 minimum for UI component boundaries.
+        // Hover measures 4.27:1 / 7.45:1.
+        outline: "bg-background shadow-[0_0_0_1px_var(--nemo-color-border-neutral-hover)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
       },
       size: {
         default: "h-8 text-sm",

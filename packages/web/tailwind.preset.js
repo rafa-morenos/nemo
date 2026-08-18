@@ -15,8 +15,20 @@ export default {
       colors: {
         background: v("color-surface-neutral-primary"),
         foreground: v("color-text-neutral-primary"),
-        border: v("color-border-neutral-main"),
-        input: v("color-border-neutral-main"),
+        border: {
+          DEFAULT: v("color-border-neutral-main"),
+          // Border/Neutral/Main mede só ~1.23:1 (claro) / ~2.66:1 (escuro) contra
+          // o fundo — abaixo do mínimo 3:1 de WCAG 1.4.11 pra fronteira de
+          // componente de UI. `strong` reusa Border/Neutral/Hover (já existe no
+          // Alias, nunca consumido em nenhum hover: do código até agora) pra
+          // controles onde a borda é a affordance real (Input, Button outline,
+          // Select, Toggle, Item outline, Resizable) — mede 4.27:1 / 7.45:1.
+          strong: v("color-border-neutral-hover"),
+        },
+        input: {
+          DEFAULT: v("color-border-neutral-main"),
+          strong: v("color-border-neutral-hover"),
+        },
         ring: v("color-border-accent-primary"),
         primary: {
           DEFAULT: v("color-interactive-accent-primary-main"),

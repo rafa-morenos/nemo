@@ -3,6 +3,13 @@ import { GripVertical } from "lucide-react";
 import * as ResizablePrimitive from "react-resizable-panels";
 import { cn } from "../lib/utils";
 
+/**
+ * a11y: the drag handle uses `border-border-strong` (Border/Neutral/Hover),
+ * not the default `border-border` (Border/Neutral/Main) — Main measures
+ * ~1.23:1 (light) / ~2.66:1 (dark) against the background, below WCAG
+ * 1.4.11's 3:1 minimum for UI component boundaries. Strong measures 4.27:1 /
+ * 7.45:1.
+ */
 const ResizablePanelGroup = ({
   className,
   ...props
@@ -30,7 +37,7 @@ const ResizableHandle = ({
     {...props}
   >
     {withHandle && (
-      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border border-border bg-border">
+      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border border-border-strong bg-border">
         <GripVertical className="h-2.5 w-2.5" />
       </div>
     )}

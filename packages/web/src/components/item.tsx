@@ -8,6 +8,12 @@ import { cn } from "../lib/utils";
  * ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader,
  * ItemFooter, ItemSeparator). A list-row primitive, token-driven with Nemo
  * variables.
+ *
+ * a11y: `variant=outline` uses `border-border-strong` (Border/Neutral/Hover),
+ * not the default `border-border` (Border/Neutral/Main) — Main measures
+ * ~1.23:1 (light) / ~2.66:1 (dark) against the background, below WCAG
+ * 1.4.11's 3:1 minimum for UI component boundaries. Strong measures 4.27:1 /
+ * 7.45:1.
  */
 const itemVariants = cva(
   "group/item flex flex-wrap items-center gap-3 rounded-md border p-3 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
@@ -15,7 +21,7 @@ const itemVariants = cva(
     variants: {
       variant: {
         default: "border-transparent bg-card",
-        outline: "border-border",
+        outline: "border-border-strong",
         muted: "border-transparent bg-muted",
       },
       size: {
