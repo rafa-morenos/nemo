@@ -119,6 +119,33 @@ for (const k of Object.keys(cp.fontWeights ?? {})) {
   }
 }
 
+// Elevation (Effect Styles) — lives under Color Palette /Light in the export and has
+// no Dark counterpart (single Effect Style, theme-invariant, same as Typography above),
+// so Light is the sole source. DTCG shadow shape: {color, offsetX, offsetY, blur, spread}
+// — Style Dictionary's css transformGroup already stringifies this to a box-shadow
+// shorthand, and build.mjs's Dart formatter already expects exactly these field names.
+core.shadow = { $type: "shadow" };
+for (const direction of Object.keys(cp.Elevation ?? {})) {
+  if (direction.startsWith("$") || typeof cp.Elevation[direction] !== "object") continue;
+  const levels = cp.Elevation[direction];
+  const out = {};
+  for (const level of Object.keys(levels)) {
+    if (level.startsWith("$") || !levels[level] || typeof levels[level] !== "object") continue;
+    const s = levels[level];
+    out[level] = {
+      $value: {
+        color: val(s.color),
+        offsetX: `${val(s.x)}px`,
+        offsetY: `${val(s.y)}px`,
+        blur: `${val(s.blur)}px`,
+        spread: `${val(s.spread)}px`,
+        ...(val(s.type) === "innerShadow" ? { type: "inset" } : {}),
+      },
+    };
+  }
+  if (Object.keys(out).length) core.shadow[slug(direction)] = out;
+}
+
 /* ---------------- semantic (alias tree only) ---------------- */
 
 function buildSemantic(mode) {
