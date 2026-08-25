@@ -130,7 +130,7 @@ class ProductCardTags extends StatelessWidget {
 
 /// Neutral gray pill (`colorSurfaceNeutralSecondary`/`colorTextNeutralPrimary`) — same
 /// look `kanban_card.dart`'s private `_Pill` uses. Kept scoped to the ProductCard family
-/// rather than promoted to [NemoBadge], since `NemoBadgeColor.defaultColor` is
+/// rather than promoted to [NemoBadge], since `NemoBadgeColor.normal` is
 /// intentionally the brand-strong fill, not a neutral chip. `icon`/`dot` mirror
 /// [NemoBadge]'s own props/rendering so a neutral pill can still show the
 /// icon-dot-label anatomy Figma's tags use.

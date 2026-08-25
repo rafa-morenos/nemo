@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
@@ -37,21 +36,46 @@ const buttonVariants = cva(
   }
 );
 
+/**
+ * Public contract (§2.1/§3.3a/§4.3): the `cva` block above stays exactly
+ * what `npx shadcn add button` generates — `"default"` is shadcn's own
+ * vocabulary, never edited there. `Button` below is the public boundary —
+ * it exposes `"normal"` instead (translated right before the `cva` call)
+ * and restricts `children` to text with a dedicated `icon` slot. Button is
+ * an atomic component with a fixed visual envelope (§4.3), so free
+ * `ReactNode` children — and `asChild`, an even bigger escape hatch —
+ * aren't part of the public API; icon-only buttons pass `icon` + a native
+ * `aria-label` instead of a visible `children` string.
+ */
+export type ButtonVariant = "normal" | "secondary" | "outline" | "ghost" | "destructive" | "link";
+
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children">,
+    Omit<VariantProps<typeof buttonVariants>, "variant"> {
+  variant?: ButtonVariant;
+  /** Button label. Optional only for icon-only buttons (pair with `aria-label`). */
+  children?: string;
+  /** Leading glyph (e.g. a lucide icon). Sized to fit the button and colored via currentColor. */
+  icon?: React.ReactNode;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, pill, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
+  ({ className, variant = "normal", size, pill, icon, children, ...props }, ref) => {
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, pill, className }))}
+      <button
+        className={cn(
+          buttonVariants({ variant: variant === "normal" ? "default" : variant, size, pill, className })
+        )}
         ref={ref}
         {...props}
-      />
+      >
+        {icon != null && (
+          <span className="shrink-0 [&_svg]:size-4" aria-hidden>
+            {icon}
+          </span>
+        )}
+        {children}
+      </button>
     );
   }
 );

@@ -18,7 +18,7 @@ enum KanbanUrgency { normal, waning, critical }
 
 enum KanbanMode { core, agendado, superDaki }
 
-enum AssignTone { normal, warning, danger, brand, success }
+enum AssignTone { normal, warning, critical, brand, success }
 
 class KanbanTimer {
   const KanbanTimer(this.label, {this.dot = false});
@@ -97,7 +97,7 @@ class KanbanCard extends StatelessWidget {
     switch (tone) {
       case AssignTone.warning:
         return NemoTokens.colorIconSemanticWarning;
-      case AssignTone.danger:
+      case AssignTone.critical:
         return NemoTokens.colorIconSemanticCritical;
       case AssignTone.brand:
         return NemoTokens.colorInteractiveAccentPrimaryMain;

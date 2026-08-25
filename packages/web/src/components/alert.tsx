@@ -19,14 +19,18 @@ const alertVariants = cva(
   }
 );
 
+/** Public contract (§2.1/§3.3a): `cva` above stays shadcn's own `"default"`; `Alert` exposes `"normal"` instead, translated right before the `cva` call. */
+export type AlertVariant = "normal" | "destructive";
+
 const Alert = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> &
+    Omit<VariantProps<typeof alertVariants>, "variant"> & { variant?: AlertVariant }
+>(({ className, variant = "normal", ...props }, ref) => (
   <div
     ref={ref}
     role="alert"
-    className={cn(alertVariants({ variant }), className)}
+    className={cn(alertVariants({ variant: variant === "normal" ? "default" : variant }), className)}
     {...props}
   />
 ));

@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-const COLORS = ["default", "success", "warning", "critical", "info", "disabled", "inverted"] as const;
+const COLORS = ["normal", "success", "warning", "critical", "info", "disabled", "inverted"] as const;
 const VARIANTS = ["filled", "outline", "ghost", "solid"] as const;
 
 export const Matrix: Story = {
@@ -50,7 +50,7 @@ export const DiscountTag: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
       <Badge color="critical" variant="solid">-30%</Badge>
-      <Badge color="default" variant="solid">Grátis</Badge>
+      <Badge color="normal" variant="solid">Grátis</Badge>
     </div>
   ),
 };
@@ -63,8 +63,8 @@ export const Counter: Story = {
       <Badge count={12} color="info" />
       <Badge count={128} color="critical" />
       <span className="text-sm text-muted-foreground">itens no carrinho</span>
-      <Badge color="default">Itens</Badge>
-      <Badge color="default" count={12}>Itens</Badge>
+      <Badge color="normal">Itens</Badge>
+      <Badge color="normal" count={12}>Itens</Badge>
     </div>
   ),
 };

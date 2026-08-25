@@ -18,7 +18,7 @@ export const Default: Story = {
             <ItemDescription>Rider · disponível</ItemDescription>
           </ItemContent>
           <ItemActions>
-            <Button variant="ghost" size="icon"><ChevronRight className="h-4 w-4" /></Button>
+            <Button variant="ghost" size="icon" icon={<ChevronRight className="h-4 w-4" />} aria-label="Ver detalhes" />
           </ItemActions>
         </Item>
       ))}

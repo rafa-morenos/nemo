@@ -52,20 +52,28 @@ const emptyMediaVariants = cva(
   }
 );
 
+/** Public contract (§2.1/§3.3a): `cva` above stays shadcn's own `"default"`; `EmptyMedia` exposes `"normal"` instead, translated right before the `cva` call. */
+export type EmptyMediaVariant = "normal" | "icon";
+
 export interface EmptyMediaProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof emptyMediaVariants> {}
+    Omit<VariantProps<typeof emptyMediaVariants>, "variant"> {
+  variant?: EmptyMediaVariant;
+}
 
 const EmptyMedia = React.forwardRef<HTMLDivElement, EmptyMediaProps>(
-  ({ className, variant, ...props }, ref) => (
-    <div
-      ref={ref}
-      data-slot="empty-media"
-      data-variant={variant}
-      className={cn(emptyMediaVariants({ variant }), className)}
-      {...props}
-    />
-  )
+  ({ className, variant = "normal", ...props }, ref) => {
+    const internalVariant = variant === "normal" ? "default" : variant;
+    return (
+      <div
+        ref={ref}
+        data-slot="empty-media"
+        data-variant={internalVariant}
+        className={cn(emptyMediaVariants({ variant: internalVariant }), className)}
+        {...props}
+      />
+    );
+  }
 );
 EmptyMedia.displayName = "EmptyMedia";
 

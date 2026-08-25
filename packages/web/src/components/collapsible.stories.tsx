@@ -13,7 +13,7 @@ export const Default: Story = {
       <div className="flex items-center justify-between gap-4 rounded-md border border-border px-4 py-2">
         <span className="text-sm font-semibold text-foreground">Itens do pedido</span>
         <CollapsibleTrigger asChild>
-          <Button variant="ghost" size="icon"><ChevronsUpDown className="h-4 w-4" /></Button>
+          <Button variant="ghost" size="icon" icon={<ChevronsUpDown className="h-4 w-4" />} aria-label="Alternar itens" />
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent className="space-y-2">

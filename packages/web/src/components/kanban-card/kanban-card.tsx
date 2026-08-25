@@ -5,25 +5,25 @@ import { ClockIcon, PinIcon } from "./icons";
 /**
  * KanbanCard — Order & Stacking cards from the HUBR "Orders Card" set.
  * Order and Stacking share the same anatomy; Stacking adds the grouped-delivery
- * footer. Urgency (default/waning/critical) and mode (core/agendado/superdaki)
+ * footer. Urgency (normal/waning/critical) and mode (core/agendado/superdaki)
  * drive the accent color + tint, all mapped to Nemo tokens.
  */
 
-export type KanbanUrgency = "default" | "waning" | "critical";
+export type KanbanUrgency = "normal" | "waning" | "critical";
 export type KanbanMode = "core" | "agendado" | "superdaki";
 
-type Tone = "default" | "warning" | "danger" | "brand" | "success";
+type Tone = "normal" | "warning" | "critical" | "brand" | "success";
 
 const toneVar: Record<Tone, string> = {
-  default: "var(--nemo-color-text-neutral-primary)",
+  normal: "var(--nemo-color-text-neutral-primary)",
   warning: "var(--nemo-color-icon-semantic-warning)",
-  danger: "var(--nemo-color-icon-semantic-critical)",
+  critical: "var(--nemo-color-icon-semantic-critical)",
   brand: "var(--nemo-color-interactive-accent-primary-main)",
   success: "var(--nemo-color-icon-semantic-success)",
 };
 
 const urgencyStyle: Record<KanbanUrgency, { accent: string; bg: string }> = {
-  default: { accent: "var(--nemo-color-text-neutral-tertiary)", bg: "var(--nemo-color-surface-neutral-primary)" },
+  normal: { accent: "var(--nemo-color-text-neutral-tertiary)", bg: "var(--nemo-color-surface-neutral-primary)" },
   waning: { accent: "var(--nemo-color-icon-semantic-warning)", bg: "var(--nemo-color-surface-semantic-warning)" },
   critical: { accent: "var(--nemo-color-icon-semantic-critical)", bg: "var(--nemo-color-surface-semantic-critical)" },
 };
@@ -87,7 +87,7 @@ function Divider() {
   return <div className="h-px w-full shrink-0 bg-border" />;
 }
 
-function Assignment({ label, value, tone = "default" }: KanbanAssignment) {
+function Assignment({ label, value, tone = "normal" }: KanbanAssignment) {
   return (
     <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
       <p className="truncate text-md font-regular leading-6 text-foreground">{label}</p>
@@ -106,7 +106,7 @@ const KanbanCard = React.forwardRef<HTMLDivElement, KanbanCardProps>(
     {
       className,
       variant = "order",
-      urgency = "default",
+      urgency = "normal",
       mode = "core",
       orderId,
       timers = [],
@@ -127,13 +127,13 @@ const KanbanCard = React.forwardRef<HTMLDivElement, KanbanCardProps>(
     const isStacking = variant === "stacking";
     // Accent: urgency wins; else superdaki→brand; else neutral.
     const accent =
-      urgency !== "default"
+      urgency !== "normal"
         ? urgencyStyle[urgency].accent
         : mode === "superdaki"
           ? "var(--nemo-color-interactive-accent-primary-main)"
-          : urgencyStyle.default.accent;
+          : urgencyStyle.normal.accent;
     const bg =
-      urgency !== "default"
+      urgency !== "normal"
         ? urgencyStyle[urgency].bg
         : mode === "superdaki"
           ? "var(--nemo-color-surface-accent-primary)"

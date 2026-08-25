@@ -72,7 +72,7 @@ const NavigationBar = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLEle
         // node's own variable annotation says surface/accent/primary, but
         // that role is a pale tint in our Alias (blue-95); the rendered
         // fill matches the brand blue, same bg-primary pairing Badge's
-        // `color="default" variant="filled"` already uses for this exact look.
+        // `color="normal" variant="filled"` already uses for this exact look.
         "flex w-full items-stretch overflow-hidden rounded-2xl bg-primary drop-shadow-[4px_4px_7.5px_rgba(24,39,75,0.15),-2px_-2px_7.5px_rgba(24,39,75,0.15)]",
         className
       )}

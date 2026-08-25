@@ -212,11 +212,10 @@ const CarouselPrevious = React.forwardRef<
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
+      icon={<ArrowLeft className="h-4 w-4" />}
+      aria-label="Previous slide"
       {...props}
-    >
-      <ArrowLeft className="h-4 w-4" />
-      <span className="sr-only">Previous slide</span>
-    </Button>
+    />
   );
 });
 CarouselPrevious.displayName = "CarouselPrevious";
@@ -241,11 +240,10 @@ const CarouselNext = React.forwardRef<
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}
+      icon={<ArrowRight className="h-4 w-4" />}
+      aria-label="Next slide"
       {...props}
-    >
-      <ArrowRight className="h-4 w-4" />
-      <span className="sr-only">Next slide</span>
-    </Button>
+    />
   );
 });
 CarouselNext.displayName = "CarouselNext";

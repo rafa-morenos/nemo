@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Heart, X } from "lucide-react";
 import { Button } from "./button";
 
 const meta = {
@@ -8,11 +9,11 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "secondary", "outline", "ghost", "destructive", "link"],
+      options: ["normal", "secondary", "outline", "ghost", "destructive", "link"],
     },
     size: { control: "select", options: ["sm", "md", "lg", "icon"] },
   },
-  args: { children: "Fazer pedido", variant: "default", size: "md" },
+  args: { children: "Fazer pedido", variant: "normal", size: "md" },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -28,7 +29,7 @@ export const Link: Story = { args: { variant: "link", children: "Saiba mais" } }
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-3">
-      <Button>Default</Button>
+      <Button>Normal</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
@@ -46,4 +47,18 @@ export const Sizes: Story = {
       <Button size="lg">Large</Button>
     </div>
   ),
+};
+
+/** `icon` é um slot dedicado — não vai dentro de `children` (§4.3). */
+export const WithIcon: Story = {
+  render: () => (
+    <Button icon={<Heart />} variant="outline">
+      Favoritar
+    </Button>
+  ),
+};
+
+/** Botão só-ícone: sem `children`, com `aria-label` no lugar do texto visível. */
+export const IconOnly: Story = {
+  render: () => <Button icon={<X />} size="icon" variant="ghost" aria-label="Fechar" />,
 };

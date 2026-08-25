@@ -22,13 +22,13 @@ export function DatePicker({
       <PopoverTrigger asChild>
         <Button
           variant="outline"
+          icon={<CalendarIcon className="h-4 w-4" />}
           className={cn(
             "w-[280px] justify-start text-left font-normal",
             !value && "text-muted-foreground"
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? format(value, "PPP") : <span>{placeholder}</span>}
+          {value ? format(value, "PPP") : placeholder}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

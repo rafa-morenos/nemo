@@ -24,7 +24,7 @@ const textVariants = cva("", {
       caption: "text-xs font-regular leading-normal",
     },
     tone: {
-      default: "text-foreground",
+      normal: "text-foreground",
       secondary: "text-muted-foreground",
       muted: "text-muted-foreground",
       brand: "text-primary",
@@ -34,7 +34,7 @@ const textVariants = cva("", {
       onBrand: "text-primary-foreground",
     },
   },
-  defaultVariants: { variant: "body", tone: "default" },
+  defaultVariants: { variant: "body", tone: "normal" },
 });
 
 // Sensible default element per variant (overridable via `as` / `asChild`).
