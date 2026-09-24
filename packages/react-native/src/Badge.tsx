@@ -37,14 +37,18 @@ function formatCount(count: number) {
 }
 
 /**
- * "solid" backgrounds for success/warning/critical pair the icon-tone bg
+ * "solid" backgrounds for warning/critical pair the icon-tone bg
  * (`icon.semantic.*`, same tone `button.tsx`'s destructive variant uses) with
- * `text.neutral.inverted` as the foreground — mirrors web's `bg-success
- * text-success-foreground` (tailwind.preset.js). Figma never promoted an
- * "On <Hue>" role for these, but `text.neutral.inverted` tonal-flips in the
- * matching direction (near-white in light mode, near-black in dark mode) as
- * the icon tone does, so contrast holds in both themes with real aliases —
- * no pinned primitive needed.
+ * `text.neutral.inverted` as the foreground — mirrors web's `bg-warning`/
+ * `bg-destructive` (tailwind.preset.js). Figma never promoted an "On <Hue>"
+ * role for these, but `text.neutral.inverted` tonal-flips in the matching
+ * direction (near-white in light mode, near-black in dark mode) as the icon
+ * tone does, so contrast holds in both themes with real aliases — no pinned
+ * primitive needed. `success` pairs `text.semantic.success` instead: the
+ * icon tone only reaches ~4.37:1 against `text.neutral.inverted` in light
+ * mode (under the 4.5:1 text minimum), while `text.semantic.success` clears
+ * it (~7.97:1) using the same real alias already used for the non-solid
+ * foreground below — mirrors web's `bg-success` fix in tailwind.preset.js.
  */
 function bgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
   if (variant === "outline" || variant === "ghost") return "transparent";
@@ -53,7 +57,7 @@ function bgFor(t: NemoTheme, color: BadgeColor, variant: BadgeVariant) {
     case "default":
       return t.color.interactive.accent.primary.main;
     case "success":
-      return solid ? t.color.icon.semantic.success : t.color.surface.semantic.success;
+      return solid ? t.color.text.semantic.success : t.color.surface.semantic.success;
     case "warning":
       return solid ? t.color.icon.semantic.warning : t.color.surface.semantic.warning;
     case "critical":

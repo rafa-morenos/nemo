@@ -12,12 +12,16 @@ import { cn } from "../lib/utils";
  * `variant="filled"` is the semantic-color "soft" look (tonal bg). `variant="solid"`
  * is a real strong bg for every color except `info`: `default`/`inverted`/
  * `disabled` are backed by Figma's aliased Primary/On Primary pair;
- * `success`/`warning`/`critical` pair the icon-tone bg (`bg-success` etc,
+ * `warning`/`critical` pair the icon-tone bg (`bg-warning`/`bg-destructive`,
  * same as `button.tsx`'s `destructive`) with `text-neutral-inverted` as the
  * foreground — Figma never promoted an "On <Hue>" role for these, but
  * `text-neutral-inverted` tonal-flips in the matching direction (near-white
  * in light mode, near-black in dark mode) as the icon tone does, so contrast
  * holds in both themes with only real aliases, no pinned primitive needed.
+ * `success` pairs `text-semantic-success` instead of the icon tone — the icon
+ * tone only reaches ~4.37:1 against `text-neutral-inverted` in light mode
+ * (under the 4.5:1 text minimum), while `text-semantic-success` clears it
+ * (~7.97:1) using the same real alias already used for `filled`'s foreground.
  * `info` has no strong tone to pair it with and stays == `filled`.
  * `size` and `shape` cover the remaining spec (sm/md, pill/square). `count`
  * covers the numeric-counter use case (counter-tag, picking-amount).
@@ -62,8 +66,8 @@ const badgeVariants = cva(
       { color: "success", variant: "filled", className: "bg-success-soft text-success-soft-foreground" },
       { color: "success", variant: "outline", className: "border-success-border bg-transparent text-success-soft-foreground" },
       { color: "success", variant: "ghost", className: "bg-transparent text-success-soft-foreground" },
-      // No aliased "On Success" role, so pair the icon-tone bg with
-      // text-neutral-inverted (see top-of-file comment) instead of pinning.
+      // No aliased "On Success" role; pairs text-semantic-success (not the
+      // icon tone — see top-of-file comment on why) with text-neutral-inverted.
       { color: "success", variant: "solid", className: "bg-success text-success-foreground" },
 
       { color: "warning", variant: "filled", className: "bg-warning-soft text-warning-soft-foreground" },

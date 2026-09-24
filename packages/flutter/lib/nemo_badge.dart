@@ -54,21 +54,27 @@ class NemoBadge extends StatelessWidget {
 
   bool get _solid => variant == NemoBadgeVariant.solid;
 
-  // "solid" backgrounds for success/warning/critical pair the icon-tone bg
+  // "solid" backgrounds for warning/critical pair the icon-tone bg
   // (colorIconSemantic*, same tone button.tsx's destructive variant uses)
   // with colorTextNeutralInverted as the foreground — mirrors web's
-  // `bg-success text-success-foreground` (tailwind.preset.js). Figma never
-  // promoted an "On <Hue>" role for these, but colorTextNeutralInverted
-  // tonal-flips in the matching direction (near-white in light mode,
-  // near-black in dark mode) as the icon tone does, so contrast holds in
-  // both themes with real aliases — no pinned primitive needed.
+  // `bg-warning`/`bg-destructive` (tailwind.preset.js). Figma never promoted
+  // an "On <Hue>" role for these, but colorTextNeutralInverted tonal-flips in
+  // the matching direction (near-white in light mode, near-black in dark
+  // mode) as the icon tone does, so contrast holds in both themes with real
+  // aliases — no pinned primitive needed. `success` pairs
+  // colorTextSemanticSuccess instead: the icon tone only reaches ~4.37:1
+  // against colorTextNeutralInverted (under the 4.5:1 text minimum, this repo
+  // only ships light-mode Flutter tokens today), while colorTextSemanticSuccess
+  // clears it (~7.97:1) using the same real generated constant already used
+  // for the non-solid foreground below — mirrors web's `bg-success` fix in
+  // tailwind.preset.js.
   Color get _bg {
     if (variant == NemoBadgeVariant.outline || variant == NemoBadgeVariant.ghost) return Colors.transparent;
     switch (color) {
       case NemoBadgeColor.defaultColor:
         return NemoTokens.colorInteractiveAccentPrimaryMain;
       case NemoBadgeColor.success:
-        return _solid ? NemoTokens.colorIconSemanticSuccess : NemoTokens.colorSurfaceSemanticSuccess;
+        return _solid ? NemoTokens.colorTextSemanticSuccess : NemoTokens.colorSurfaceSemanticSuccess;
       case NemoBadgeColor.warning:
         return _solid ? NemoTokens.colorIconSemanticWarning : NemoTokens.colorSurfaceSemanticWarning;
       case NemoBadgeColor.critical:
