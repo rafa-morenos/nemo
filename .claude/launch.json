@@ -4,8 +4,25 @@
     {
       "name": "storybook",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "storybook", "--prefix", "packages/web"],
+      "runtimeArgs": [
+        "run",
+        "storybook",
+        "--prefix",
+        "packages/web"
+      ],
       "autoPort": true
+    },
+    {
+      "name": "ai-kit",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8765",
+        "--directory",
+        "packages/ai-kit"
+      ],
+      "port": 8765
     }
   ]
 }
